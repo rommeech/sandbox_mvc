@@ -1,7 +1,7 @@
 package org.rp.sandboxmvc.service;
 
 public class ServiceException extends Exception {
-    public ServiceException() {f
+    public ServiceException() {
     }
 
     public ServiceException(String message) {

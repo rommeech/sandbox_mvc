@@ -76,6 +76,13 @@
             <version>2.11.0</version>
         </dependency>
 
+        <!-- Apache common lang -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+            <version>3.7</version>
+        </dependency>
+
     </dependencies>
 
 
