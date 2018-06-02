@@ -24,7 +24,7 @@
         <th>Next Job</th>
         <th>&nbsp;</th>
     </tr>
-    <c:forEach items="${feedList}" var="feed">
+    <c:forEach items="${feedsList}" var="feed">
         <tr>
             <td>${feed.id}</td>
             <td>${feed.status}</td>

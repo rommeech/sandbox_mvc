@@ -1,22 +1,21 @@
-package org.rp.sandboxmvc.ui.feed;
+package org.rp.sandboxmvc.servlet.feed;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.rp.sandboxmvc.model.feed.Feed;
 import org.rp.sandboxmvc.service.feed.FeedService;
-import org.rp.sandboxmvc.ui.UITools;
+import org.rp.sandboxmvc.servlet.UITools;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 
-@WebServlet(name = "FeedServlet", urlPatterns = "/feeds/*")
+//@WebServlet(name = "FeedServlet", urlPatterns = "/feeds/*")
 public class FeedServlet extends HttpServlet {
 
     private static Logger logger = LogManager.getLogger(FeedServlet.class);
@@ -52,7 +51,7 @@ public class FeedServlet extends HttpServlet {
 
         List<Feed> feedList = feedService.getAll();
         request.setAttribute("feedList", feedList);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/feed/FeedList.jsp");
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/feed/FeedsList.jsp");
         dispatcher.forward(request, response);
 
     }
@@ -66,7 +65,7 @@ public class FeedServlet extends HttpServlet {
             return;
         }
         request.setAttribute("feed", feed);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/jsp/feed/FeedForm.jsp");
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/feed/FeedsForm.jsp");
         dispatcher.forward(request, response);
 
     }

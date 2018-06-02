@@ -3,11 +3,15 @@ package org.rp.sandboxmvc.dao.feed;
 import org.rp.sandboxmvc.dao.AbstractDao;
 import org.rp.sandboxmvc.dao.DaoEntityManagerFactory;
 import org.rp.sandboxmvc.model.feed.Feed;
+import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
 import java.util.List;
 
+@Repository
 public class FeedDao extends AbstractDao<Feed, Long> {
+
+    // TODO: entityManagerFactory should be here, so we can inject mock object
 
     public List<Feed> getAll() {
         EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();

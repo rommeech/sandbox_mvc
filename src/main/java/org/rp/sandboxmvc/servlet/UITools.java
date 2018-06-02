@@ -1,4 +1,4 @@
-package org.rp.sandboxmvc.ui;
+package org.rp.sandboxmvc.servlet;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
