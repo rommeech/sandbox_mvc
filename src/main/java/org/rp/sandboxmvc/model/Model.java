@@ -16,7 +16,8 @@ public abstract class Model<T extends Serializable> implements Serializable {
 
     @Id
     @Column(name = "id", updatable = false, nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @SequenceGenerator(name = "pk_model_seq", sequenceName = "model_id_seq")
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "pk_model_seq")
     private T id;
 
     @Column(name = "date_created", updatable = false, nullable = false)
