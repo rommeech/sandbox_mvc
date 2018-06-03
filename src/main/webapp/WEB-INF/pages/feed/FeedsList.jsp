@@ -1,27 +1,21 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: rparshin
-  Date: 26.05.18
-  Time: 22:40
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <html>
 <head>
-    <title>Feed</title>
+    <title><spring:message text="Feeds"/></title>
 </head>
 <body>
 
-<h1>Feeds</h1>
+<h1><spring:message text="Feeds"/></h1>
 <table border="1">
     <tr>
-        <th>ID</th>
-        <th>Status</th>
-        <th>Title</th>
-        <th>Url</th>
-        <th>Job interval</th>
-        <th>Next Job</th>
+        <th><spring:message text="ID"/></th>
+        <th><spring:message text="Status"/></th>
+        <th><spring:message text="Title"/></th>
+        <th><spring:message text="Url"/></th>
+        <th><spring:message text="Job interval"/></th>
+        <th><spring:message text="Next Job"/></th>
         <th>&nbsp;</th>
     </tr>
     <c:forEach items="${feedsList}" var="feed">
@@ -32,7 +26,7 @@
             <td>${feed.feedUrl}</td>
             <td>${feed.jobInterval}</td>
             <td>${feed.nextJob}</td>
-            <td><a href="<%= request.getContextPath() %>/feeds/${feed.id}/">edit</a></td>
+            <td><a href="<c:url value="/feeds/${feed.id}/"/>">edit</a></td>
         </tr>
     </c:forEach>
 </table>

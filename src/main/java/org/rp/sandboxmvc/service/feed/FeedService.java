@@ -13,6 +13,10 @@ public class FeedService {
     @Autowired
     private FeedDao feedDao;
 
+    public void setFeedDao(FeedDao feedDao) {
+        this.feedDao = feedDao;
+    }
+
     public List<Feed> getAll() {
        return feedDao.getAll();
     }

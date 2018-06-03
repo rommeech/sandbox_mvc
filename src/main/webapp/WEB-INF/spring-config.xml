@@ -7,10 +7,8 @@
     <mvc:annotation-driven/>
     <context:component-scan base-package="org.rp.sandboxmvc"/>
 
-    <mvc:view-controller path="hello" view-name="hello"/>
-
     <bean id="resolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 

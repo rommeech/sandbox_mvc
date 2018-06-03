@@ -33,8 +33,8 @@ public abstract class Model<T extends Serializable> implements Serializable {
     }
 
     public void setId(T id) throws ModelException {
-        if (this.id != null || !id.equals(this.id)) {
-            logger.error("Cannot change ID");
+        if (this.id != null && !id.equals(this.id)) {
+            logger.error("Cannot change ID " + this.id + " => " + id);
             throw new ModelException("Cannot change ID");
         }
         this.id = id;
