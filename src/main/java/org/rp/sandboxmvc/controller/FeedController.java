@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.sql.Date;
+
 @Controller
 @RequestMapping("/feeds")
 public class FeedController {
@@ -43,18 +45,28 @@ public class FeedController {
         return modelAndView;
     }
 
+    @RequestMapping(value = "/new/", method = RequestMethod.GET)
+    public ModelAndView newFeedsForm() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("feed", new Feed());
+        modelAndView.setViewName("feed/FeedsForm");
+        return modelAndView;
+    }
+
     @RequestMapping(value = "/save/", method = RequestMethod.POST)
-    public String saveForm(@ModelAttribute("feed") Feed feed) {
+    public String saveFeed(@ModelAttribute("feed") Feed feed) {
 
-        logger.info("feed = " + feed);
-
+        //TODO: dirty hack, remove it
         feed.setStatus(Status.ACTIVE);
 
-        if (!feed.getId().equals(0L)) {
-            feedService.update(feed);
+        if (feed.getId() == null || feed.getId().equals(0L)) {
+            feed.setDateCreated(new Date(System.currentTimeMillis()));
+            logger.info("inserting feed = " + feed);
+            feedService.insert(feed);
         }
         else {
-            feedService.insert(feed);
+            logger.info("updating feed = " + feed);
+            feedService.update(feed);
         }
 
         return "redirect:/feeds/";

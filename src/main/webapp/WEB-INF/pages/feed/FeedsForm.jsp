@@ -14,10 +14,14 @@
 
 <h1><spring:message text="Feed"/> / ${feed.id}</h1>
 
-<springform:form modelAttribute="feed" method="POST" action="${pageContext.request.contextPath}/feeds/save/">
+<c:url var="formAction" value="/feeds/save/"/>
+<springform:form modelAttribute="feed" method="POST" action="${formAction}">
     <springform:hidden path="id"/>
 
+
     <table border="1" width="100%">
+
+        <c:if test="${!empty feed.id}">
         <tr>
             <td width="20%"><spring:message text="ID"/></td>
             <td width="80%">${feed.id}</td>
@@ -30,6 +34,8 @@
             <td><spring:message text="Updated"/></td>
             <td>${feed.lastUpdated}</td>
         </tr>
+        </c:if>
+
         <tr>
             <td><spring:message text="Status"/></td>
             <td>${feed.status}</td>
