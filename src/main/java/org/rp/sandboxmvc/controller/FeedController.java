@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 
 @Controller
 @RequestMapping("/feeds")
@@ -60,7 +60,6 @@ public class FeedController {
         feed.setStatus(Status.ACTIVE);
 
         if (feed.getId() == null || feed.getId().equals(0L)) {
-            feed.setDateCreated(new Date(System.currentTimeMillis()));
             logger.info("inserting feed = " + feed);
             feedService.insert(feed);
         }

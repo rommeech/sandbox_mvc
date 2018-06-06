@@ -6,7 +6,7 @@ import org.rp.sandboxmvc.model.Status;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @Entity
@@ -43,7 +43,7 @@ public class Feed extends Model<Long> {
     private Long jobInterval;
 
     @Column(name = "next_job")
-    private Date nextJob;
+    private Timestamp nextJob;
 
     public Feed() {
         super();
@@ -113,11 +113,11 @@ public class Feed extends Model<Long> {
         this.jobInterval = jobInterval;
     }
 
-    public Date getNextJob() {
+    public Timestamp getNextJob() {
         return nextJob;
     }
 
-    public void setNextJob(Date nextJob) {
+    public void setNextJob(Timestamp nextJob) {
         this.nextJob = nextJob;
     }
 

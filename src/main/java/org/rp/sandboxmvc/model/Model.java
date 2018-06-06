@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.Objects;
 
 @MappedSuperclass
@@ -21,12 +21,22 @@ public abstract class Model<T extends Serializable> implements Serializable {
     private T id;
 
     @Column(name = "date_created", updatable = false, nullable = false)
-    private Date dateCreated;
+    private Timestamp dateCreated;
 
     @Column(name = "last_updated")
-    private Date lastUpdated;
+    private Timestamp lastUpdated;
 
     public Model() {
+    }
+
+    @PrePersist
+    public void setDateCreate() {
+        this.dateCreated = new Timestamp(System.currentTimeMillis());
+    }
+
+    @PreUpdate
+    public void setLastUpdate() {
+        this.lastUpdated = new Timestamp(System.currentTimeMillis());
     }
 
     public T getId() {
@@ -41,19 +51,19 @@ public abstract class Model<T extends Serializable> implements Serializable {
         this.id = id;
     }
 
-    public Date getDateCreated() {
+    public Timestamp getDateCreated() {
         return dateCreated;
     }
 
-    public void setDateCreated(Date dateCreated) {
+    public void setDateCreated(Timestamp dateCreated) {
         this.dateCreated = dateCreated;
     }
 
-    public Date getLastUpdated() {
+    public Timestamp getLastUpdated() {
         return lastUpdated;
     }
 
-    public void setLastUpdated(Date lastUpdated) {
+    public void setLastUpdated(Timestamp lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
 
