@@ -12,6 +12,7 @@
         <!-- class>org.hibernate.documentation.userguide.Document</class -->
 
         <properties>
+
             <property name="javax.persistence.jdbc.driver"
                       value="org.postgresql.Driver" />
 

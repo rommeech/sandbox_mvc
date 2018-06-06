@@ -28,7 +28,7 @@ public class FeedController {
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String feedsList(Model model) {
         model.addAttribute("feedsList", feedService.getAll());
-        return "feed/FeedsList";
+        return "feed/feeds_list";
     }
 
     @RequestMapping(value = "/{id}/", method = RequestMethod.GET)
@@ -41,7 +41,7 @@ public class FeedController {
 
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("feed", feed);
-        modelAndView.setViewName("feed/FeedsForm");
+        modelAndView.setViewName("feed/feeds_form");
         return modelAndView;
     }
 
@@ -49,7 +49,7 @@ public class FeedController {
     public ModelAndView newFeedsForm() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("feed", new Feed());
-        modelAndView.setViewName("feed/FeedsForm");
+        modelAndView.setViewName("feed/feeds_form");
         return modelAndView;
     }
 

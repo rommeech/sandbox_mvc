@@ -12,6 +12,22 @@
     <build>
         <plugins>
             <plugin>
+                <groupId>org.eclipse.jetty</groupId>
+                <artifactId>jetty-maven-plugin</artifactId>
+                <version>9.4.9.v20180320</version>
+                <configuration>
+                    <httpConnector>
+                        <port>8080</port>
+                    </httpConnector>
+                    <webApp>
+                        <contextPath>/sandboxmvc</contextPath>
+                    </webApp>
+                    <scanIntervalSeconds>5</scanIntervalSeconds>
+                    <!-- jettyXml>src/main/webapp/WEB-INF/jetty-env.xml</jettyXml -->
+                </configuration>
+            </plugin>
+
+            <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>

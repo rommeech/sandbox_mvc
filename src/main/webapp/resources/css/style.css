@@ -1,0 +1,120 @@
+/* Common */
+
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #222;
+}
+
+body {
+    height: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    background-color: #222;
+}
+
+body, p, span, input, button, textarea {
+    font-family: sans-serif;
+    color: #A9B7C6;
+    font-size: small;
+}
+
+/* Links */
+
+a               { color: #cd9b7f; }
+a:hover         { color: #e17661; }
+a:visited       { color: #cd9b7f; }
+a:visited:hover { color: #e17661; }
+
+/* Forms */
+
+input, textarea {
+    border: 1px solid #444;
+    padding: 4px 8px 4px 8px;
+    color: #ccc;
+    background-color: #333;
+    width: 90%;
+}
+
+input.warn {
+    color: #A9B7C6;
+    background: #e17661 none;
+}
+
+input[type='checkbox'] {
+    padding: 0px;
+    margin: 3px;
+    border: 1px solid gray;
+}
+
+button {
+    border: 1px solid #444;
+    padding: 8px 32px 8px 32px;
+    margin: 0px 16px 0px 0px;
+    color: #ccc;
+    background-color: #333;
+    width: auto;
+}
+
+/* Tables */
+
+table {
+    border: 0px;
+    border-collapse: collapse;
+}
+td {
+    padding: 4px 8px 4px 8px;
+    border: 1px solid #454545;
+}
+td span.value {
+    border: 1px solid #454545;
+    padding: 0px 0px 0px 0px;
+    color: #d2d2d2;
+    display: block;
+}
+th {
+    padding: 8px 8px 8px 8px;
+    border: 1px solid #454545;
+    border-bottom: 3px double #454545;
+    font-weight: bold;
+}
+
+/* Layout */
+
+header {}
+footer {}
+
+nav {
+    padding: 0px 0px 16px 0px;
+}
+
+main {
+    padding: 20px;
+    margin: 0px;
+}
+
+main div{
+    padding: 0px 0px 16px 0px;
+}
+
+/* Other layers */
+
+div.info {
+    background-color: #6fb22e;
+    color: #222;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+div.error {
+    background-color: #e17661;
+    color: #222;
+    padding: 10px;
+    margin-top: 10px;
+}
+
+
+
