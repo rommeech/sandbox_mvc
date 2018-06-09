@@ -45,7 +45,9 @@
             <col width="80%">
             <tr>
                 <td><spring:message text="Status"/></td>
-                <td>${feed.status}</td>
+                <td><springform:select path="status">
+                    <springform:options items="${statusList}" path="status" />
+                </springform:select></td>
             </tr>
             <tr>
                 <td><spring:message text="Icon URL"/></td>

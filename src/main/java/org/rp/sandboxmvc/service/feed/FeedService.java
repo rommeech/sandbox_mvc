@@ -3,14 +3,16 @@ package org.rp.sandboxmvc.service.feed;
 import org.rp.sandboxmvc.dao.feed.FeedDao;
 import org.rp.sandboxmvc.model.feed.Feed;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service
+@Service(value = "feedService")
 public class FeedService {
 
     @Autowired
+    @Qualifier("feedDao")
     private FeedDao feedDao;
 
     public void setFeedDao(FeedDao feedDao) {

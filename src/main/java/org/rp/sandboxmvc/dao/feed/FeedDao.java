@@ -6,6 +6,7 @@ import org.rp.sandboxmvc.model.feed.Feed;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.EntityManager;
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Repository
@@ -13,11 +14,10 @@ public class FeedDao extends AbstractDao<Feed, Long> {
 
     // TODO: entityManagerFactory should be here, so we can inject mock object
 
+    @Transactional
     public List<Feed> getAll() {
         EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();
-        entityManager.getTransaction().begin();
         List<Feed> feeds = entityManager.createQuery("FROM Feed", Feed.class).getResultList();
-        entityManager.getTransaction().commit();
         entityManager.close();
         return feeds;
     }

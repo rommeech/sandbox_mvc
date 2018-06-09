@@ -4,7 +4,6 @@ import org.rp.sandboxmvc.model.Model;
 import org.rp.sandboxmvc.model.Status;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 
 import java.sql.Timestamp;
 import java.util.Objects;
@@ -14,8 +13,7 @@ import java.util.Objects;
 public class Feed extends Model<Long> {
     private static final long serialVersionUID = -581287016449199340L;
 
-    @NotNull
-    @Column(name = "status")
+    @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
 
@@ -28,8 +26,7 @@ public class Feed extends Model<Long> {
     @Column(name = "title")
     private String title;
 
-    @NotNull
-    @Column(name = "feed_url")
+    @Column(name = "feed_url", nullable = false)
     private String feedUrl;
 
     @Column(name = "author")
@@ -38,8 +35,7 @@ public class Feed extends Model<Long> {
     @Column(name = "description")
     private String description;
 
-    @NotNull
-    @Column(name = "job_interval")
+    @Column(name = "job_interval", nullable = false)
     private Long jobInterval;
 
     @Column(name = "next_job")
