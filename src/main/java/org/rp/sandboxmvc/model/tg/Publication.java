@@ -1,6 +1,6 @@
 package org.rp.sandboxmvc.model.tg;
 
-import org.rp.sandboxmvc.model.Model;
+import org.rp.sandboxmvc.model.AbstractModel;
 import org.rp.sandboxmvc.model.feed.Post;
 
 import javax.persistence.Column;
@@ -11,7 +11,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "publication")
-public class Publication extends Model<Long> {
+public class Publication extends AbstractModel<Long> {
 
     private static final long serialVersionUID = 6886566454370545420L;
 

@@ -35,6 +35,8 @@
             <!-- property name="hibernate.current_session_context_class" value="thread" / -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect" />
 
+            <!--property name="current_session_context_class" value="thread"/!-->
+
         </properties>
 
     </persistence-unit>

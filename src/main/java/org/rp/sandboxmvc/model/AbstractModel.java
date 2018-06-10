@@ -9,10 +9,10 @@ import java.sql.Timestamp;
 import java.util.Objects;
 
 @MappedSuperclass
-public abstract class Model<T extends Serializable> implements Serializable {
+public abstract class AbstractModel<T extends Serializable> implements Serializable {
 
     private static final long serialVersionUID = -8781734021436849708L;
-    private static final Logger logger = LogManager.getLogger(Model.class);
+    private static final Logger logger = LogManager.getLogger(AbstractModel.class);
 
     @Id
     @Column(name = "id", updatable = false, nullable = false)
@@ -28,7 +28,7 @@ public abstract class Model<T extends Serializable> implements Serializable {
     @Column(name = "last_updated")
     private Timestamp lastUpdated;
 
-    public Model() {
+    public AbstractModel() {
     }
 
     @PrePersist
@@ -72,8 +72,8 @@ public abstract class Model<T extends Serializable> implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Model)) return false;
-        Model<?> model = (Model<?>) o;
+        if (!(o instanceof AbstractModel)) return false;
+        AbstractModel<?> model = (AbstractModel<?>) o;
         return Objects.equals(id, model.id) &&
                 Objects.equals(dateCreated, model.dateCreated) &&
                 Objects.equals(lastUpdated, model.lastUpdated);

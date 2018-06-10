@@ -1,6 +1,6 @@
 package org.rp.sandboxmvc.model.feed;
 
-import org.rp.sandboxmvc.model.Model;
+import org.rp.sandboxmvc.model.AbstractModel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -9,13 +9,12 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "post")
-public class Post extends Model<Long> {
+public class Post extends AbstractModel<Long> {
 
     private static final long serialVersionUID = -2803666248225562332L;
 
-    //@ManyToOne(fetch = FetchType.LAZY)
-    //@JoinColumn(name = "id")
-    private String feed;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Feed feed;
 
     @Column(name = "author")
     private String author;
@@ -40,11 +39,11 @@ public class Post extends Model<Long> {
         super();
     }
 
-    public String getFeed() {
+    public Feed getFeed() {
         return feed;
     }
 
-    public void setFeed(String feed) {
+    public void setFeed(Feed feed) {
         this.feed = feed;
     }
 

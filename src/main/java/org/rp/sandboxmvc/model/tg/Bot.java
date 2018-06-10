@@ -1,6 +1,6 @@
 package org.rp.sandboxmvc.model.tg;
 
-import org.rp.sandboxmvc.model.Model;
+import org.rp.sandboxmvc.model.AbstractModel;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "bot")
-public class Bot extends Model<Long> {
+public class Bot extends AbstractModel<Long> {
 
     private static final long serialVersionUID = 8493343250882283132L;
 

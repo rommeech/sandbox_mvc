@@ -1,6 +1,6 @@
 package org.rp.sandboxmvc.model.tg;
 
-import org.rp.sandboxmvc.model.Model;
+import org.rp.sandboxmvc.model.AbstractModel;
 import org.rp.sandboxmvc.model.Status;
 import org.rp.sandboxmvc.model.feed.Feed;
 
@@ -12,7 +12,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "channel")
-public class Channel extends Model<Long> {
+public class Channel extends AbstractModel<Long> {
 
     private static final long serialVersionUID = -5584189033160373117L;
 

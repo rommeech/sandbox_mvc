@@ -1,6 +1,6 @@
 package org.rp.sandboxmvc.model.feed;
 
-import org.rp.sandboxmvc.model.Model;
+import org.rp.sandboxmvc.model.AbstractModel;
 import org.rp.sandboxmvc.model.Status;
 
 import javax.persistence.*;
@@ -10,7 +10,7 @@ import java.util.Objects;
 
 @Entity
 @Table(name = "feed")
-public class Feed extends Model<Long> {
+public class Feed extends AbstractModel<Long> {
     private static final long serialVersionUID = -581287016449199340L;
 
     @Column(name = "status", nullable = false)
