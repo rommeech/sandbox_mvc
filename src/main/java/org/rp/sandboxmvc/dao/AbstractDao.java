@@ -1,8 +1,10 @@
 package org.rp.sandboxmvc.dao;
 
 import org.rp.sandboxmvc.model.AbstractModel;
+import org.rp.sandboxmvc.model.feed.Post;
 
 import java.io.Serializable;
+import java.util.List;
 
 public abstract class AbstractDao<T extends AbstractModel<K>, K extends Serializable> {
 
@@ -16,5 +18,4 @@ public abstract class AbstractDao<T extends AbstractModel<K>, K extends Serializ
     public abstract void update(T model);
 
     public abstract void delete (T model);
-
 }
