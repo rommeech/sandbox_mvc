@@ -51,7 +51,7 @@ public class FeedServlet extends HttpServlet {
 
         List<Feed> feedList = feedService.getAll();
         request.setAttribute("feedList", feedList);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/feed/feeds_list.jsp");
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/feed/feed_list.jsp");
         dispatcher.forward(request, response);
 
     }
@@ -65,7 +65,7 @@ public class FeedServlet extends HttpServlet {
             return;
         }
         request.setAttribute("feed", feed);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/feed/feeds_form.jsp");
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/feed/feed_form.jsp");
         dispatcher.forward(request, response);
 
     }

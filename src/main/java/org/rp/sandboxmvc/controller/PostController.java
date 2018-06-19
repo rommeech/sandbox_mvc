@@ -32,7 +32,7 @@ public class PostController {
 
         Map<String, String> requestParams = this.getRequestParams();
 
-        List<Post> postList = postService.search(requestParams);
+        List<Post> postList = postService.list(requestParams);
 
         model.addAttribute("postList", postList);
 

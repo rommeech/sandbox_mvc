@@ -14,23 +14,23 @@
 <jsp:include page="../include/header.jsp"/>
 
 <main>
-    <h1><spring:message text="Feeds"/></h1>
+    <h1><spring:message text="Posts"/></h1>
     <nav>
         <a href="<spring:url value='/feeds/new/'/>">Add new feed</a>
     </nav>
     <table border="1">
         <tr>
             <th><spring:message text="ID"/></th>
-            <th><spring:message text="Feed"/></th>
+            <th><spring:message text="Author"/></th>
             <th><spring:message text="Title"/></th>
             <th>&nbsp;</th>
         </tr>
-        <c:forEach items="${postsList}" var="model">
+        <c:forEach items="${postList}" var="model">
             <tr>
                 <td>${model.id}</td>
                 <td>${model.author}</td>
                 <td>${model.title}</td>
-                <td><a href="<spring:url value="/posts/${model.id}/"/>">edit</a></td>
+                <td><a href="<spring:url value="/posts/${model.id}/"/>">view</a></td>
             </tr>
         </c:forEach>
     </table>
