@@ -15,9 +15,11 @@
 
 <main>
     <h1><spring:message text="Posts"/></h1>
-    <nav>
+
+    <!-- nav>
         <a href="<spring:url value='/feeds/new/'/>">Add new feed</a>
-    </nav>
+    </nav -->
+
     <table border="1">
         <tr>
             <th><spring:message text="ID"/></th>

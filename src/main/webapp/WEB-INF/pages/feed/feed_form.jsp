@@ -26,6 +26,7 @@
 
     <nav>
         <a href="<spring:url value='/feeds/'/>">Feeds list</a>
+        <c:if test="${!empty feed.id}"> | <a href="<spring:url value='/posts/?feed=${feed.id}'/>">Posts</a></c:if>
     </nav>
 
     <spring:url var="formAction" value="/feeds/save/"/>

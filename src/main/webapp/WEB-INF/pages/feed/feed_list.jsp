@@ -27,6 +27,7 @@
             <th><spring:message text="Job Interval, ms"/></th>
             <th><spring:message text="Next Job"/></th>
             <th>&nbsp;</th>
+            <th>&nbsp;</th>
         </tr>
         <c:forEach items="${feedsList}" var="feed">
             <tr>
@@ -37,6 +38,7 @@
                 <td>${feed.jobInterval}</td>
                 <td>${feed.nextJob}</td>
                 <td><a href="<spring:url value="/feeds/${feed.id}/"/>">edit</a></td>
+                <td><a href="<spring:url value="/posts/?feed=${feed.id}"/>">posts</a></td>
             </tr>
         </c:forEach>
     </table>

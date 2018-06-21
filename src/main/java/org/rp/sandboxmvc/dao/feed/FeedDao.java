@@ -11,8 +11,6 @@ import java.util.List;
 @Repository
 public class FeedDao extends AbstractDao<Feed, Long> {
 
-    // TODO: entityManagerFactory should be here, so we can inject mock object
-
     public List<Feed> getAll() {
         EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();
         List<Feed> feeds = entityManager.createQuery("FROM Feed", Feed.class).getResultList();
@@ -20,41 +18,6 @@ public class FeedDao extends AbstractDao<Feed, Long> {
         return feeds;
     }
 
-    @Override
-    public Feed getById(Long id) {
-        EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();
-        entityManager.getTransaction().begin();
-        Feed model = entityManager.find(Feed.class, id);
-        entityManager.getTransaction().commit();
-        entityManager.close();
-        return model;
-    }
 
-    @Override
-    public void insert(Feed model) {
-        EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.persist(model);
-        entityManager.getTransaction().commit();
-        entityManager.close();
-    }
-
-    @Override
-    public void update(Feed model) {
-        EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.merge(model);
-        entityManager.getTransaction().commit();
-        entityManager.close();
-    }
-
-    @Override
-    public void delete(Feed model) {
-        EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();
-        entityManager.getTransaction().begin();
-        entityManager.remove(model);
-        entityManager.getTransaction().commit();
-        entityManager.close();
-    }
 
 }
