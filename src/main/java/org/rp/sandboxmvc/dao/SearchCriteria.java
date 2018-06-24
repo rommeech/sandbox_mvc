@@ -1,11 +1,15 @@
 package org.rp.sandboxmvc.dao;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class SearchCriteria {
 
     private int limitOffset =  0;
     private int limitCount  = 50;
     private String orderBy;
     private OrderDirection orderDir = OrderDirection.ASC;
+    private Map<String, Object> where = new HashMap<>();
 
     public SearchCriteria() {
     }
@@ -30,6 +34,15 @@ public class SearchCriteria {
         this.orderBy = orderBy;
         this.orderDir = orderDir;
         return this;
+    }
+
+    public SearchCriteria setWhere(String field, Object value) {
+        this.where.put(field, value);
+        return this;
+    }
+
+    public boolean isWhereNotEmpty() {
+        return !this.where.isEmpty();
     }
 
     public int getLimitOffset() {
@@ -62,5 +75,13 @@ public class SearchCriteria {
 
     public void setOrderDir(OrderDirection orderDir) {
         this.orderDir = orderDir;
+    }
+
+    public Map<String, Object> getWhere() {
+        return where;
+    }
+
+    public void setWhere(Map<String, Object> where) {
+        this.where = where;
     }
 }

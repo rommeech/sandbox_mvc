@@ -19,6 +19,7 @@ public class PostService {
     public List<Post> list(Map<String, String> requestParams) {
 
         SearchCriteria searchCriteria = new SearchCriteria()
+                .setWhere("feed", Long.valueOf(requestParams.get("feed")))
                 .setLimit(0, 30)
                 .setOrder("id", OrderDirection.ASC);
 

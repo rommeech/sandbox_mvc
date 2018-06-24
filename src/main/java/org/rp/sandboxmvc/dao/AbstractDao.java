@@ -1,7 +1,6 @@
 package org.rp.sandboxmvc.dao;
 
 import org.rp.sandboxmvc.model.AbstractModel;
-import org.rp.sandboxmvc.model.feed.Post;
 
 import javax.persistence.EntityManager;
 import javax.persistence.criteria.CriteriaBuilder;
@@ -47,9 +46,9 @@ public abstract class AbstractDao<T extends AbstractModel<K>, K extends Serializ
         entityManager.close();
     }
 
-    // https://developer.jboss.org/wiki/GenericDataAccessObjects
-    // https://stackoverflow.com/questions/3403909/get-generic-type-of-class-at-runtime
-    // https://stackoverflow.com/questions/18707582/get-actual-type-of-generic-type-argument-on-abstract-superclass
+
+    // TODO: use metamodel here
+    // https://www.ibm.com/developerworks/java/library/j-typesafejpa/#N102F2
 
     public List<T> search(SearchCriteria criteria) {
         EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();
@@ -57,6 +56,13 @@ public abstract class AbstractDao<T extends AbstractModel<K>, K extends Serializ
         CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(persistenceClass);
         Root<T> root = criteriaQuery.from(persistenceClass);
         criteriaQuery.select(root);
+
+        if (criteria.isWhereNotEmpty()) {
+            criteria.getWhere().forEach((k, v) ->
+                criteriaQuery.where(criteriaBuilder.equal(root.get(k), v))
+            );
+        }
+
         List<T> list = entityManager
                 .createQuery(criteriaQuery)
                 .setFirstResult(criteria.getLimitOffset())
