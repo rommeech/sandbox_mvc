@@ -18,6 +18,16 @@ public class FeedDao extends AbstractDao<Feed, Long> {
         return feeds;
     }
 
+    @Override
+    public void delete (Feed model) {
+        EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();
+
+        entityManager.getTransaction().begin();
+        entityManager.remove(entityManager.find(Feed.class, model.getId()));
+        entityManager.getTransaction().commit();
+
+        entityManager.close();
+    }
 
 
 }

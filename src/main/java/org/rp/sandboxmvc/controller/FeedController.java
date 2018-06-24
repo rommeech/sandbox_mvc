@@ -24,13 +24,25 @@ public class FeedController {
     private FeedService feedService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String feedsList(Model model) {
+    public String feedList(Model model) {
         model.addAttribute("feedsList", feedService.getAll());
         return "feed/feed_list";
     }
 
-    @RequestMapping(value = "/{id}/", method = RequestMethod.GET)
-    public ModelAndView editFeedsForm(@PathVariable Long id) {
+    @RequestMapping(value = "/delete/{id}/", method = RequestMethod.GET)
+    public String deleteFeed(@PathVariable Long id) {
+        Feed feed = feedService.getById(id);
+        if (feed == null) {
+            throw new NotFoundException();
+        }
+        feedService.delete(feed);
+
+        return "OK";
+    }
+
+
+    @RequestMapping(value = "/edit/{id}/", method = RequestMethod.GET)
+    public ModelAndView editFeedForm(@PathVariable Long id) {
 
         Feed feed = feedService.getById(id);
         if (feed == null) {
@@ -45,7 +57,7 @@ public class FeedController {
     }
 
     @RequestMapping(value = "/new/", method = RequestMethod.GET)
-    public ModelAndView newFeedsForm() {
+    public ModelAndView newFeedForm() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("feed", new Feed());
         modelAndView.setViewName("feed/feeds_form");

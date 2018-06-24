@@ -16,7 +16,7 @@
 <main>
     <h1><spring:message text="Feeds"/></h1>
     <nav>
-        <a href="<spring:url value='/feeds/new/'/>">Add new feed</a>
+        <a href="<spring:url value='/feeds/new/'/>"><spring:message text="Add new feed"/></a>
     </nav>
     <table border="1">
         <tr>
@@ -27,7 +27,6 @@
             <th><spring:message text="Job Interval, ms"/></th>
             <th><spring:message text="Next Job"/></th>
             <th>&nbsp;</th>
-            <th>&nbsp;</th>
         </tr>
         <c:forEach items="${feedsList}" var="feed">
             <tr>
@@ -37,8 +36,11 @@
                 <td>${feed.feedUrl}</td>
                 <td>${feed.jobInterval}</td>
                 <td>${feed.nextJob}</td>
-                <td><a href="<spring:url value="/feeds/${feed.id}/"/>">edit</a></td>
-                <td><a href="<spring:url value="/posts/?feed=${feed.id}"/>">posts</a></td>
+                <td>
+                    <a href="<spring:url value="/feeds/delete/${feed.id}/"/>"><spring:message text="delete"/></a>
+                    | <a href="<spring:url value="/feeds/edit/${feed.id}/"/>"><spring:message text="edit"/></a>
+                    | <a href="<spring:url value="/posts/?feed=${feed.id}"/>"><spring:message text="posts"/></a>
+                </td>
             </tr>
         </c:forEach>
     </table>
