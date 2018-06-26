@@ -5,7 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.rp.sandboxmvc.model.AbstractModel;
 
 import javax.persistence.EntityManager;
-import javax.persistence.FlushModeType;
+import javax.persistence.PersistenceContext;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
@@ -18,6 +18,9 @@ public abstract class AbstractDao<T extends AbstractModel<K>, K extends Serializ
     // We don't have getAll here cause it make no sense, it is dangerous for big tables,
     // and DAO classes can implement it itself.
 
+    @PersistenceContext(unitName = "entityManagerFactory")
+    EntityManager entityManager;
+
     private final Class<T> persistenceClass;
     private static final Logger logger = LogManager.getLogger(AbstractDao.class);
 
@@ -26,37 +29,31 @@ public abstract class AbstractDao<T extends AbstractModel<K>, K extends Serializ
     }
 
     public T getById(K id) {
-        EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();
+        //EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();
         T model = entityManager.find(persistenceClass, id);
-        entityManager.close();
+        //entityManager.close();
         return model;
     }
 
     public void insert(T model) {
-        EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();
+        //EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();
         entityManager.persist(model);
-        entityManager.close();
+        //entityManager.close();
     }
 
     public void update(T model) {
-        EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();
+        //EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();
         entityManager.merge(model);
-        entityManager.close();
+        //entityManager.close();
     }
 
-    public void delete (T model) {
-        EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();
-
-        //T entity = entityManager.contains(model) ? model : entityManager.merge(model);
-
-        T entity = entityManager.find(persistenceClass, model.getId());
-        logger.info("Delete: contains = " + entityManager.contains(model) + " / entity = " + entity);
-
-        entityManager.remove(entity);
-        entityManager.flush();
-        entityManager.clear();
-
-        entityManager.close();
+    public void delete(T model) {
+        //EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();
+        //entityManager.remove(entityManager.contains(model) ? model : entityManager.merge(model));
+        //entityManager.remove(entityManager.contains(model) ? model : entityManager.merge(model));
+        entityManager.remove(model);
+        //entityManager.close();
+        //entityManager.remove(model);
     }
 
 
@@ -64,7 +61,7 @@ public abstract class AbstractDao<T extends AbstractModel<K>, K extends Serializ
     // https://www.ibm.com/developerworks/java/library/j-typesafejpa/#N102F2
 
     public List<T> search(SearchCriteria criteria) {
-        EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();
+        //EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(persistenceClass);
         Root<T> root = criteriaQuery.from(persistenceClass);
@@ -81,7 +78,7 @@ public abstract class AbstractDao<T extends AbstractModel<K>, K extends Serializ
                 .setFirstResult(criteria.getLimitOffset())
                 .setMaxResults(criteria.getLimitCount())
                 .getResultList();
-        entityManager.close();
+        //entityManager.close();
         return list;
     }
 }

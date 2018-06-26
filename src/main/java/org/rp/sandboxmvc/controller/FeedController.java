@@ -31,13 +31,8 @@ public class FeedController {
 
     @RequestMapping(value = "/delete/{id}/", method = RequestMethod.GET)
     public String deleteFeed(@PathVariable Long id) {
-        Feed feed = feedService.getById(id);
-        if (feed == null) {
-            throw new NotFoundException();
-        }
-        feedService.delete(feed);
-
-        return "OK";
+        feedService.delete(id);
+        return "redirect:/feeds/";
     }
 
 

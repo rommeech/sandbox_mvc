@@ -5,11 +5,11 @@ import org.rp.sandboxmvc.model.feed.Feed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.transaction.Transactional;
 import java.util.List;
 
-@Service(value = "feedService")
+@Service
 public class FeedService {
 
     @Autowired
@@ -41,7 +41,8 @@ public class FeedService {
     }
 
     @Transactional
-    public void delete(Feed model) {
-        feedDao.delete(model);
+    public void delete(Long id) {
+        //TODO: check here
+        feedDao.delete(feedDao.getById(id));
     }
 }

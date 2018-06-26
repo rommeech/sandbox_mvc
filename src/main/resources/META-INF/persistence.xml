@@ -5,11 +5,9 @@
              version="2.1">
 
     <persistence-unit name="CRM">
-        <description>Persistence unit for Hibernate User Guide</description>
+        <description>Persistence unit for Hibernate</description>
 
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
-
-        <!-- class>org.hibernate.documentation.userguide.Document</class -->
 
         <properties>
 
