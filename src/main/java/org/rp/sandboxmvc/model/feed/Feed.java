@@ -42,8 +42,8 @@ public class Feed extends AbstractModel<Long> {
     @Column(name = "next_job")
     private Timestamp nextJob;
 
-    //@OneToMany(mappedBy = "feed", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    //List<Post> posts;
+    @OneToMany(mappedBy = "feed", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    List<Post> posts;
 
     public Feed() {
         super();
@@ -121,13 +121,13 @@ public class Feed extends AbstractModel<Long> {
         this.nextJob = nextJob;
     }
 
-    /*public List<Post> getPosts() {
+    public List<Post> getPosts() {
         return posts;
     }
 
     public void setPosts(List<Post> posts) {
         this.posts = posts;
-    }*/
+    }
 
     @Override
     public boolean equals(Object o) {

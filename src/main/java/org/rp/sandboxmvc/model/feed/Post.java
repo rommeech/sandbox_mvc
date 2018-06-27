@@ -13,8 +13,8 @@ public class Post extends AbstractModel<Long> {
 
     private static final long serialVersionUID = -2803666248225562332L;
 
-    //@ManyToOne(fetch = FetchType.LAZY)
-    //private Feed feed;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private Feed feed;
 
     @Column(name = "author")
     private String author;
@@ -39,13 +39,13 @@ public class Post extends AbstractModel<Long> {
         super();
     }
 
-    /*public Feed getFeed() {
+    public Feed getFeed() {
         return feed;
     }
 
     public void setFeed(Feed feed) {
         this.feed = feed;
-    }*/
+    }
 
     public String getAuthor() {
         return author;
@@ -101,7 +101,7 @@ public class Post extends AbstractModel<Long> {
         if (!(o instanceof Post)) return false;
         if (!super.equals(o)) return false;
         Post post = (Post) o;
-        return //Objects.equals(feed, post.feed) &&
+        return Objects.equals(feed, post.feed) &&
                 Objects.equals(author, post.author) &&
                 Objects.equals(authorUrl, post.authorUrl) &&
                 Objects.equals(title, post.title) &&
@@ -121,7 +121,7 @@ public class Post extends AbstractModel<Long> {
     @Override
     public String toString() {
         return "Post{id=" + getId() +
-                //", feed=" + feed +
+                ", feed=" + feed +
                 ", author='" + author + '\'' +
                 ", authorUrl='" + authorUrl + '\'' +
                 ", title='" + title + '\'' +

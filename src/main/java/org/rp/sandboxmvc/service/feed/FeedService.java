@@ -42,7 +42,6 @@ public class FeedService {
 
     @Transactional
     public void delete(Long id) {
-        //TODO: check here
-        feedDao.delete(feedDao.getById(id));
+        feedDao.delete(this.getById(id));
     }
 }
