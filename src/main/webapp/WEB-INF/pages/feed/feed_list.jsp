@@ -2,23 +2,22 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<c:set var="title" value="Feeds"/>
+<c:set var="title" value="Feeds" scope="request"/>
 
 <!doctype html>
 <html>
-<jsp:include page="../include/metadata.jsp">
-    <jsp:param name="title" value="${title}"/>
-</jsp:include>
+<jsp:include page="../include/metadata.jsp"/>
 <body>
 
 <jsp:include page="../include/header.jsp"/>
 
+<nav class="subnav">
+    <a href="<spring:url value='/feeds/new/'/>"><spring:message text="Add new feed"/></a>
+</nav>
+
 <main>
-    <h1><spring:message text="Feeds"/></h1>
-    <nav>
-        <a href="<spring:url value='/feeds/new/'/>"><spring:message text="Add new feed"/></a>
-    </nav>
-    <table border="1">
+
+    <table>
         <tr>
             <th><spring:message text="ID"/></th>
             <th><spring:message text="Status"/></th>
@@ -44,6 +43,7 @@
             </tr>
         </c:forEach>
     </table>
+
 </main>
 
 <jsp:include page="../include/footer.jsp"/>

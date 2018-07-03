@@ -8,6 +8,7 @@ import org.rp.sandboxmvc.service.feed.FeedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,14 +31,14 @@ public class FeedController {
     }
 
     @RequestMapping(value = "/delete/{id}/", method = RequestMethod.GET)
-    public String deleteFeed(@PathVariable Long id) {
+    public String feedDelete(@PathVariable Long id) {
         feedService.delete(id);
         return "redirect:/feeds/";
     }
 
 
     @RequestMapping(value = "/edit/{id}/", method = RequestMethod.GET)
-    public ModelAndView editFeedForm(@PathVariable Long id) {
+    public ModelAndView feedEdit(@PathVariable Long id) {
 
         Feed feed = feedService.getById(id);
         if (feed == null) {
@@ -47,20 +48,25 @@ public class FeedController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("feed", feed);
         modelAndView.addObject("statusList", Status.values());
-        modelAndView.setViewName("feed/feed_form");
+        modelAndView.setViewName("feed/feed_edit");
         return modelAndView;
     }
 
     @RequestMapping(value = "/new/", method = RequestMethod.GET)
-    public ModelAndView newFeedForm() {
+    public ModelAndView feedNew() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("feed", new Feed());
-        modelAndView.setViewName("feed/feeds_form");
+        modelAndView.setViewName("feed/feed_edit");
         return modelAndView;
     }
 
     @RequestMapping(value = "/save/", method = RequestMethod.POST)
-    public String saveFeed(@ModelAttribute("feed") Feed feed) {
+    public String feedSave(@ModelAttribute Feed feed,  BindingResult result) {
+
+        if (result.hasErrors()) {
+            logger.error(result.getAllErrors());
+            return "redirect:/feeds/";
+        }
 
         if (feed.getId() == null || feed.getId().equals(0L)) {
             logger.info("inserting feed = " + feed);

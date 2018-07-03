@@ -6,6 +6,7 @@ import org.rp.sandboxmvc.dao.feed.PostDao;
 import org.rp.sandboxmvc.model.feed.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -16,6 +17,7 @@ public class PostService {
     @Autowired
     PostDao postDao;
 
+    @Transactional
     public List<Post> list(Map<String, String> requestParams) {
 
         SearchCriteria searchCriteria = new SearchCriteria()
@@ -24,7 +26,10 @@ public class PostService {
                 .setOrder("id", OrderDirection.ASC);
 
         return postDao.search(searchCriteria);
+    }
 
+    public Post getById(Long id) {
+        return postDao.getById(id);
     }
 
 

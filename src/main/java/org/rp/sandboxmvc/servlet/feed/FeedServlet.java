@@ -65,7 +65,7 @@ public class FeedServlet extends HttpServlet {
             return;
         }
         request.setAttribute("feed", feed);
-        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/feed/feed_form.jsp");
+        RequestDispatcher dispatcher = getServletContext().getRequestDispatcher("/WEB-INF/jsp/feed/feed_edit.jsp");
         dispatcher.forward(request, response);
 
     }

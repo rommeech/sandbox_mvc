@@ -13,29 +13,32 @@ body {
     margin: 0;
     padding: 0;
     position: relative;
-    background-color: #222;
+    background-color: #2e3032;
 }
 
 body, p, span, input, button, textarea {
     font-family: sans-serif;
-    color: #A9B7C6;
+    color: #ACACAC;
     font-size: small;
 }
 
+h1 { font-size: 22px; font-weight: normal; padding: 0px; margin: 0; }
+h2 { font-size: 18px; font-weight: normal; padding: 0px; margin: 0; }
+
 /* Links */
 
-a               { color: #cd9b7f; }
+a               { color: #5484ae; }
 a:hover         { color: #e17661; }
-a:visited       { color: #cd9b7f; }
+a:visited       { color: #5484ae; }
 a:visited:hover { color: #e17661; }
 
 /* Forms */
 
 input, textarea {
-    border: 1px solid #444;
+    border: 1px solid #515151;
     padding: 4px 8px 4px 8px;
     color: #ccc;
-    background-color: #333;
+    background-color: #35393A;
     width: 90%;
 }
 
@@ -67,7 +70,7 @@ table {
 }
 td {
     padding: 4px 8px 4px 8px;
-    border: 1px solid #454545;
+    border: 1px solid #515151;
 }
 td span.value {
     border: 1px solid #454545;
@@ -84,16 +87,28 @@ th {
 
 /* Layout */
 
-header {}
+header {
+    padding: 16px 32px 16px 32px;
+    background-color: #252628;
+    margin: 0;
+}
+
 footer {}
 
-nav {
-    padding: 0px 0px 16px 0px;
+nav.subnav {
+    padding: 8px 32px 8px 32px;
+    background-color: #292A2C;
+}
+
+nav.subnav a {
+    margin-right: 16px;
 }
 
 main {
-    padding: 20px;
+    display: block;
+    padding: 16px 32px 16px 32px;
     margin: 0px;
+    background-color: #2e3032;
 }
 
 main div{
@@ -114,6 +129,25 @@ div.error {
     color: #222;
     padding: 10px;
     margin-top: 10px;
+}
+
+div.post_content {
+    margin: 0;
+    border: 1px solid #515151;
+    padding: 4px 8px 4px 8px;
+    color: #ccc;
+    background-color: #35393A;
+    width: 90%;
+}
+
+div.post_content div {
+    margin: 0;
+    padding: 0;
+}
+
+div.post_content p {
+    padding: 0px;
+    margin: 0px 0px 16px 0px;
 }
 
 

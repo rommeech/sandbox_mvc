@@ -7,7 +7,9 @@ import org.rp.sandboxmvc.service.feed.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Enumeration;
@@ -28,7 +30,7 @@ public class PostController {
     private static final Logger logger = LogManager.getLogger(PostController.class);
 
     @RequestMapping("/")
-    public String postsList(Model model) {
+    public String postList(Model model) {
 
         Map<String, String> requestParams = this.getRequestParams();
 
@@ -37,6 +39,16 @@ public class PostController {
         model.addAttribute("postList", postList);
 
         return "feed/post_list";
+    }
+
+    @RequestMapping(value = "/view/{id}/", method = RequestMethod.GET)
+    public String postView(@PathVariable Long id, Model model) {
+        Post post = postService.getById(id);
+        if (post == null) {
+            throw new NotFoundException();
+        }
+        model.addAttribute("post", post);
+        return "feed/post_view";
     }
 
     private Map<String, String> getRequestParams() {

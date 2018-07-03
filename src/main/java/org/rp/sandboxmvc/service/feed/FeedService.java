@@ -16,10 +16,6 @@ public class FeedService {
     @Qualifier("feedDao")
     private FeedDao feedDao;
 
-    public void setFeedDao(FeedDao feedDao) {
-        this.feedDao = feedDao;
-    }
-
     @Transactional
     public List<Feed> getAll() {
        return feedDao.getAll();
