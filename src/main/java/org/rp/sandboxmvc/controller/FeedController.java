@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.validation.Valid;
+import java.util.stream.Collectors;
+
 @Controller
 @RequestMapping("/feeds")
 public class FeedController {
@@ -61,11 +64,15 @@ public class FeedController {
     }
 
     @RequestMapping(value = "/save/", method = RequestMethod.POST)
-    public String feedSave(@ModelAttribute Feed feed,  BindingResult result) {
+    public String feedSave(Model model, @ModelAttribute("feed") @Valid Feed feed, BindingResult result) {
 
         if (result.hasErrors()) {
             logger.error(result.getAllErrors());
-            return "redirect:/feeds/";
+            model.addAttribute("errorMsg", result.getAllErrors().stream()
+                    .map(x -> x.getDefaultMessage())
+                    .collect(Collectors.joining("\n"))
+            );
+            return "feed/feed_edit";
         }
 
         if (feed.getId() == null || feed.getId().equals(0L)) {

@@ -17,28 +17,28 @@
 
 <main>
 
-    <table>
+    <table class="table_list">
         <tr>
-            <th><spring:message text="ID"/></th>
+            <th class="numeric"><spring:message text="ID"/></th>
             <th><spring:message text="Status"/></th>
             <th><spring:message text="Title"/></th>
             <th><spring:message text="Url"/></th>
-            <th><spring:message text="Job Interval, ms"/></th>
-            <th><spring:message text="Next Job"/></th>
+            <th class="numeric"><spring:message text="Job Interval, ms"/></th>
+            <th class="numeric"><spring:message text="Next Job"/></th>
             <th>&nbsp;</th>
         </tr>
         <c:forEach items="${feedsList}" var="feed">
             <tr>
-                <td>${feed.id}</td>
+                <td class="numeric">${feed.id}</td>
                 <td>${feed.status}</td>
                 <td>${feed.title}</td>
                 <td>${feed.feedUrl}</td>
-                <td>${feed.jobInterval}</td>
-                <td>${feed.nextJob}</td>
-                <td>
+                <td class="numeric">${feed.jobInterval}</td>
+                <td class="numeric">${feed.nextJob}</td>
+                <td class="td_buttons">
                     <a href="<spring:url value="/feeds/delete/${feed.id}/"/>"><spring:message text="delete"/></a>
-                    | <a href="<spring:url value="/feeds/edit/${feed.id}/"/>"><spring:message text="edit"/></a>
-                    | <a href="<spring:url value="/posts/?feed=${feed.id}"/>"><spring:message text="posts"/></a>
+                    <a href="<spring:url value="/feeds/edit/${feed.id}/"/>"><spring:message text="edit"/></a>
+                    <a href="<spring:url value="/posts/?feed=${feed.id}"/>"><spring:message text="posts"/></a>
                 </td>
             </tr>
         </c:forEach>

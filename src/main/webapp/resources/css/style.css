@@ -39,7 +39,7 @@ input, textarea {
     padding: 4px 8px 4px 8px;
     color: #ccc;
     background-color: #35393A;
-    width: 90%;
+    min-width: 512px;
 }
 
 input.warn {
@@ -54,23 +54,24 @@ input[type='checkbox'] {
 }
 
 button {
-    border: 1px solid #444;
-    padding: 8px 32px 8px 32px;
     margin: 0px 16px 0px 0px;
     color: #ccc;
-    background-color: #333;
-    width: auto;
+    min-width: 96px;
+    border: 0;
+    padding: 8px 16px 8px 16px;
+    background-color: #5484ae;
 }
 
 /* Tables */
 
 table {
     border: 0px;
+    border-top: 1px solid #515151;
     border-collapse: collapse;
 }
 td {
     padding: 4px 8px 4px 8px;
-    border: 1px solid #515151;
+    border-bottom: 1px solid #515151;
 }
 td span.value {
     border: 1px solid #454545;
@@ -80,10 +81,74 @@ td span.value {
 }
 th {
     padding: 8px 8px 8px 8px;
-    border: 1px solid #454545;
     border-bottom: 3px double #454545;
     font-weight: bold;
+    background-color: #292A2C;
+    text-align: left;
 }
+
+td.numeric, th.numeric {
+    text-align: right;
+}
+
+table.table_edit {
+    min-width: 512px;
+}
+
+table.table_edit td.td_legend {
+    font-weight: bold;
+    text-align: right;
+    padding-top: 6px;
+    min-width: 128px;
+    vertical-align: top;
+}
+
+table.table_view td.td_legend {
+    font-weight: bold;
+    text-align: right;
+    padding-top: 6px;
+    min-width: 128px;
+    vertical-align: top;
+}
+
+table.table_view div.post_content {
+    margin: 0;
+    border: 1px solid #515151;
+    padding: 4px 8px 4px 8px;
+    color: #ccc;
+    background-color: #35393A;
+}
+
+table.table_view div.post_content div {
+    margin: 0;
+    padding: 0;
+}
+
+table.table_view div.post_content p {
+    padding: 0px;
+    margin: 0px 0px 16px 0px;
+}
+
+table.table_view div.post_content table {
+    border: 0;
+}
+
+table.table_view div.post_content td {
+    border: 0;
+}
+
+/*table.table_list td.td_buttons {
+    padding: 2px 8px 2px 8px;
+}*/
+
+/*table.table_list a {
+    text-decoration: none;
+    display: inline-block;
+    background-color: #5484ae;
+    color: #ACACAC;
+    padding: 2px 4px 2px 4px;
+    margin: 0px 4px 0px 0px;
+}*/
 
 /* Layout */
 
@@ -131,24 +196,20 @@ div.error {
     margin-top: 10px;
 }
 
-div.post_content {
-    margin: 0;
-    border: 1px solid #515151;
-    padding: 4px 8px 4px 8px;
-    color: #ccc;
-    background-color: #35393A;
-    width: 90%;
-}
-
-div.post_content div {
-    margin: 0;
-    padding: 0;
-}
-
-div.post_content p {
-    padding: 0px;
+div.error_msg, div.warning_msg, div.info_msg {
     margin: 0px 0px 16px 0px;
+    padding: 8px 16px 8px 16px;
 }
 
+div.error_msg {
+    background-color: #e17661;
+    color: antiquewhite;
+}
 
+div.warning_msg {
+    background-color: antiquewhite;
+}
 
+div.info_msg {
+    background-color: aquamarine;
+}

@@ -4,8 +4,13 @@ import org.rp.sandboxmvc.model.AbstractModel;
 import org.rp.sandboxmvc.model.Status;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -14,6 +19,7 @@ import java.util.Objects;
 public class Feed extends AbstractModel<Long> {
     private static final long serialVersionUID = -581287016449199340L;
 
+    @NotNull(message = "Input status")
     @Column(name = "status", nullable = false)
     @Enumerated(EnumType.STRING)
     private Status status;
@@ -24,9 +30,12 @@ public class Feed extends AbstractModel<Long> {
     @Column(name = "logo_url")
     private String logoUrl;
 
+    @NotNull(message = "Input title")
     @Column(name = "title")
     private String title;
 
+    @NotNull()
+    @Pattern(regexp = "^https?://.+", message = "Input valid feed URL")
     @Column(name = "feed_url", nullable = false)
     private String feedUrl;
 
@@ -36,14 +45,16 @@ public class Feed extends AbstractModel<Long> {
     @Column(name = "description")
     private String description;
 
+    @NotNull(message = "Input valid job interval in milliseconds")
     @Column(name = "job_interval", nullable = false)
     private Long jobInterval;
 
-    @Column(name = "next_job")
+    @NotNull(message = "Input next job date and time")
+    @Column(name = "next_job", nullable = false)
     private Timestamp nextJob;
 
-    @OneToMany(mappedBy = "feed", orphanRemoval = true, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    List<Post> posts;
+    @OneToMany(mappedBy = "feed", fetch = FetchType.LAZY) // , orphanRemoval = true
+    private List<Post> posts = new ArrayList<>();
 
     public Feed() {
         super();
@@ -126,7 +137,10 @@ public class Feed extends AbstractModel<Long> {
     }
 
     public void setPosts(List<Post> posts) {
-        this.posts = posts;
+        this.posts.clear();
+        if (posts != null) {
+            this.posts = posts;
+        }
     }
 
     @Override
@@ -143,13 +157,14 @@ public class Feed extends AbstractModel<Long> {
                 Objects.equals(author, feed.author) &&
                 Objects.equals(description, feed.description) &&
                 Objects.equals(jobInterval, feed.jobInterval) &&
-                Objects.equals(nextJob, feed.nextJob);
+                Objects.equals(nextJob, feed.nextJob) &&
+                Objects.equals(posts, feed.posts);
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), status, iconUrl, logoUrl, title, feedUrl, author, description, jobInterval, nextJob);
+        return Objects.hash(super.hashCode(), status, iconUrl, logoUrl, title, feedUrl, author, description, jobInterval, nextJob, posts);
     }
 
     @Override

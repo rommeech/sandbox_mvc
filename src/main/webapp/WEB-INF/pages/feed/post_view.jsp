@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<c:set var="title" value="Post ID: ${post.id}" scope="request"/>
+<c:set var="title" value="PostID=${post.id}" scope="request"/>
 
 <!doctype html>
 <html>
@@ -20,35 +20,34 @@
 
 <main>
 
-    <table width="90%">
-        <col width="20%">
-        <col width="80%">
+    <table class="table_view">
+
         <tr>
-            <td>Post ID</td>
+            <td class="td_legend">Post ID</td>
             <td>${post.id}</td>
         </tr>
         <tr>
-            <td>Feed</td>
+            <td class="td_legend">Feed</td>
             <td>${post.feed.id} ${post.feed.id} ${post.feed.id}</td>
         </tr>
         <tr>
-            <td>Author</td>
+            <td class="td_legend">Author</td>
             <td>${post.author}<c:if test="${post.authorUrl != null}"> - ${post.authorUrl}</c:if></td>
         </tr>
         <tr>
-            <td>Post URL</td>
+            <td class="td_legend">Post URL</td>
             <td>${post.postUrl}</td>
         </tr>
         <tr>
-            <td>Post XID</td>
+            <td class="td_legend">Post XID</td>
             <td>${post.postXid}</td>
         </tr>
         <tr>
-            <td>Title</td>
+            <td class="td_legend">Title</td>
             <td>${post.title}</td>
         </tr>
         <tr>
-            <td>Content</td>
+            <td class="td_legend">Content</td>
             <td><div class="post_content">${post.content}</div></td>
         </tr>
 
