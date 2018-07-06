@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <c:set var="title" value="Posts" scope="request"/>
 
@@ -16,6 +17,26 @@
 </nav>
 
 <main>
+
+    <form:form>
+        <div class="search">
+            <div class="entity">
+                <div class="legend"><spring:message text="Author"/></div>
+                <div class="input"><form:input path=""/></div>
+            </div>
+            <div class="entity">
+                <div class="legend"><spring:message text="Title"/></div>
+                <div class="input"><form:input path="title"/></div>
+            </div>
+            <div class="entity">
+                <div class="legend"><spring:message text="Content"/></div>
+                <div class="input"><form:input path="content"/></div>
+            </div>
+            <div class="entity">
+                <div class="button"><form:button>Search</form:button></div>
+            </div>
+        </div>
+    </form:form>
 
     <table class="table_list">
         <tr>
