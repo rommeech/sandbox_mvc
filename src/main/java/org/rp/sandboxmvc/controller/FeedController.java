@@ -24,8 +24,12 @@ public class FeedController {
 
     private static Logger logger = LogManager.getLogger(FeedController.class);
 
+    private final FeedService feedService;
+
     @Autowired
-    private FeedService feedService;
+    public FeedController(FeedService feedService) {
+        this.feedService = feedService;
+    }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String feedList(Model model) {

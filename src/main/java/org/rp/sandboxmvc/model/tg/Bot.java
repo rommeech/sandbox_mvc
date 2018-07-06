@@ -23,14 +23,16 @@ public class Bot extends AbstractModel<Long> {
     @Column(name = "description", length = 1024)
     private String description;
 
-    @Column(name = "name")
+    @NotNull
+    @Column(name = "name", nullable = false)
     private String name;
 
     @NotNull
-    @Column(name = "token")
+    @Column(name = "token", nullable = false, unique = true)
     private String token;
 
-    @Column(name = "username")
+    @NotNull
+    @Column(name = "username", nullable = false, unique = true)
     private String username;
 
     public Bot() {

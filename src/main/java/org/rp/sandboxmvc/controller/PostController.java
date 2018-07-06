@@ -29,6 +29,7 @@ public class PostController {
 
     private static final Logger logger = LogManager.getLogger(PostController.class);
 
+    // TODO: refactoring, use Command object
     @RequestMapping("/")
     public String postList(Model model) {
 
