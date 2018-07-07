@@ -91,6 +91,11 @@ td.numeric, th.numeric {
     text-align: right;
 }
 
+table.table_list a {
+    padding: 2px;
+    background-color: #35393A;
+}
+
 table.table_edit {
     min-width: 512px;
 }

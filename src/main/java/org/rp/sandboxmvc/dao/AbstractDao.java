@@ -73,10 +73,19 @@ public abstract class AbstractDao<T extends AbstractModel<K>, K extends Serializ
             );
         }
 
+        if (criteria.getOrderBy() != null) {
+            if (criteria.getOrderDir() == OrderDirection.DESC) {
+                criteriaQuery.orderBy(criteriaBuilder.desc(root.get(criteria.getOrderBy())));
+            }
+            else {
+                criteriaQuery.orderBy(criteriaBuilder.asc(root.get(criteria.getOrderBy())));
+            }
+        }
+
         List<T> list = entityManager
                 .createQuery(criteriaQuery)
-                .setFirstResult(criteria.getLimitOffset())
-                .setMaxResults(criteria.getLimitCount())
+                .setFirstResult(criteria.getPage())
+                .setMaxResults(criteria.getSize())
                 .getResultList();
         //entityManager.close();
         return list;

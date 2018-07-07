@@ -18,8 +18,8 @@
 
 <main>
 
-    <form:form>
-        <div class="search">
+<% /*    <form:form>
+        <div class="searchCommand">
             <div class="entity">
                 <div class="legend"><spring:message text="Author"/></div>
                 <div class="input"><form:input path=""/></div>
@@ -33,10 +33,11 @@
                 <div class="input"><form:input path="content"/></div>
             </div>
             <div class="entity">
-                <div class="button"><form:button>Search</form:button></div>
+                <div class="button"><form:button>SearchCommand</form:button></div>
             </div>
         </div>
     </form:form>
+*/ %>
 
     <table class="table_list">
         <tr>
