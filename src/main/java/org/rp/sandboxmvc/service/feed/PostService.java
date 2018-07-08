@@ -1,7 +1,7 @@
 package org.rp.sandboxmvc.service.feed;
 
-import org.rp.sandboxmvc.dao.SearchCriteria;
 import org.rp.sandboxmvc.dao.feed.PostDao;
+import org.rp.sandboxmvc.helper.PostSearchCriteria;
 import org.rp.sandboxmvc.model.feed.Post;
 import org.rp.sandboxmvc.service.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,13 +17,7 @@ public class PostService extends AbstractService {
     PostDao postDao;
 
     @Transactional
-    public List<Post> list(SearchCriteria searchCriteria) {
-
-        /*SearchCriteria searchCriteria = new SearchCriteria()
-                //.setWhere("feed", Long.valueOf(requestParams.get("feed")))
-                .setLimit((searchCommand.getPage() - 1) * searchCommand.getSize(), searchCommand.getSize())
-                .setOrder("id", OrderDirection.ASC);*/
-
+    public List<Post> list(PostSearchCriteria searchCriteria) {
         return postDao.search(searchCriteria);
     }
 

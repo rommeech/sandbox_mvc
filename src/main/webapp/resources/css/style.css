@@ -22,8 +22,8 @@ body, p, span, input, button, textarea {
     font-size: small;
 }
 
-h1 { font-size: 22px; font-weight: normal; padding: 0px; margin: 0; }
-h2 { font-size: 18px; font-weight: normal; padding: 0px; margin: 0; }
+h1 { font-size: 22px; font-weight: normal; padding: 0; margin: 0; }
+h2 { font-size: 18px; font-weight: normal; padding: 0; margin: 0; }
 
 /* Links */
 
@@ -48,13 +48,13 @@ input.warn {
 }
 
 input[type='checkbox'] {
-    padding: 0px;
+    padding: 0;
     margin: 3px;
     border: 1px solid gray;
 }
 
 button {
-    margin: 0px 16px 0px 0px;
+    margin: 0 16px 0 0;
     color: #ccc;
     min-width: 96px;
     border: 0;
@@ -65,7 +65,7 @@ button {
 /* Tables */
 
 table {
-    border: 0px;
+    border: 0;
     border-top: 1px solid #515151;
     border-collapse: collapse;
 }
@@ -75,7 +75,7 @@ td {
 }
 td span.value {
     border: 1px solid #454545;
-    padding: 0px 0px 0px 0px;
+    padding: 0 0 0 0;
     color: #d2d2d2;
     display: block;
 }
@@ -92,8 +92,7 @@ td.numeric, th.numeric {
 }
 
 table.table_list a {
-    padding: 2px;
-    background-color: #35393A;
+    margin: 0 2px 0 2px;
 }
 
 table.table_edit {
@@ -130,8 +129,8 @@ table.table_view div.post_content div {
 }
 
 table.table_view div.post_content p {
-    padding: 0px;
-    margin: 0px 0px 16px 0px;
+    padding: 0;
+    margin: 0 0 16px 0;
 }
 
 table.table_view div.post_content table {
@@ -152,7 +151,7 @@ table.table_view div.post_content td {
     background-color: #5484ae;
     color: #ACACAC;
     padding: 2px 4px 2px 4px;
-    margin: 0px 4px 0px 0px;
+    margin: 0 4px 0 0;
 }*/
 
 /* Layout */
@@ -177,12 +176,12 @@ nav.subnav a {
 main {
     display: block;
     padding: 16px 32px 16px 32px;
-    margin: 0px;
+    margin: 0;
     background-color: #2e3032;
 }
 
 main div{
-    padding: 0px 0px 16px 0px;
+    padding: 0 0 16px 0;
 }
 
 /* Other layers */
@@ -202,7 +201,7 @@ div.error {
 }
 
 div.error_msg, div.warning_msg, div.info_msg {
-    margin: 0px 0px 16px 0px;
+    margin: 0 0 16px 0;
     padding: 8px 16px 8px 16px;
 }
 

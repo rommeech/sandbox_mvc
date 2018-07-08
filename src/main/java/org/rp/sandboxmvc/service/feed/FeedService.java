@@ -1,5 +1,6 @@
 package org.rp.sandboxmvc.service.feed;
 
+import org.rp.sandboxmvc.dao.SearchCriteria;
 import org.rp.sandboxmvc.dao.feed.FeedDao;
 import org.rp.sandboxmvc.model.feed.Feed;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,8 @@ public class FeedService {
     private FeedDao feedDao;
 
     @Transactional
-    public List<Feed> getAll() {
-       return feedDao.getAll();
+    public List<Feed> search(SearchCriteria searchCriteria) {
+       return feedDao.search(searchCriteria);
     }
 
     @Transactional

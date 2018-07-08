@@ -2,7 +2,7 @@ package org.rp.sandboxmvc.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.rp.sandboxmvc.dao.SearchCriteria;
+import org.rp.sandboxmvc.helper.PostSearchCriteria;
 import org.rp.sandboxmvc.model.feed.Post;
 import org.rp.sandboxmvc.service.feed.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class PostController {
 
     // TODO: refactoring, use Command object
     @RequestMapping("/")
-    public String postList(Model model, SearchCriteria searchCriteria) {
+    public String postList(Model model, PostSearchCriteria searchCriteria) {
         logger.info("Search criteria: " + searchCriteria);
         List<Post> postList = postService.list(searchCriteria);
         model.addAttribute("postList", postList);

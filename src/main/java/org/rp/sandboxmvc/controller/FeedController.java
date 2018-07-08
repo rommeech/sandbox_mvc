@@ -2,6 +2,7 @@ package org.rp.sandboxmvc.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.rp.sandboxmvc.dao.SearchCriteria;
 import org.rp.sandboxmvc.model.Status;
 import org.rp.sandboxmvc.model.feed.Feed;
 import org.rp.sandboxmvc.service.feed.FeedService;
@@ -32,8 +33,8 @@ public class FeedController {
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String feedList(Model model) {
-        model.addAttribute("feedsList", feedService.getAll());
+    public String feedList(Model model, SearchCriteria searchCriteria) {
+        model.addAttribute("feedsList", feedService.search(searchCriteria));
         return "feed/feed_list";
     }
 

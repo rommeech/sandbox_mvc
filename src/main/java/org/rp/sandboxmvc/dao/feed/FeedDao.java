@@ -14,8 +14,4 @@ public class FeedDao extends AbstractDao<Feed, Long> {
     @PersistenceContext
     EntityManager entityManager;
 
-    public List<Feed> getAll() {
-        return entityManager.createQuery("FROM Feed", Feed.class).getResultList();
-    }
-
 }

@@ -60,7 +60,9 @@ public abstract class AbstractDao<T extends AbstractModel<K>, K extends Serializ
     // TODO: use metamodel here
     // https://www.ibm.com/developerworks/java/library/j-typesafejpa/#N102F2
 
-    public List<T> search(SearchCriteria criteria) {
+    public List<T>
+
+    search(SearchCriteria criteria) {
         //EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(persistenceClass);

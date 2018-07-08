@@ -85,6 +85,10 @@ public class SearchCriteria {
         return !where.isEmpty();
     }
 
+    public void addWhere(String field, Object value) {
+        where.put(field, value);
+    }
+
     @Override
     public String toString() {
         return "SearchCriteria{" +
