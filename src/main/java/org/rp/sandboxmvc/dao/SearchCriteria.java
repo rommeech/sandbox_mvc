@@ -5,13 +5,19 @@ import java.util.Map;
 
 public class SearchCriteria {
 
-    private int page =  0;
-    private int size = 50;
+    public static final int DEFAULT_PAGE =  1;
+    public static final int DEFAULT_SIZE = 50;
+
+    private int page;
+    private int size;
     private String orderBy;
     private OrderDirection orderDir;
-    private Map<String, Object> where = new HashMap<>();
+    private Map<String, Object> where;
 
     public SearchCriteria() {
+        this.where = new HashMap<>();
+        this.page = DEFAULT_PAGE;
+        this.size = DEFAULT_SIZE;
     }
 
     public SearchCriteria setLimit(int page, int size) {
@@ -36,17 +42,14 @@ public class SearchCriteria {
         return this;
     }
 
-    public SearchCriteria setWhere(String field, Object value) {
-        this.where.put(field, value);
-        return this;
-    }
-
     public int getPage() {
         return page;
     }
 
     public void setPage(int page) {
-        this.page = page;
+        if (page >= 1) {
+            this.page = page;
+        }
     }
 
     public int getSize() {
@@ -54,7 +57,9 @@ public class SearchCriteria {
     }
 
     public void setSize(int size) {
-        this.size = size;
+        if (size >= 1) {
+            this.size = size;
+        }
     }
 
     public String getOrderBy() {
@@ -75,10 +80,6 @@ public class SearchCriteria {
 
     public Map<String, Object> getWhere() {
         return where;
-    }
-
-    public void setWhere(Map<String, Object> where) {
-        this.where = where;
     }
 
     public boolean isWhereNotEmpty() {

@@ -24,7 +24,6 @@ import java.util.stream.Collectors;
 public class FeedController {
 
     private static Logger logger = LogManager.getLogger(FeedController.class);
-
     private final FeedService feedService;
 
     @Autowired
@@ -34,7 +33,9 @@ public class FeedController {
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String feedList(Model model, SearchCriteria searchCriteria) {
-        model.addAttribute("feedsList", feedService.search(searchCriteria));
+        model.addAttribute("feeds", feedService.getFeeds(searchCriteria));
+        model.addAttribute("total", feedService.countFeeds(searchCriteria));
+        model.addAttribute("searchCriteria", searchCriteria);
         return "feed/feed_list";
     }
 

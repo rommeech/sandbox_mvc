@@ -4,6 +4,7 @@ import org.rp.sandboxmvc.dao.OrderDirection;
 import org.rp.sandboxmvc.dao.SearchCriteria;
 import org.rp.sandboxmvc.dao.tg.BotDao;
 import org.rp.sandboxmvc.model.tg.Bot;
+import org.rp.sandboxmvc.service.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Map;
 
 @Service
-public class BotService {
+public class BotService extends AbstractService {
 
     private final BotDao botDao;
 
@@ -42,13 +43,17 @@ public class BotService {
     }
 
     @Transactional
-    public List<Bot> list(Map<String, String> requestParams) {
-
-        SearchCriteria searchCriteria = new SearchCriteria()
-                .setWhere("feed", Long.valueOf(requestParams.get("bot")))
-                .setLimit(0, 30)
-                .setOrder("id", OrderDirection.ASC);
-
+    public List<Bot> getBots(SearchCriteria searchCriteria) {
+        if (searchCriteria.getOrderBy() == null) {
+            searchCriteria.setOrder("id", OrderDirection.ASC);
+        }
         return botDao.search(searchCriteria);
     }
+
+    @Transactional
+    public Long countBots(SearchCriteria searchCriteria) {
+        return botDao.count(searchCriteria);
+    }
+
+
 }

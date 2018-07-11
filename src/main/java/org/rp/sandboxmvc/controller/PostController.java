@@ -12,20 +12,17 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
-
 @Controller
 @RequestMapping("/posts")
 public class PostController {
 
-    @Autowired
-    private PostService postService;
-
-    @Autowired
-    private HttpServletRequest request;
-
     private static final Logger logger = LogManager.getLogger(PostController.class);
+    private final PostService postService;
+
+    @Autowired
+    public PostController(PostService postService) {
+        this.postService = postService;
+    }
 
     @RequestMapping(value = "/view/{id}/", method = RequestMethod.GET)
     public String postView(@PathVariable Long id, Model model) {
@@ -40,9 +37,9 @@ public class PostController {
     // TODO: refactoring, use Command object
     @RequestMapping("/")
     public String postList(Model model, PostSearchCriteria searchCriteria) {
-        logger.info("Search criteria: " + searchCriteria);
-        List<Post> postList = postService.list(searchCriteria);
-        model.addAttribute("postList", postList);
+        model.addAttribute("posts", postService.getPosts(searchCriteria));
+        model.addAttribute("total", postService.countPosts(searchCriteria));
+        model.addAttribute("searchCriteria", searchCriteria);
         return "feed/post_list";
     }
 

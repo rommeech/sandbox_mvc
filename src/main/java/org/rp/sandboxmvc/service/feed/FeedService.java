@@ -13,13 +13,24 @@ import java.util.List;
 @Service
 public class FeedService {
 
+    private final FeedDao feedDao;
+
     @Autowired
-    @Qualifier("feedDao")
-    private FeedDao feedDao;
+    public FeedService(FeedDao feedDao) {
+        this.feedDao = feedDao;
+    }
 
     @Transactional
-    public List<Feed> search(SearchCriteria searchCriteria) {
-       return feedDao.search(searchCriteria);
+    public List<Feed> getFeeds(SearchCriteria criteria) {
+        if (criteria.getOrderBy() == null) {
+            criteria.setOrderBy("id");
+        }
+        return feedDao.search(criteria);
+    }
+
+    @Transactional
+    public Long countFeeds(SearchCriteria criteria) {
+        return feedDao.count(criteria);
     }
 
     @Transactional

@@ -10,8 +10,4 @@ import java.util.List;
 
 @Repository
 public class FeedDao extends AbstractDao<Feed, Long> {
-
-    @PersistenceContext
-    EntityManager entityManager;
-
 }

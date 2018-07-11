@@ -2,6 +2,7 @@ package org.rp.sandboxmvc.dao;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.rp.sandboxmvc.helper.PostSearchCriteria;
 import org.rp.sandboxmvc.model.AbstractModel;
 
 import javax.persistence.EntityManager;
@@ -19,7 +20,7 @@ public abstract class AbstractDao<T extends AbstractModel<K>, K extends Serializ
     // and DAO classes can implement it itself.
 
     @PersistenceContext(unitName = "entityManagerFactory")
-    EntityManager entityManager;
+    private EntityManager entityManager;
 
     private final Class<T> persistenceClass;
     private static final Logger logger = LogManager.getLogger(AbstractDao.class);
@@ -86,10 +87,23 @@ public abstract class AbstractDao<T extends AbstractModel<K>, K extends Serializ
 
         List<T> list = entityManager
                 .createQuery(criteriaQuery)
-                .setFirstResult(criteria.getPage())
+                .setFirstResult(criteria.getPage() - 1)
                 .setMaxResults(criteria.getSize())
                 .getResultList();
         //entityManager.close();
         return list;
+    }
+
+    public Long count(SearchCriteria criteria) {
+        CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
+        CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
+        Root<T> root = criteriaQuery.from(persistenceClass);
+        criteriaQuery.select(criteriaBuilder.count(root));
+        if (criteria.isWhereNotEmpty()) {
+            criteria.getWhere().forEach((k, v) ->
+                    criteriaQuery.where(criteriaBuilder.equal(root.get(k), v))
+            );
+        }
+        return entityManager.createQuery(criteriaQuery).getSingleResult();
     }
 }

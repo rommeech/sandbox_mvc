@@ -46,7 +46,7 @@
             <th><spring:message text="Title"/></th>
             <th>&nbsp;</th>
         </tr>
-        <c:forEach items="${postList}" var="post">
+        <c:forEach items="${posts}" var="post">
             <tr>
                 <td class="numeric">${post.id}</td>
                 <td>${post.author}</td>
@@ -55,6 +55,8 @@
             </tr>
         </c:forEach>
     </table>
+
+    <jsp:include page="../include/paginator.jsp"/>
 
 </main>
 

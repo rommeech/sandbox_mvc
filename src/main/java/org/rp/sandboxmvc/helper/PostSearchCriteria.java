@@ -4,14 +4,14 @@ import org.rp.sandboxmvc.dao.SearchCriteria;
 
 public class PostSearchCriteria extends SearchCriteria {
 
-    private Long feedId;
+    private Long feed;
 
-    public Long getFeedId() {
-        return feedId;
+    public Long getFeed() {
+        return feed;
     }
 
-    public void setFeedId(Long feedId) {
-        this.feedId = feedId;
-        this.addWhere("feed", feedId);
+    public void setFeed(Long feed) {
+        this.feed = feed;
+        this.addWhere("feed", feed);
     }
 }

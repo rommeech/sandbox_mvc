@@ -27,7 +27,7 @@
             <th class="numeric"><spring:message text="Next Job"/></th>
             <th>&nbsp;</th>
         </tr>
-        <c:forEach items="${feedsList}" var="feed">
+        <c:forEach items="${feeds}" var="feed">
             <tr>
                 <td class="numeric">${feed.id}</td>
                 <td>${feed.status}</td>
@@ -43,6 +43,8 @@
             </tr>
         </c:forEach>
     </table>
+
+    <jsp:include page="../include/paginator.jsp"/>
 
 </main>
 
