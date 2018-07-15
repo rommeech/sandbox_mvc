@@ -222,3 +222,15 @@ div.warning_msg {
 div.info_msg {
     background-color: aquamarine;
 }
+
+div.div_edit { padding: 0; margin: 0; }
+div.div_edit_row { padding: 0; margin: 0 0 8px 0; vertical-align: top; }
+div.div_edit_legend { width: 256px; display: inline-block; padding: 6px 4px 4px 0; margin: 0; font-weight: bold;
+    text-align: right; vertical-align: top; }
+div.div_edit_input{ display: inline-block; padding: 0 4px 4px 4px; margin: 0; vertical-align: top; }
+
+div.div_edit_error { display: block; padding: 0; margin: 0; font-weight: normal; color: #e17661; }
+div.div_edit_error span { color: #e17661; }
+
+
+

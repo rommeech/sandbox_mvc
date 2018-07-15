@@ -12,7 +12,7 @@
 <jsp:include page="../include/header.jsp"/>
 
 <nav class="subnav">
-    <a href="<spring:url value='/bots/new/'/>"><spring:message text="Add new bot"/></a>
+    <a href="<spring:url value='/bots/new/'/>"><spring:message text="Add New Bot"/></a>
 </nav>
 
 <main>
@@ -28,8 +28,8 @@
                 <td class="numeric">${bot.id}</td>
                 <td>${bot.name}</td>
                 <td class="td_buttons">
-                    <a href="<spring:url value="/feeds/edit/${bot.id}/"/>"><spring:message text="edit"/></a>
-                    <a href="<spring:url value="/feeds/delete/${bot.id}/"/>"><spring:message text="delete"/></a>
+                    <a href="<spring:url value="/bots/edit/${bot.id}/"/>"><spring:message text="edit"/></a>
+                    <a href="<spring:url value="/bots/delete/${bot.id}/"/>"><spring:message text="delete"/></a>
                 </td>
             </tr>
         </c:forEach>

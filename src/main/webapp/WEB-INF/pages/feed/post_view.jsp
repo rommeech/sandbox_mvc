@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
-<c:set var="title" value="PostID=${post.id}" scope="request"/>
+<c:set var="title" value="PostId=${post.id}" scope="request"/>
 
 <!doctype html>
 <html>

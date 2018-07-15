@@ -106,4 +106,8 @@ public abstract class AbstractDao<T extends AbstractModel<K>, K extends Serializ
         }
         return entityManager.createQuery(criteriaQuery).getSingleResult();
     }
+
+    public EntityManager getEntityManager() {
+        return entityManager;
+    }
 }

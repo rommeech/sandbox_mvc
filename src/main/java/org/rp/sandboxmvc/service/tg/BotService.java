@@ -56,4 +56,33 @@ public class BotService extends AbstractService {
     }
 
 
+    @Transactional
+    public Bot getByToken(String token) {
+        return botDao.getByToken(token);
+    }
+
+    @Transactional
+    public Bot getByUsername(String username) {
+        return botDao.getByUsername(username);
+    }
+
+    public boolean isTokenUnique(String token, Long id) {
+        return isBotUnique(this.getByToken(token), id);
+    }
+
+    public boolean isUsernameUnique(String username, Long id) {
+        return isBotUnique(this.getByUsername(username), id);
+    }
+
+    private boolean isBotUnique(Bot bot, Long id) {
+        if (bot == null) {
+            return true;
+        }
+        else if (id == null) {
+            return false;
+        }
+        else {
+            return id != bot.getId();
+        }
+    }
 }

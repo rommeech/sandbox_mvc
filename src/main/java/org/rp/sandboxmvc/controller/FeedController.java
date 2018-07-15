@@ -21,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Controller
 @RequestMapping("/feeds")
-public class FeedController {
+public class FeedController extends AbstractController {
 
     private static Logger logger = LogManager.getLogger(FeedController.class);
     private final FeedService feedService;
@@ -74,10 +74,7 @@ public class FeedController {
 
         if (result.hasErrors()) {
             logger.error(result.getAllErrors());
-            model.addAttribute("errorMsg", result.getAllErrors().stream()
-                    .map(x -> x.getDefaultMessage())
-                    .collect(Collectors.joining("\n"))
-            );
+            model.addAttribute("errorMsg", this.getErrors(result));
             return "feed/feed_edit";
         }
 
@@ -90,7 +87,7 @@ public class FeedController {
             feedService.update(feed);
         }
 
-        return "redirect:/feeds/";
+        return "redirect:/feeds/?success=true";
     }
 
 }

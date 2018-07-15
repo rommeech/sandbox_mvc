@@ -5,7 +5,6 @@ import org.rp.sandboxmvc.model.AbstractModel;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Table;
-import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
@@ -23,15 +22,12 @@ public class Bot extends AbstractModel<Long> {
     @Column(name = "description", length = 1024)
     private String description;
 
-    @NotNull
     @Column(name = "name", nullable = false)
     private String name;
 
-    @NotNull
     @Column(name = "token", nullable = false, unique = true)
     private String token;
 
-    @NotNull
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 

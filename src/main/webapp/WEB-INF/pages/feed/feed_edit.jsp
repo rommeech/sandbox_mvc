@@ -5,7 +5,7 @@
 
 <c:choose>
     <c:when test="${feed.id != null}">
-        <c:set var="title" value="FeedID=${feed.id} / Feeds" scope="request"/>
+        <c:set var="title" value="FeedId=${feed.id} / Feeds" scope="request"/>
     </c:when>
     <c:otherwise>
         <c:set var="title" value="New Feed / Feeds" scope="request"/>
