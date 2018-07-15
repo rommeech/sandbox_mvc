@@ -169,14 +169,11 @@ header {
 
 footer {}
 
-nav.subnav {
-    padding: 8px 32px 8px 32px;
-    background-color: #292A2C;
-}
+nav.main-nav { padding: 8px 32px 8px 32px; background-color: #292A2C; }
+nav.main-nav a { margin-right: 16px; font-size: 15px; }
 
-nav.subnav a {
-    margin-right: 16px;
-}
+nav.sub-nav { padding: 8px 32px 8px 32px; background-color: #2c2e30; }
+nav.sub-nav a { margin-right: 16px; }
 
 main {
     display: block;

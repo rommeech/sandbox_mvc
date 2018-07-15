@@ -12,7 +12,7 @@
 
 <jsp:include page="../include/header.jsp"/>
 
-<nav class="subnav">
+<nav class="sub-nav">
     <a href="<spring:url value='/feeds/'/>">Feeds</a>
 </nav>
 

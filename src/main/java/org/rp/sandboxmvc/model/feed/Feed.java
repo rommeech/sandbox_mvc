@@ -2,6 +2,7 @@ package org.rp.sandboxmvc.model.feed;
 
 import org.rp.sandboxmvc.model.AbstractModel;
 import org.rp.sandboxmvc.model.Status;
+import org.rp.sandboxmvc.model.tg.Channel;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -53,6 +54,9 @@ public class Feed extends AbstractModel<Long> {
 
     @OneToMany(mappedBy = "feed", fetch = FetchType.LAZY) // , orphanRemoval = true
     private List<Post> posts = new ArrayList<>();
+
+    @OneToMany(mappedBy = "feed", fetch = FetchType.LAZY)
+    private List<Channel> channels;
 
     public Feed() {
         super();

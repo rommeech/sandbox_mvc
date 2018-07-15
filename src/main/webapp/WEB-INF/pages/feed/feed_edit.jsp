@@ -19,7 +19,7 @@
 
 <jsp:include page="../include/header.jsp"/>
 
-<nav class="subnav">
+<nav class="sub-nav">
     <a href="<spring:url value='/feeds/'/>">Feed list</a>
     <c:if test="${!empty feed.id}"><a href="<spring:url value='/posts/?feed=${feed.id}'/>">Posts</a></c:if>
 </nav>

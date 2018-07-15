@@ -19,8 +19,8 @@
 
 <jsp:include page="../include/header.jsp"/>
 
-<nav class="subnav">
-    <a href="<spring:url value='/bots/'/>">Bot List</a>
+<nav class="sub-nav">
+    <a href="<spring:url value='/bots/'/>">Bot list</a>
 </nav>
 
 <main>

@@ -4,9 +4,7 @@ import org.rp.sandboxmvc.model.AbstractModel;
 import org.rp.sandboxmvc.model.Status;
 import org.rp.sandboxmvc.model.feed.Feed;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
@@ -17,11 +15,13 @@ public class Channel extends AbstractModel<Long> {
     private static final long serialVersionUID = -5584189033160373117L;
 
     @NotNull
-    @Column(name = "bot_id")
+    @JoinColumn(name = "bot_id")
+    @ManyToOne
     private Bot bot;
 
     @NotNull
-    @Column(name = "feed_id")
+    @JoinColumn(name = "feed_id")
+    @ManyToOne
     private Feed feed;
 
     @Column(name = "name")

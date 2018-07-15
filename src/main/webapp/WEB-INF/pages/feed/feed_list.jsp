@@ -11,7 +11,7 @@
 
 <jsp:include page="../include/header.jsp"/>
 
-<nav class="subnav">
+<nav class="sub-nav">
     <a href="<spring:url value='/feeds/new/'/>"><spring:message text="Add new feed"/></a>
 </nav>
 

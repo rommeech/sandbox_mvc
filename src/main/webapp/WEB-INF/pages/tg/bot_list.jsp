@@ -11,8 +11,8 @@
 
 <jsp:include page="../include/header.jsp"/>
 
-<nav class="subnav">
-    <a href="<spring:url value='/bots/new/'/>"><spring:message text="Add New Bot"/></a>
+<nav class="sub-nav">
+    <a href="<spring:url value='/bots/new/'/>"><spring:message text="Add new bot"/></a>
 </nav>
 
 <main>

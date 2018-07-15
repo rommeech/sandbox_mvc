@@ -2,9 +2,8 @@ package org.rp.sandboxmvc.model.tg;
 
 import org.rp.sandboxmvc.model.AbstractModel;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 import java.util.Objects;
 
 @Entity
@@ -30,6 +29,9 @@ public class Bot extends AbstractModel<Long> {
 
     @Column(name = "username", nullable = false, unique = true)
     private String username;
+
+    @OneToMany(mappedBy = "bot", fetch = FetchType.LAZY)
+    private List<Channel> channels;
 
     public Bot() {
         super();
