@@ -52,4 +52,9 @@ public class FeedService {
     public void delete(Long id) {
         feedDao.delete(this.getById(id));
     }
+
+    @Transactional
+    public List<Feed> getAllFeeds() {
+        return feedDao.getAllFeeds();
+    }
 }

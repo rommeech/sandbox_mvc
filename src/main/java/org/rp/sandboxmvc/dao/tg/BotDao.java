@@ -26,4 +26,8 @@ public class BotDao extends AbstractDao<Bot, Long> {
                 .getResultList();
         return bots.isEmpty() ? null : bots.get(0);
     }
+
+    public List<Bot> getAllBots() {
+        return this.getEntityManager().createQuery("FROM Bot").getResultList();
+    }
 }

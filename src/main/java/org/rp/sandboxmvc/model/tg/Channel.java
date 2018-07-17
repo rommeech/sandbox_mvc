@@ -15,23 +15,26 @@ public class Channel extends AbstractModel<Long> {
     private static final long serialVersionUID = -5584189033160373117L;
 
     @NotNull
-    @JoinColumn(name = "bot_id")
+    @JoinColumn(name = "bot_id", nullable = false)
     @ManyToOne
     private Bot bot;
 
     @NotNull
-    @JoinColumn(name = "feed_id")
+    @JoinColumn(name = "feed_id", nullable = false)
     @ManyToOne
     private Feed feed;
 
-    @Column(name = "name")
+    @NotNull
+    @Column(name = "name", nullable = false)
     private String name;
 
     @NotNull
-    @Column(name = "token")
+    @Column(name = "token", nullable = false, unique = true)
     private String token;
 
-    @Column(name = "status")
+    @NotNull
+    @Column(name = "status", nullable = false)
+    @Enumerated(EnumType.STRING)
     private Status status;
 
     public Channel() {

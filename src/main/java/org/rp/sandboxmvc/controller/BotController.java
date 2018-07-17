@@ -93,7 +93,7 @@ public class BotController extends AbstractController {
             throw new NotFoundException("Bot not found, unknown id=" + id);
         }
 
-        botService.delete(id);
+        botService.delete(bot);
 
         ModelAndView model = new ModelAndView();
         model.setViewName("redirect:/bots/?success=true");

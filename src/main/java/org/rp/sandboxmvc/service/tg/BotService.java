@@ -10,7 +10,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Map;
 
 @Service
 public class BotService extends AbstractService {
@@ -28,18 +27,18 @@ public class BotService extends AbstractService {
     }
 
     @Transactional
-    public void update(Bot bot) {
-        botDao.update(bot);
+    public void update(Bot entity) {
+        botDao.update(entity);
     }
 
     @Transactional
-    public void insert(Bot bot) {
-        botDao.insert(bot);
+    public void insert(Bot entity) {
+        botDao.insert(entity);
     }
 
     @Transactional
-    public void delete(Long id) {
-        botDao.delete(this.getById(id));
+    public void delete(Bot entity) {
+        botDao.delete(entity);
     }
 
     @Transactional
@@ -84,5 +83,9 @@ public class BotService extends AbstractService {
         else {
             return id != bot.getId();
         }
+    }
+
+    public List<Bot> getAllBots() {
+        return botDao.getAllBots();
     }
 }
