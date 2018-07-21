@@ -1,11 +1,8 @@
 package org.rp.sandboxmvc.dao;
 
-import org.rp.sandboxmvc.dao.AbstractDao;
-import org.rp.sandboxmvc.model.feed.Feed;
+import org.rp.sandboxmvc.model.Feed;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
 @Repository

@@ -1,7 +1,4 @@
-package org.rp.sandboxmvc.model.tg;
-
-import org.rp.sandboxmvc.model.AbstractModel;
-import org.rp.sandboxmvc.model.feed.Post;
+package org.rp.sandboxmvc.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

@@ -1,7 +1,6 @@
 package org.rp.sandboxmvc.dao;
 
-import org.rp.sandboxmvc.dao.AbstractDao;
-import org.rp.sandboxmvc.model.tg.Channel;
+import org.rp.sandboxmvc.model.Channel;
 import org.springframework.stereotype.Repository;
 
 @Repository

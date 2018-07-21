@@ -1,6 +1,6 @@
 package org.rp.sandboxmvc.helper;
 
-import org.rp.sandboxmvc.model.tg.Bot;
+import org.rp.sandboxmvc.model.Bot;
 import org.rp.sandboxmvc.service.BotService;
 
 import java.beans.PropertyEditorSupport;

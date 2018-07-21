@@ -1,6 +1,6 @@
 package org.rp.sandboxmvc.helper;
 
-import org.rp.sandboxmvc.model.feed.Feed;
+import org.rp.sandboxmvc.model.Feed;
 import org.rp.sandboxmvc.service.FeedService;
 
 import java.beans.PropertyEditorSupport;

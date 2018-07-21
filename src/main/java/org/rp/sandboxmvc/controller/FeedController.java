@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.rp.sandboxmvc.dao.SearchCriteria;
 import org.rp.sandboxmvc.model.Status;
-import org.rp.sandboxmvc.model.feed.Feed;
+import org.rp.sandboxmvc.model.Feed;
 import org.rp.sandboxmvc.service.FeedService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

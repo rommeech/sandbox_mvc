@@ -3,7 +3,7 @@ package org.rp.sandboxmvc.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.rp.sandboxmvc.helper.PostSearchCriteria;
-import org.rp.sandboxmvc.model.feed.Post;
+import org.rp.sandboxmvc.model.Post;
 import org.rp.sandboxmvc.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

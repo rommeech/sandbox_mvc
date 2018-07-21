@@ -1,6 +1,4 @@
-package org.rp.sandboxmvc.model.tg;
-
-import org.rp.sandboxmvc.model.AbstractModel;
+package org.rp.sandboxmvc.model;
 
 import javax.persistence.*;
 import java.util.List;

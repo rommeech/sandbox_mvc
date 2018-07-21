@@ -1,6 +1,6 @@
 package org.rp.sandboxmvc.helper;
 
-import org.rp.sandboxmvc.model.feed.Post;
+import org.rp.sandboxmvc.model.Post;
 
 import java.util.List;
 

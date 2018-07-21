@@ -1,8 +1,4 @@
-package org.rp.sandboxmvc.model.feed;
-
-import org.rp.sandboxmvc.model.AbstractModel;
-import org.rp.sandboxmvc.model.Status;
-import org.rp.sandboxmvc.model.tg.Channel;
+package org.rp.sandboxmvc.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

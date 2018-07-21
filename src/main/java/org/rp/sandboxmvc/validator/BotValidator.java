@@ -1,6 +1,6 @@
 package org.rp.sandboxmvc.validator;
 
-import org.rp.sandboxmvc.model.tg.Bot;
+import org.rp.sandboxmvc.model.Bot;
 import org.rp.sandboxmvc.service.BotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

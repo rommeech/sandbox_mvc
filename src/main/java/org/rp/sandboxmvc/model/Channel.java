@@ -1,9 +1,6 @@
-package org.rp.sandboxmvc.model.tg;
+package org.rp.sandboxmvc.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.rp.sandboxmvc.model.AbstractModel;
-import org.rp.sandboxmvc.model.Status;
-import org.rp.sandboxmvc.model.feed.Feed;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

@@ -1,7 +1,6 @@
 package org.rp.sandboxmvc.dao;
 
-import org.rp.sandboxmvc.dao.AbstractDao;
-import org.rp.sandboxmvc.model.tg.Bot;
+import org.rp.sandboxmvc.model.Bot;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
