@@ -94,7 +94,7 @@ td.numeric, th.numeric {
 
 td.td_buttons {
     text-align: right;
-    padding: 0;
+    padding: 0 0 0 4px;
 }
 
 td.td_buttons a {

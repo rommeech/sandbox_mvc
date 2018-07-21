@@ -15,6 +15,9 @@
                 <th class="numeric"><spring:message text="ID"/></th>
                 <th><spring:message text="Name"/></th>
                 <th><spring:message text="Status"/></th>
+                <th><spring:message text="Bot"/></th>
+                <th><spring:message text="Feed"/></th>
+                <th><spring:message text="Posts"/></th>
                 <th>&nbsp;</th>
             </tr>
             <c:forEach items="${channels}" var="channel">
@@ -22,6 +25,9 @@
                     <td class="numeric">${channel.id}</td>
                     <td>${channel.name}</td>
                     <td>${channel.status}</td>
+                    <td>${channel.bot.name}</td>
+                    <td>${channel.feed.title}</td>
+                    <td>8 / 300</td>
                     <td class="td_buttons">
                         <a href="<spring:url value="/channels/view/${channel.id}/"/>"><spring:message text="overview"/></a>
                         <a href="<spring:url value="/channels/edit/${channel.id}/"/>"><spring:message text="edit"/></a>

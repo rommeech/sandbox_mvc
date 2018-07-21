@@ -31,7 +31,7 @@ public class PostController {
             throw new NotFoundException();
         }
         model.addAttribute("post", post);
-        return "feed/post_view";
+        return "post_view";
     }
 
     // TODO: refactoring, use Command object
@@ -40,7 +40,7 @@ public class PostController {
         model.addAttribute("posts", postService.getPosts(searchCriteria));
         model.addAttribute("total", postService.countPosts(searchCriteria));
         model.addAttribute("searchCriteria", searchCriteria);
-        return "feed/post_list";
+        return "post_list";
     }
 
 }

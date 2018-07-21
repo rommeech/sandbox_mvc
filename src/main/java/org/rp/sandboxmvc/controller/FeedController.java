@@ -32,7 +32,7 @@ public class FeedController extends AbstractController {
         model.addAttribute("feeds", feedService.getFeeds(searchCriteria));
         model.addAttribute("total", feedService.countFeeds(searchCriteria));
         model.addAttribute("searchCriteria", searchCriteria);
-        return "feed/feed_list";
+        return "feed_list";
     }
 
     @RequestMapping(value = "/delete/{id}/", method = RequestMethod.GET)
@@ -53,7 +53,7 @@ public class FeedController extends AbstractController {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("feed", feed);
         modelAndView.addObject("statusList", Status.values());
-        modelAndView.setViewName("feed/feed_edit");
+        modelAndView.setViewName("feed_edit");
         return modelAndView;
     }
 
@@ -61,7 +61,7 @@ public class FeedController extends AbstractController {
     public ModelAndView feedNew() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("feed", new Feed());
-        modelAndView.setViewName("feed/feed_edit");
+        modelAndView.setViewName("feed_edit");
         return modelAndView;
     }
 
@@ -71,7 +71,7 @@ public class FeedController extends AbstractController {
         if (result.hasErrors()) {
             logger.error(result.getAllErrors());
             model.addAttribute("errorMsg", this.getErrors(result));
-            return "feed/feed_edit";
+            return "feed_edit";
         }
 
         if (feed.getId() == null || feed.getId().equals(0L)) {

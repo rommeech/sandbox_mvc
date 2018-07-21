@@ -32,7 +32,7 @@ public class BotController extends AbstractController {
         model.addObject("bots", botService.getBots(searchCriteria));
         model.addObject("total", botService.countBots(searchCriteria));
         model.addObject("searchCriteria", searchCriteria);
-        model.setViewName("tg/bot_list");
+        model.setViewName("bot_list");
         return model;
     }
 
@@ -47,7 +47,7 @@ public class BotController extends AbstractController {
 
         ModelAndView model = new ModelAndView();
         model.addObject("bot", bot);
-        model.setViewName("tg/bot_edit");
+        model.setViewName("bot_edit");
         return model;
     }
 
@@ -55,7 +55,7 @@ public class BotController extends AbstractController {
     public ModelAndView botNew() {
         ModelAndView model = new ModelAndView();
         model.addObject("bot", new Bot());
-        model.setViewName("tg/bot_edit");
+        model.setViewName("bot_edit");
         return model;
     }
 
@@ -69,7 +69,7 @@ public class BotController extends AbstractController {
 
         if (result.hasErrors()) {
             logger.error("Cannot save bot, validation errors: " + result.toString());
-            model.setViewName("tg/bot_edit");
+            model.setViewName("bot_edit");
         }
         else {
             if (bot.getId() == null || bot.getId() == 0L) {

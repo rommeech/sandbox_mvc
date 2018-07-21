@@ -47,7 +47,7 @@ public class ChannelController {
     public String channelList(Model model, SearchCriteria searchCriteria) {
         model.addAttribute("channels", channelService.getChannels(searchCriteria));
         model.addAttribute("total", channelService.countChannels(searchCriteria));
-        return "tg/channel_list";
+        return "channel_list";
     }
 
     @RequestMapping(value = "/edit/{id}/", method = RequestMethod.GET)
@@ -61,7 +61,7 @@ public class ChannelController {
 
         initEditModel(model);
         model.addAttribute("channel", channel);
-        return "tg/channel_edit";
+        return "channel_edit";
     }
 
     private void initEditModel(Model model) {
@@ -76,7 +76,7 @@ public class ChannelController {
         initEditModel(model);
         model.addAttribute("channel", new Channel());
 
-        return "tg/channel_edit";
+        return "channel_edit";
     }
 
     @RequestMapping(value = "/save/", method = RequestMethod.POST)
@@ -85,7 +85,7 @@ public class ChannelController {
         if (result.hasErrors()) {
             logger.error(result.getAllErrors());
             initEditModel(model);
-            return "tg/channel_edit";
+            return "channel_edit";
         }
 
         if (channel.getId() == null) {
