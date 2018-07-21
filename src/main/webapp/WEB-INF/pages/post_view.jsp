@@ -7,10 +7,10 @@
 
 <!doctype html>
 <html>
-<jsp:include page="../include/metadata.jsp"/>
+<jsp:include page="include/metadata.jsp"/>
 <body>
 
-<jsp:include page="../include/header.jsp"/>
+<jsp:include page="include/header.jsp"/>
 
 <nav class="sub-nav">
     <a href="<spring:url value='/feeds/'/>">Feeds</a>
@@ -55,7 +55,7 @@
 
 </main>
 
-<jsp:include page="../include/footer.jsp"/>
+<jsp:include page="include/footer.jsp"/>
 
 </body>
 </html>

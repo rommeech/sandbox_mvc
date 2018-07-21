@@ -6,10 +6,10 @@
 
 <!doctype html>
 <html>
-<jsp:include page="../include/metadata.jsp"/>
+<jsp:include page="include/metadata.jsp"/>
 <body>
 
-<jsp:include page="../include/header.jsp"/>
+<jsp:include page="include/header.jsp"/>
 
 <nav class="sub-nav">
     <a href="<spring:url value='/bots/new/'/>"><spring:message text="Add new bot"/></a>
@@ -35,11 +35,11 @@
         </c:forEach>
     </table>
 
-    <jsp:include page="../include/paginator.jsp"/>
+    <jsp:include page="include/paginator.jsp"/>
 
 </main>
 
-<jsp:include page="../include/footer.jsp"/>
+<jsp:include page="include/footer.jsp"/>
 
 </body>
 </html>

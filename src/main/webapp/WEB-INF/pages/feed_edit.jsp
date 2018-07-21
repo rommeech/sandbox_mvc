@@ -14,10 +14,10 @@
 
 <!doctype html>
 <html>
-<jsp:include page="../include/metadata.jsp"/>
+<jsp:include page="include/metadata.jsp"/>
 <body>
 
-<jsp:include page="../include/header.jsp"/>
+<jsp:include page="include/header.jsp"/>
 
 <nav class="sub-nav">
     <a href="<spring:url value='/feeds/'/>">Feed list</a>
@@ -26,7 +26,7 @@
 
 <main>
 
-    <jsp:include page="../include/messages.jsp"/>
+    <jsp:include page="include/messages.jsp"/>
 
     <spring:url var="formAction" value="/feeds/save/"/>
     <form:form modelAttribute="feed" acceptCharset="UTF-8" method="POST" action="${formAction}">
@@ -84,7 +84,7 @@
     </form:form>
 </main>
 
-<jsp:include page="../include/footer.jsp"/>
+<jsp:include page="include/footer.jsp"/>
 
 </body>
 </html>
