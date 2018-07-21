@@ -1,10 +1,9 @@
-package org.rp.sandboxmvc.service.feed;
+package org.rp.sandboxmvc.service;
 
 import org.rp.sandboxmvc.dao.SearchCriteria;
-import org.rp.sandboxmvc.dao.feed.FeedDao;
+import org.rp.sandboxmvc.dao.FeedDao;
 import org.rp.sandboxmvc.model.feed.Feed;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

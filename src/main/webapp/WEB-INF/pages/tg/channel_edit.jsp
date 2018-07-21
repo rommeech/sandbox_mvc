@@ -2,74 +2,31 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="tg" tagdir="/WEB-INF/tags" %>
 
-<c:choose>
-    <c:when test="${channel.id != null}">
-        <c:set var="title" value="${channel.id}. ${channel.name} / Telegram Channels" scope="request"/>
-    </c:when>
-    <c:otherwise>
-        <c:set var="title" value="New channel / Telegram Channels" scope="request"/>
-    </c:otherwise>
-</c:choose>
+<c:set var="isNew" value="${channel.id == null ? true : false}"/>
+<c:set var="title" value="${isNew ? 'Add New' : channel.id} / Telegram Channels" scope="request"/>
 
-<!doctype html>
-<html>
-<jsp:include page="../include/metadata.jsp"/>
-<body>
+<spring:url var="linkSave" value="/channels/save/"/>
+<spring:url var="linkList" value="/channels/"/>
 
-<jsp:include page="../include/header.jsp"/>
+<tg:wrapper>
+    <jsp:attribute name="subnav">
+        <a href="${linkList}">Back to Channel List</a>
+    </jsp:attribute>
 
-<nav class="sub-nav">
-    <a href="<spring:url value='/channels/'/>">Channel list</a>
-</nav>
-
-<main>
-
-    <jsp:include page="../include/messages.jsp"/>
-
-    <spring:url var="formAction" value="/channels/save/"/>
-    <form:form modelAttribute="channel" acceptCharset="UTF-8" method="POST" action="${formAction}">
-        <form:hidden path="id"/>
-
-        <div class="div_edit">
-            
-            <div class="div_row">
-                <div class="div_legend"><spring:message text="Name"/></div>
-                <div class="div_input">
-                    <form:input path="name"/>
-                    <form:errors path="name" cssClass="field_error"/>
-                </div>
-            </div>
-
-            <div class="div_row">
-                <div class="div_legend"><spring:message text="Feed"/></div>
-                <div class="div_input">
-                    <form:input path="feed"/>
-                    <form:errors path="feed" cssClass="field_error"/>
-                </div>
-            </div>
-
-            <div class="div_row">
-                <div class="div_legend"><spring:message text="Token"/></div>
-                <div class="div_input">
-                    <form:input path="token"/>
-                    <form:errors path="token" cssClass="field_error"/>
-                </div>
-            </div>
-
-            <div class="div_row">
-                <div class="div_legend"><spring:message text="Status"/></div>
-                <div class="div_input">
-                    <form:input path="status"/>
-                    <form:errors path="status" cssClass="field_error"/>
-                </div>
-            </div>
-
-        </div>
-    </form:form>
-</main>
-
-<jsp:include page="../include/footer.jsp"/>
-
-</body>
-</html>
+    <jsp:body>
+        <tg:formWrapper model="channel" formAction="${linkSave}" cancelLink="${linkList}">
+            <jsp:attribute name="hiddenFields">
+                <form:hidden path="id"/>
+            </jsp:attribute>
+            <jsp:body>
+                <tg:formInput field="name" legendCode="channel.name"/>
+                <tg:formInput field="token" legendCode="channel.token"/>
+                <tg:formRadioButtons items="${statuses}" legendCode="channel.status" field="status" />
+                <tg:formSelect items="${feeds}" field="feed.id" legendCode="channel.feed" itemValue="id" itemLabel="title"/>
+                <tg:formSelect items="${bots}" field="bot.id" legendCode="channel.bot" itemValue="id" itemLabel="name"/>
+            </jsp:body>
+        </tg:formWrapper>
+    </jsp:body>
+</tg:wrapper>

@@ -1,19 +1,23 @@
 package org.rp.sandboxmvc.controller;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.rp.sandboxmvc.dao.SearchCriteria;
+import org.rp.sandboxmvc.helper.BotEditor;
+import org.rp.sandboxmvc.helper.FeedEditor;
 import org.rp.sandboxmvc.model.Status;
+import org.rp.sandboxmvc.model.feed.Feed;
+import org.rp.sandboxmvc.model.tg.Bot;
 import org.rp.sandboxmvc.model.tg.Channel;
-import org.rp.sandboxmvc.service.feed.FeedService;
-import org.rp.sandboxmvc.service.tg.BotService;
-import org.rp.sandboxmvc.service.tg.ChannelService;
+import org.rp.sandboxmvc.service.FeedService;
+import org.rp.sandboxmvc.service.BotService;
+import org.rp.sandboxmvc.service.ChannelService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -24,12 +28,19 @@ public class ChannelController {
     private final ChannelService channelService;
     private final BotService botService;
     private final FeedService feedService;
+    private static final Logger logger = LogManager.getLogger(ChannelController.class);
 
     @Autowired
     public ChannelController(ChannelService channelService, BotService botService, FeedService feedService) {
         this.channelService = channelService;
         this.botService = botService;
         this.feedService = feedService;
+    }
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+        binder.registerCustomEditor(Feed.class, new FeedEditor(feedService));
+        binder.registerCustomEditor(Bot.class, new BotEditor(botService));
     }
 
     @RequestMapping(value = {"/", "/list/"}, method = RequestMethod.GET)
@@ -44,28 +55,26 @@ public class ChannelController {
 
         Channel channel = channelService.getById(id);
         if (channel == null) {
+            logger.error("Channel not found, invalid ID=" + id);
             throw new NotFoundException("Invalid URL, channel not found");
         }
 
+        initEditModel(model);
         model.addAttribute("channel", channel);
+        return "tg/channel_edit";
+    }
 
-        //TODO: code duplicate detected, try to do it using taglibs
+    private void initEditModel(Model model) {
         model.addAttribute("statuses", Status.values());
-
-        //TODO: try to do it using taglib
         model.addAttribute("feeds", feedService.getAllFeeds());
         model.addAttribute("bots", botService.getAllBots());
-
-        return "tg/channel_edit";
     }
 
     @RequestMapping(value = "/new/", method = RequestMethod.GET)
     public String channelNew(Model model) {
 
+        initEditModel(model);
         model.addAttribute("channel", new Channel());
-        model.addAttribute("statuses", Status.values());
-        model.addAttribute("feeds", feedService.getAllFeeds());
-        model.addAttribute("bots", botService.getAllBots());
 
         return "tg/channel_edit";
     }
@@ -74,9 +83,8 @@ public class ChannelController {
     public String channelSave(Model model, @Valid @ModelAttribute("channel") Channel channel, BindingResult result) {
 
         if (result.hasErrors()) {
-            model.addAttribute("statuses", Status.values());
-            model.addAttribute("feeds", feedService.getAllFeeds());
-            model.addAttribute("bots", botService.getAllBots());
+            logger.error(result.getAllErrors());
+            initEditModel(model);
             return "tg/channel_edit";
         }
 
@@ -91,7 +99,7 @@ public class ChannelController {
         return "redirect:/channels/?success=true";
     }
 
-    @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/delete/{id}/", method = RequestMethod.GET)
     public String channelDelete(Model model, @PathVariable("id") Long id) {
 
         Channel channel = channelService.getById(id);

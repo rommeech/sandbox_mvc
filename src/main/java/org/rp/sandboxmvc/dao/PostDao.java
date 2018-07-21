@@ -1,4 +1,4 @@
-package org.rp.sandboxmvc.dao.feed;
+package org.rp.sandboxmvc.dao;
 
 import org.rp.sandboxmvc.dao.AbstractDao;
 import org.rp.sandboxmvc.model.feed.Post;

@@ -4,7 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.rp.sandboxmvc.dao.SearchCriteria;
 import org.rp.sandboxmvc.model.tg.Bot;
-import org.rp.sandboxmvc.service.tg.BotService;
+import org.rp.sandboxmvc.service.BotService;
 import org.rp.sandboxmvc.validator.BotValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

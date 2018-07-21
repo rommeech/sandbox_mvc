@@ -1,10 +1,9 @@
-package org.rp.sandboxmvc.service.feed;
+package org.rp.sandboxmvc.service;
 
 import org.rp.sandboxmvc.dao.OrderDirection;
-import org.rp.sandboxmvc.dao.feed.PostDao;
+import org.rp.sandboxmvc.dao.PostDao;
 import org.rp.sandboxmvc.helper.PostSearchCriteria;
 import org.rp.sandboxmvc.model.feed.Post;
-import org.rp.sandboxmvc.service.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

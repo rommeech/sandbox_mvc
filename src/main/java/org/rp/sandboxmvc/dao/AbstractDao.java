@@ -50,9 +50,7 @@ public abstract class AbstractDao<T extends AbstractModel<K>, K extends Serializ
 
     public void delete(T model) {
         //EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();
-        //entityManager.remove(entityManager.contains(model) ? model : entityManager.merge(model));
-        //entityManager.remove(entityManager.contains(model) ? model : entityManager.merge(model));
-        entityManager.remove(model);
+        entityManager.remove(entityManager.contains(model) ? model : entityManager.merge(model));
         //entityManager.close();
         //entityManager.remove(model);
     }

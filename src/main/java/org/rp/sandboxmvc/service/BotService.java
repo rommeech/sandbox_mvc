@@ -1,10 +1,9 @@
-package org.rp.sandboxmvc.service.tg;
+package org.rp.sandboxmvc.service;
 
 import org.rp.sandboxmvc.dao.OrderDirection;
 import org.rp.sandboxmvc.dao.SearchCriteria;
-import org.rp.sandboxmvc.dao.tg.BotDao;
+import org.rp.sandboxmvc.dao.BotDao;
 import org.rp.sandboxmvc.model.tg.Bot;
-import org.rp.sandboxmvc.service.AbstractService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

@@ -1,4 +1,4 @@
-package org.rp.sandboxmvc.dao.tg;
+package org.rp.sandboxmvc.dao;
 
 import org.rp.sandboxmvc.dao.AbstractDao;
 import org.rp.sandboxmvc.model.tg.Bot;
