@@ -28,6 +28,10 @@ public abstract class AbstractModel<T extends Serializable> implements Serializa
     @Column(name = "last_updated")
     private Timestamp lastUpdated;
 
+    @Version
+    @Column(name = "version")
+    private Integer version;
+
     public AbstractModel() {
     }
 
@@ -67,6 +71,14 @@ public abstract class AbstractModel<T extends Serializable> implements Serializa
 
     public void setLastUpdated(Timestamp lastUpdated) {
         this.lastUpdated = lastUpdated;
+    }
+
+    public Integer getVersion() {
+        return version;
+    }
+
+    public void setVersion(Integer version) {
+        this.version = version;
     }
 
     @Override
