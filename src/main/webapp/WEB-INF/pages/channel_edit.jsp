@@ -5,7 +5,7 @@
 <%@ taglib prefix="tg" tagdir="/WEB-INF/tags" %>
 
 <c:set var="isNew" value="${channel.id == null ? true : false}"/>
-<c:set var="title" value="${isNew ? 'Add New' : channel.id} / Telegram Channels" scope="request"/>
+<c:set var="title" value="${isNew ? 'Add New' : channel.name} / Telegram Channels" scope="request"/>
 
 <spring:url var="linkSave" value="/channels/save/"/>
 <spring:url var="linkList" value="/channels/"/>

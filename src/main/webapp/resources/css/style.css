@@ -23,7 +23,9 @@ body, p, span, input, button, textarea {
 }
 
 h1 { font-size: 22px; font-weight: normal; padding: 0; margin: 0; }
-h2 { font-size: 18px; font-weight: normal; padding: 0; margin: 0; }
+
+h2 { font-size: 18px; font-weight: normal; padding: 0; margin: 0 0 8px 0; }
+p { padding: 0; margin: 0 0 16px 0; }
 
 /* Links */
 
@@ -110,8 +112,12 @@ td.td_buttons a:hover {
 
 table.table_list {
     min-width: 512px;
+    max-width: 1024px;
 }
 
+table.table_list td.word_break {
+    word-break: break-all;
+}
 
 table.table_list a {
     margin: 0 2px 0 2px;

@@ -9,9 +9,7 @@ import org.rp.sandboxmvc.model.Status;
 import org.rp.sandboxmvc.model.Feed;
 import org.rp.sandboxmvc.model.Bot;
 import org.rp.sandboxmvc.model.Channel;
-import org.rp.sandboxmvc.service.FeedService;
-import org.rp.sandboxmvc.service.BotService;
-import org.rp.sandboxmvc.service.ChannelService;
+import org.rp.sandboxmvc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -110,6 +108,25 @@ public class ChannelController {
         channelService.delete(channel);
 
         return "redirect:/channels/?success=true";
+    }
+
+    @RequestMapping(value = "/view/{id}/", method = RequestMethod.GET)
+    public String channelView(Model model, @PathVariable("id") Long id, SearchCriteria searchCriteria) {
+
+        Channel channel = channelService.getById(id);
+        if (channel == null) {
+            throw new NotFoundException("Invalid URL, channel not found");
+        }
+
+        // Channel (bot, feed)
+        // Published posts
+        // Not published posts
+        // Paginator
+
+        model.addAttribute("channel", channel);
+        model.addAttribute("pubReports", channelService.getPublicationReports(channel, searchCriteria));
+
+        return "channel_view";
     }
 
 }

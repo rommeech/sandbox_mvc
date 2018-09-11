@@ -2,7 +2,9 @@ package org.rp.sandboxmvc.service;
 
 import org.rp.sandboxmvc.dao.OrderDirection;
 import org.rp.sandboxmvc.dao.PostDao;
+import org.rp.sandboxmvc.dao.SearchCriteria;
 import org.rp.sandboxmvc.helper.PostSearchCriteria;
+import org.rp.sandboxmvc.model.Feed;
 import org.rp.sandboxmvc.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -36,6 +38,11 @@ public class PostService extends AbstractService {
     @Transactional
     public Post getById(Long id) {
         return postDao.getById(id);
+    }
+
+    @Transactional
+    public List<Post> getUnpublishedPosts(Feed feed) {
+        return postDao.getUnpublishedPostsByFeed(feed);
     }
 
 

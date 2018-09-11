@@ -2,6 +2,8 @@ package org.rp.sandboxmvc.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
 
@@ -32,6 +34,9 @@ public class Post extends AbstractModel<Long> {
     @NotNull
     @Column(name = "post_xid")
     private String postXid;
+
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
+    private List<Publication> publications = new ArrayList<>();
 
     public Post() {
         super();
@@ -93,6 +98,14 @@ public class Post extends AbstractModel<Long> {
         this.postXid = postXid;
     }
 
+    public List<Publication> getPublications() {
+        return publications;
+    }
+
+    public void setPublications(List<Publication> publications) {
+        this.publications = publications;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -128,4 +141,6 @@ public class Post extends AbstractModel<Long> {
                 ", postXid='" + postXid + '\'' +
                 '}';
     }
+
+
 }
