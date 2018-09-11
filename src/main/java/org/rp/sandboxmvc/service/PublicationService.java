@@ -30,7 +30,7 @@ public class PublicationService extends AbstractService {
         publicationDao.delete(model);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Publication> getPublicationsByChannel(Channel channel, SearchCriteria searchCriteria) {
         return publicationDao.getPublicationsByChannel(channel, searchCriteria);
     }

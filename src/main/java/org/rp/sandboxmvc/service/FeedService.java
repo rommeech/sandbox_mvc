@@ -19,7 +19,13 @@ public class FeedService {
         this.feedDao = feedDao;
     }
 
-    @Transactional
+
+    @Transactional(readOnly = true)
+    public List<Feed> getAllFeeds() {
+        return feedDao.getAllFeeds();
+    }
+
+    @Transactional(readOnly = true)
     public List<Feed> getFeeds(SearchCriteria criteria) {
         if (criteria.getOrderBy() == null) {
             criteria.setOrderBy("id");
@@ -27,12 +33,12 @@ public class FeedService {
         return feedDao.search(criteria);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Long countFeeds(SearchCriteria criteria) {
         return feedDao.count(criteria);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Feed getById(Long id) {
         return feedDao.getById(id);
     }
@@ -52,8 +58,4 @@ public class FeedService {
         feedDao.delete(this.getById(id));
     }
 
-    @Transactional
-    public List<Feed> getAllFeeds() {
-        return feedDao.getAllFeeds();
-    }
 }

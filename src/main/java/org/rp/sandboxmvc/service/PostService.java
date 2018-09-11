@@ -22,7 +22,7 @@ public class PostService extends AbstractService {
         this.postDao = postDao;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Post> getPosts(PostSearchCriteria criteria) {
         if (criteria.getOrderBy() == null) {
             criteria.setOrder("id", OrderDirection.DESC);
@@ -30,17 +30,17 @@ public class PostService extends AbstractService {
         return postDao.search(criteria);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public long countPosts(PostSearchCriteria criteria) {
         return postDao.count(criteria);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Post getById(Long id) {
         return postDao.getById(id);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Post> getUnpublishedPosts(Feed feed) {
         return postDao.getUnpublishedPostsByFeed(feed);
     }

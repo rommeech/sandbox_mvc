@@ -20,12 +20,12 @@ public class ChannelService extends AbstractService {
         this.channelDao = channelDao;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Channel getById(Long id) {
         return channelDao.getById(id);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public List<Channel> getChannels(SearchCriteria searchCriteria) {
         if (searchCriteria.getOrderBy() == null) {
             searchCriteria.setOrder("id", OrderDirection.ASC);
@@ -33,7 +33,7 @@ public class ChannelService extends AbstractService {
         return channelDao.search(searchCriteria);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Long countChannels(SearchCriteria searchCriteria) {
         return channelDao.count(searchCriteria);
     }

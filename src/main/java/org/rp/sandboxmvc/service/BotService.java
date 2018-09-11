@@ -20,7 +20,7 @@ public class BotService extends AbstractService {
         this.botDao = botDao;
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Bot getById(Long id) {
         return botDao.getById(id);
     }
@@ -40,7 +40,12 @@ public class BotService extends AbstractService {
         botDao.delete(entity);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
+    public List<Bot> getAllBots() {
+        return botDao.getAllBots();
+    }
+
+    @Transactional(readOnly = true)
     public List<Bot> getBots(SearchCriteria searchCriteria) {
         if (searchCriteria.getOrderBy() == null) {
             searchCriteria.setOrder("id", OrderDirection.ASC);
@@ -48,18 +53,18 @@ public class BotService extends AbstractService {
         return botDao.search(searchCriteria);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Long countBots(SearchCriteria searchCriteria) {
         return botDao.count(searchCriteria);
     }
 
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Bot getByToken(String token) {
         return botDao.getByToken(token);
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public Bot getByUsername(String username) {
         return botDao.getByUsername(username);
     }
@@ -84,7 +89,5 @@ public class BotService extends AbstractService {
         }
     }
 
-    public List<Bot> getAllBots() {
-        return botDao.getAllBots();
-    }
+
 }
