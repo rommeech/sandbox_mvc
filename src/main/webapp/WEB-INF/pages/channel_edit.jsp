@@ -19,6 +19,7 @@
         <tg:formWrapper model="channel" formAction="${linkSave}" cancelLink="${linkList}">
             <jsp:attribute name="hiddenFields">
                 <form:hidden path="id"/>
+                <form:hidden path="version"/>
             </jsp:attribute>
             <jsp:body>
                 <tg:formInput field="name" legendCode="channel.name"/>

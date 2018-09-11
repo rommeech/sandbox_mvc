@@ -30,6 +30,7 @@
     <spring:url var="formAction" value="/bots/save/"/>
     <form:form modelAttribute="bot" acceptCharset="UTF-8" method="POST" action="${formAction}">
         <form:hidden path="id"/>
+        <form:hidden path="version"/>
 
         <div class="div_edit">
             <div class="div_edit_row">

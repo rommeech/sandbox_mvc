@@ -31,6 +31,7 @@
     <spring:url var="formAction" value="/feeds/save/"/>
     <form:form modelAttribute="feed" acceptCharset="UTF-8" method="POST" action="${formAction}">
         <form:hidden path="id"/>
+        <form:hidden path="version"/>
 
         <table class="table_edit">
 
