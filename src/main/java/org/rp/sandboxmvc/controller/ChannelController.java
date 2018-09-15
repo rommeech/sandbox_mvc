@@ -5,12 +5,14 @@ import org.apache.logging.log4j.Logger;
 import org.rp.sandboxmvc.dao.SearchCriteria;
 import org.rp.sandboxmvc.helper.BotEditor;
 import org.rp.sandboxmvc.helper.FeedEditor;
+import org.rp.sandboxmvc.helper.MessageProvider;
 import org.rp.sandboxmvc.model.Status;
 import org.rp.sandboxmvc.model.Feed;
 import org.rp.sandboxmvc.model.Bot;
 import org.rp.sandboxmvc.model.Channel;
 import org.rp.sandboxmvc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,18 +25,21 @@ import javax.validation.Valid;
 @RequestMapping(value = "/channels/")
 public class ChannelController {
 
-    private final ChannelService channelService;
-    private final BotService botService;
-    private final FeedService feedService;
-    private static final Logger logger = LogManager.getLogger(ChannelController.class);
+    @Autowired
+    private ChannelService channelService;
 
     @Autowired
-    public ChannelController(ChannelService channelService, BotService botService, FeedService feedService) {
-        this.channelService = channelService;
-        this.botService = botService;
-        this.feedService = feedService;
-    }
+    private BotService botService;
 
+    @Autowired
+    private FeedService feedService;
+
+    @Autowired
+    private MessageProvider messageProvider;
+
+    private static final Logger logger = LogManager.getLogger(ChannelController.class);
+
+    //TODO: private?
     @InitBinder
     public void initBinder(WebDataBinder binder) {
         binder.registerCustomEditor(Feed.class, new FeedEditor(feedService));
@@ -62,12 +67,6 @@ public class ChannelController {
         return "channel_edit";
     }
 
-    private void initEditModel(Model model) {
-        model.addAttribute("statuses", Status.values());
-        model.addAttribute("feeds", feedService.getAllFeeds());
-        model.addAttribute("bots", botService.getAllBots());
-    }
-
     @RequestMapping(value = "/new/", method = RequestMethod.GET)
     public String channelNew(Model model) {
 
@@ -93,8 +92,7 @@ public class ChannelController {
             channelService.update(channel);
         }
 
-        //TODO: do something with this terrible GET parameter
-        return "redirect:/channels/?success=true";
+        return "redirect:/channels/";
     }
 
     @RequestMapping(value = "/delete/{id}/", method = RequestMethod.GET)
@@ -124,9 +122,15 @@ public class ChannelController {
         // Paginator
 
         model.addAttribute("channel", channel);
-        model.addAttribute("pubReports", channelService.getPublicationReports(channel, searchCriteria));
+        //model.addAttribute("pubReports", channelService.getPublicationReports(channel, searchCriteria));
 
         return "channel_view";
+    }
+
+    private void initEditModel(Model model) {
+        model.addAttribute("statuses", Status.values());
+        model.addAttribute("feeds", feedService.getAllFeeds());
+        model.addAttribute("bots", botService.getAllBots());
     }
 
 }

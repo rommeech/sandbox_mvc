@@ -15,6 +15,8 @@
     <a href="<spring:url value='/feeds/new/'/>"><spring:message text="Add new feed"/></a>
 </nav>
 
+<jsp:include page="include/messages.jsp"/>
+
 <main>
 
     <table class="table_list">

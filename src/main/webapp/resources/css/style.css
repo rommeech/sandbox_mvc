@@ -112,7 +112,6 @@ td.td_buttons a:hover {
 
 table.table_list {
     min-width: 512px;
-    max-width: 1024px;
 }
 
 table.table_list td.word_break {
@@ -183,7 +182,7 @@ table.table_view div.post_content td {
 /* Layout */
 
 header {
-    padding: 16px 32px 16px 128px;
+    padding: 16px 128px 16px 128px;
     background-color: #252628;
     margin: 0;
 }
@@ -209,9 +208,15 @@ nav.main-nav a { margin-right: 16px; font-size: 15px; }
 nav.sub-nav { padding: 8px 32px 8px 128px; background-color: #292A2C; }
 nav.sub-nav a { margin-right: 16px; }
 
+div#messages {
+    display: block;
+    padding: 0px 128px 0px 128px;
+    margin: 0;
+}
+
 main {
     display: block;
-    padding: 16px 32px 16px 128px;
+    padding: 16px 128px 16px 128px;
     margin: 0;
     background-color: #2e3032;
 }
@@ -226,22 +231,8 @@ main h1 {
 
 /* Other layers */
 
-div.info {
-    background-color: #6fb22e;
-    color: #222;
-    padding: 10px;
-    margin-top: 10px;
-}
-
-div.error {
-    background-color: #e17661;
-    color: #222;
-    padding: 10px;
-    margin-top: 10px;
-}
-
 div.error_msg, div.warning_msg, div.info_msg {
-    margin: 0 0 16px 0;
+    margin: 0;
     padding: 8px 16px 8px 16px;
 }
 
@@ -251,11 +242,13 @@ div.error_msg {
 }
 
 div.warning_msg {
-    background-color: antiquewhite;
+    background-color: sandybrown;
+    color: #222;
 }
 
 div.info_msg {
-    background-color: aquamarine;
+    background-color: cadetblue;
+    color: #222
 }
 
 div.edit_form { padding: 0; margin: 0; display: inline-block; }

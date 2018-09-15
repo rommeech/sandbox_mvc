@@ -24,10 +24,9 @@
     <c:if test="${!empty feed.id}"><a href="<spring:url value='/posts/?feed=${feed.id}'/>">Posts</a></c:if>
 </nav>
 
+<jsp:include page="include/messages.jsp"/>
+
 <main>
-
-    <jsp:include page="include/messages.jsp"/>
-
     <spring:url var="formAction" value="/feeds/save/"/>
     <form:form modelAttribute="feed" acceptCharset="UTF-8" method="POST" action="${formAction}">
         <form:hidden path="id"/>

@@ -3,6 +3,7 @@ package org.rp.sandboxmvc.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.rp.sandboxmvc.dao.SearchCriteria;
+import org.rp.sandboxmvc.helper.MessageProvider;
 import org.rp.sandboxmvc.model.Status;
 import org.rp.sandboxmvc.model.Feed;
 import org.rp.sandboxmvc.service.FeedService;
@@ -20,12 +21,12 @@ import javax.validation.Valid;
 public class FeedController extends AbstractController {
 
     private static Logger logger = LogManager.getLogger(FeedController.class);
-    private final FeedService feedService;
 
     @Autowired
-    public FeedController(FeedService feedService) {
-        this.feedService = feedService;
-    }
+    private FeedService feedService;
+
+    @Autowired
+    private MessageProvider messageProvider;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String feedList(Model model, SearchCriteria searchCriteria) {
@@ -38,6 +39,7 @@ public class FeedController extends AbstractController {
     @RequestMapping(value = "/delete/{id}/", method = RequestMethod.GET)
     public String feedDelete(@PathVariable Long id) {
         feedService.delete(id);
+        messageProvider.addInfoMessage("Feed successfully deleted");
         return "redirect:/feeds/";
     }
 
@@ -71,19 +73,20 @@ public class FeedController extends AbstractController {
         if (result.hasErrors()) {
             logger.error(result.getAllErrors());
             model.addAttribute("errorMsg", this.getErrors(result));
+            messageProvider.addWarningMessage("Please fill the form properly");
             return "feed_edit";
         }
 
         if (feed.getId() == null || feed.getId().equals(0L)) {
-            logger.info("inserting feed = " + feed);
+            messageProvider.addInfoMessage("New feed successfully added");
             feedService.insert(feed);
         }
         else {
-            logger.info("updating feed = " + feed);
+            messageProvider.addInfoMessage("Feed successfully saved");
             feedService.update(feed);
         }
 
-        return "redirect:/feeds/?success=true";
+        return "redirect:/feeds/";
     }
 
 }
