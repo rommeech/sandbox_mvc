@@ -77,11 +77,12 @@ public class BotController extends AbstractController {
         else {
             if (bot.getId() == null || bot.getId() == 0L) {
                 botService.insert(bot);
+                messageProvider.addInfoMessage("Successfully added");
             }
             else {
                 botService.update(bot);
+                messageProvider.addInfoMessage("Successfully updated");
             }
-            messageProvider.addInfoMessage("Successfully saved");
             model.setViewName("redirect:/bots/");
         }
 

@@ -12,7 +12,6 @@ import org.rp.sandboxmvc.model.Bot;
 import org.rp.sandboxmvc.model.Channel;
 import org.rp.sandboxmvc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -82,14 +81,17 @@ public class ChannelController {
         if (result.hasErrors()) {
             logger.error(result.getAllErrors());
             initEditModel(model);
+            messageProvider.addWarningMessage("Please fill the form properly");
             return "channel_edit";
         }
 
         if (channel.getId() == null) {
             channelService.insert(channel);
+            messageProvider.addInfoMessage("Successfully added");
         }
         else {
             channelService.update(channel);
+            messageProvider.addInfoMessage("Successfully inserted");
         }
 
         return "redirect:/channels/";
@@ -105,7 +107,9 @@ public class ChannelController {
 
         channelService.delete(channel);
 
-        return "redirect:/channels/?success=true";
+        messageProvider.addInfoMessage("Successfully deleted");
+
+        return "redirect:/channels/";
     }
 
     @RequestMapping(value = "/view/{id}/", method = RequestMethod.GET)

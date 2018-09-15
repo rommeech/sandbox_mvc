@@ -78,12 +78,12 @@ public class FeedController extends AbstractController {
         }
 
         if (feed.getId() == null || feed.getId().equals(0L)) {
-            messageProvider.addInfoMessage("New feed successfully added");
             feedService.insert(feed);
+            messageProvider.addInfoMessage("New feed successfully added");
         }
         else {
-            messageProvider.addInfoMessage("Feed successfully saved");
             feedService.update(feed);
+            messageProvider.addInfoMessage("Feed successfully saved");
         }
 
         return "redirect:/feeds/";
