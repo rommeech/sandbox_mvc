@@ -2,91 +2,33 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="tg" tagdir="/WEB-INF/tags" %>
 
-<c:choose>
-    <c:when test="${bot.id != null}">
-        <c:set var="title" value="BotId=${bot.id} / Telegram Bots" scope="request"/>
-    </c:when>
-    <c:otherwise>
-        <c:set var="title" value="New Bot / Telegram Bots" scope="request"/>
-    </c:otherwise>
-</c:choose>
+<c:set var="isNew" value="${bot.id == null ? true : false}"/>
+<c:set var="title" value="${isNew ? 'Add new' : bot.name} / Telegram bots" scope="request"/>
 
-<!doctype html>
-<html>
-<jsp:include page="include/metadata.jsp"/>
-<body>
+<spring:url var="linkSave" value="/bots/save/"/>
+<spring:url var="linkList" value="/bots/"/>
 
-<jsp:include page="include/header.jsp"/>
+<tg:wrapper>
+    <jsp:attribute name="subnav">
+        <a href="${linkList}"><spring:message code="bot.linkList"/></a>
+    </jsp:attribute>
 
-<nav class="sub-nav">
-    <a href="<spring:url value='/bots/'/>">Bot list</a>
-</nav>
-
-<main>
-
-    <jsp:include page="include/messages.jsp"/>
-
-    <spring:url var="formAction" value="/bots/save/"/>
-    <form:form modelAttribute="bot" acceptCharset="UTF-8" method="POST" action="${formAction}">
-        <form:hidden path="id"/>
-        <form:hidden path="version"/>
-
-        <div class="div_edit">
-            <div class="div_edit_row">
-                <div class="div_edit_legend">
-                    <spring:message text="Name"/>
-                    <div class="div_edit_error"><form:errors path="name"/></div>
-                </div>
-                <div class="div_edit_input"><form:input path="name"/></div>
-            </div>
-            <div class="div_edit_row">
-                <div class="div_edit_legend">
-                    <spring:message text="Username"/>
-                    <div class="div_edit_error"><form:errors path="username"/></div>
-                </div>
-                <div class="div_edit_input"><form:input path="username"/></div>
-            </div>
-            <div class="div_edit_row">
-                <div class="div_edit_legend">
-                    <spring:message text="Token"/>
-                    <div class="div_edit_error"><form:errors path="token"/></div>
-                </div>
-                <div class="div_edit_input"><form:input path="token"/></div>
-            </div>
-            <div class="div_edit_row">
-                <div class="div_edit_legend">
-                    <spring:message text="Bot Picrute URL"/>
-                    <div class="div_edit_error"><form:errors path="botpic"/></div>
-                </div>
-                <div class="div_edit_input"><form:input path="botpic"/></div>
-            </div>
-            <div class="div_edit_row">
-                <div class="div_edit_legend">
-                    <spring:message text="About"/>
-                    <div class="div_edit_error"><form:errors path="about"/></div>
-                </div>
-                <div class="div_edit_input"><form:textarea rows="6" path="about"/></div>
-            </div>
-            <div class="div_edit_row">
-                <div class="div_edit_legend">
-                    <spring:message text="Description"/>
-                    <div class="div_edit_error"><form:errors path="description"/></div>
-                </div>
-                <div class="div_edit_input"><form:textarea rows="6" path="description"/></div>
-            </div>
-            <div class="div_edit_row">
-                <div class="div_edit_legend"></div>
-                <div class="div_edit_input">
-                    <form:button>Save</form:button>
-                    <a href="<spring:url value="/bots/"/>">Cancel</a>
-                </div>
-            </div>
-        </div>
-    </form:form>
-</main>
-
-<jsp:include page="include/footer.jsp"/>
-
-</body>
-</html>
+    <jsp:body>
+        <tg:formWrapper model="bot" formAction="${linkSave}" cancelLink="${linkList}">
+            <jsp:attribute name="hiddenFields">
+                <form:hidden path="id"/>
+                <form:hidden path="version"/>
+            </jsp:attribute>
+            <jsp:body>
+                <tg:formInput field="name" legendCode="bot.name"/>
+                <tg:formInput field="username" legendCode="bot.username"/>
+                <tg:formInput field="token" legendCode="bot.token"/>
+                <tg:formInput field="botpic" legendCode="bot.botpic"/>
+                <tg:formTextarea rows="3" field="about" legendCode="bot.about"/>
+                <tg:formTextarea rows="3" field="description" legendCode="bot.about"/>
+            </jsp:body>
+        </tg:formWrapper>
+    </jsp:body>
+</tg:wrapper>

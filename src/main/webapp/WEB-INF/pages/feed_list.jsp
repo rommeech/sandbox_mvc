@@ -2,7 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
-<c:set var="title" value="Feeds" scope="request"/>
+<spring:message var="title" code="feed.title" scope="request"/>
 
 <!doctype html>
 <html>
@@ -38,9 +38,9 @@
                 <td class="numeric">${feed.jobInterval}</td>
                 <td class="numeric">${feed.nextJob}</td>
                 <td class="td_buttons">
-                    <a href="<spring:url value="/feeds/delete/${feed.id}/"/>"><spring:message text="delete"/></a>
-                    <a href="<spring:url value="/feeds/edit/${feed.id}/"/>"><spring:message text="edit"/></a>
-                    <a href="<spring:url value="/posts/?feed=${feed.id}"/>"><spring:message text="posts"/></a>
+                    <a href="<spring:url value="/feeds/delete/${feed.id}/"/>"><spring:message code="action.delete"/></a>
+                    <a href="<spring:url value="/feeds/edit/${feed.id}/"/>"><spring:message code="action.edit"/></a>
+                    <a href="<spring:url value="/posts/?feed=${feed.id}"/>"><spring:message code="action.posts"/></a>
                 </td>
             </tr>
         </c:forEach>

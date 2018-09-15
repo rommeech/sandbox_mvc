@@ -3,6 +3,7 @@ package org.rp.sandboxmvc.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.rp.sandboxmvc.dao.SearchCriteria;
+import org.rp.sandboxmvc.helper.MessageProvider;
 import org.rp.sandboxmvc.model.Bot;
 import org.rp.sandboxmvc.service.BotService;
 import org.rp.sandboxmvc.validator.BotValidator;
@@ -18,13 +19,14 @@ import javax.validation.Valid;
 @RequestMapping("/bots/")
 public class BotController extends AbstractController {
 
-    private final BotService botService;
     private static final Logger logger = LogManager.getLogger(BotController.class);
 
     @Autowired
-    public BotController(BotService botService) {
-        this.botService = botService;
-    }
+    private BotService botService;
+
+    @Autowired
+    private MessageProvider messageProvider;
+
 
     @RequestMapping(value = {"/", "/list/"}, method = RequestMethod.GET)
     public ModelAndView botList(SearchCriteria searchCriteria) {
@@ -69,6 +71,7 @@ public class BotController extends AbstractController {
 
         if (result.hasErrors()) {
             logger.error("Cannot save bot, validation errors: " + result.toString());
+            messageProvider.addWarningMessage("Please fill the form properly");
             model.setViewName("bot_edit");
         }
         else {
@@ -78,7 +81,8 @@ public class BotController extends AbstractController {
             else {
                 botService.update(bot);
             }
-            model.setViewName("redirect:/bots/?success=true");
+            messageProvider.addInfoMessage("Successfully saved");
+            model.setViewName("redirect:/bots/");
         }
 
         return model;
@@ -96,7 +100,8 @@ public class BotController extends AbstractController {
         botService.delete(bot);
 
         ModelAndView model = new ModelAndView();
-        model.setViewName("redirect:/bots/?success=true");
+        messageProvider.addInfoMessage("Successfully deleted");
+        model.setViewName("redirect:/bots/");
         return model;
     }
 
