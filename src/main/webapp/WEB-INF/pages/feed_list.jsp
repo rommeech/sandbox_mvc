@@ -41,6 +41,7 @@
                     <a href="<spring:url value="/feeds/delete/${feed.id}/"/>"><spring:message code="action.delete"/></a>
                     <a href="<spring:url value="/feeds/edit/${feed.id}/"/>"><spring:message code="action.edit"/></a>
                     <a href="<spring:url value="/posts/?feed=${feed.id}"/>"><spring:message code="action.posts"/></a>
+                    <a href="<spring:url value="/read/${feed.id}/"/>"><spring:message code="action.read"/></a>
                 </td>
             </tr>
         </c:forEach>

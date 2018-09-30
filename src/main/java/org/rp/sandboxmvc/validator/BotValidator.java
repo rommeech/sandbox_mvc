@@ -5,6 +5,7 @@ import org.rp.sandboxmvc.service.BotService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 
@@ -33,9 +34,11 @@ public class BotValidator implements Validator {
 
         Bot bot = (Bot) target;
 
-        if (bot.getName() == null || bot.getName().isEmpty()) {
+        ValidationUtils.rejectIfEmpty(errors, "name", "bot.validator.error.name.empty");
+
+        /*if (bot.getName() == null || bot.getName().isEmpty()) {
             errors.rejectValue("name", "bot.validator.error.name.empty");
-        }
+        }*/
 
         if (bot.getToken() == null || bot.getToken().isEmpty()) {
             errors.rejectValue("token", "bot.validator.error.token.empty");
