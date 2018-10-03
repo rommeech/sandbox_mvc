@@ -7,6 +7,7 @@ import org.rp.sandboxmvc.helper.MessageProvider;
 import org.rp.sandboxmvc.model.Status;
 import org.rp.sandboxmvc.model.Feed;
 import org.rp.sandboxmvc.service.FeedService;
+import org.rp.sandboxmvc.service.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,8 +17,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
 
-@Controller
-@RequestMapping("/feeds")
+@Controller(value = "feedController")
+@RequestMapping(value = "/feeds")
 public class FeedController extends AbstractController {
 
     private static Logger logger = LogManager.getLogger(FeedController.class);
@@ -29,29 +30,45 @@ public class FeedController extends AbstractController {
     private MessageProvider messageProvider;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String feedList(Model model, SearchCriteria searchCriteria) {
-        model.addAttribute("feeds", feedService.getFeeds(searchCriteria));
-        model.addAttribute("total", feedService.countFeeds(searchCriteria));
-        model.addAttribute("searchCriteria", searchCriteria);
-        return "feed_list";
+    public ModelAndView feedList(SearchCriteria searchCriteria) {
+        ModelAndView model = new ModelAndView();
+        model.addObject("feeds", feedService.getFeeds(searchCriteria));
+        model.addObject("total", feedService.countFeeds(searchCriteria));
+        model.addObject("searchCriteria", searchCriteria);
+        model.setViewName("feed_list");
+        return model;
     }
 
     @RequestMapping(value = "/delete/{id}/", method = RequestMethod.GET)
-    public String feedDelete(@PathVariable Long id) {
+    public ModelAndView feedDelete(@PathVariable Long id) {
+        // TODO: Invalid service method, here should
+        // TODO: call all delete methods as REST service
         feedService.delete(id);
         messageProvider.addInfoMessage("Feed successfully deleted");
-        return "redirect:/feeds/";
+        ModelAndView model = new ModelAndView();
+        model.setViewName("redirect:/feeds/");
+        return model;
     }
 
+    @RequestMapping(value = "/read/{id}/", method = RequestMethod.GET)
+    public ModelAndView feedRead(@PathVariable Long id) {
+        Feed feed = getByIdOrShow404(id);
+
+        try {
+            feedService.readPosts(feed);
+            messageProvider.addInfoMessage("Feed " + feed.getId() + " " + feed.getFeedUrl() + " read successfully");
+        } catch (ServiceException e) {
+            messageProvider.addErrorMessage("Cannot read feed: " + e.getStackTrace());
+        }
+
+        ModelAndView model = new ModelAndView();
+        model.setViewName("redirect:/feeds/");
+        return model;
+    }
 
     @RequestMapping(value = "/edit/{id}/", method = RequestMethod.GET)
     public ModelAndView feedEdit(@PathVariable Long id) {
-
-        Feed feed = feedService.getById(id);
-        if (feed == null) {
-            throw new NotFoundException();
-        }
-
+        Feed feed = getByIdOrShow404(id);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("feed", feed);
         modelAndView.addObject("statusList", Status.values());
@@ -68,13 +85,14 @@ public class FeedController extends AbstractController {
     }
 
     @RequestMapping(value = "/save/", method = RequestMethod.POST)
-    public String feedSave(Model model, @ModelAttribute("feed") @Valid Feed feed, BindingResult result) {
+    public ModelAndView feedSave(@ModelAttribute("feed") @Valid Feed feed, BindingResult result) {
+
+        ModelAndView model = new ModelAndView();
 
         if (result.hasErrors()) {
             logger.error(result.getAllErrors());
-            model.addAttribute("errorMsg", this.getErrors(result));
             messageProvider.addWarningMessage("Please fill the form properly");
-            return "feed_edit";
+            return model;
         }
 
         if (feed.getId() == null || feed.getId().equals(0L)) {
@@ -86,7 +104,16 @@ public class FeedController extends AbstractController {
             messageProvider.addInfoMessage("Feed successfully saved");
         }
 
-        return "redirect:/feeds/";
+        model.setViewName("redirect:/feeds/");
+        return model;
     }
 
+    private Feed getByIdOrShow404(Long id) {
+        Feed feed = feedService.getById(id);
+        if (feed == null) {
+            logger.error("Feed not found, invalid id=" + id);
+            throw new NotFoundException();
+        }
+        return feed;
+    }
 }

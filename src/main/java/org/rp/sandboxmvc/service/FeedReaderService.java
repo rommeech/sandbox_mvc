@@ -4,7 +4,11 @@ import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
+import net.bytebuddy.asm.Advice;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.rp.sandboxmvc.dao.FeedDao;
+import org.rp.sandboxmvc.dao.PostDao;
 import org.rp.sandboxmvc.model.Feed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,8 +21,13 @@ import java.util.List;
 @Service
 public class FeedReaderService {
 
+    private static final Logger logger = LogManager.getLogger(FeedReaderService.class);
+
     @Autowired
     private FeedDao feedDao;
+
+    @Autowired
+    private PostDao postDao;
 
     public void readAllFeeds() throws ServiceException {
         List<Feed> feeds = feedDao.getAllFeeds();
@@ -27,10 +36,10 @@ public class FeedReaderService {
         }
     }
 
-    private void readFeed(Feed feed) throws ServiceException {
+    public void readFeed(Feed feed) throws ServiceException {
 
         SyndFeed syndFeed = getSyndFeed(feed);
-        System.out.println(syndFeed);
+        logger.info(syndFeed);
 
     }
 

@@ -12,13 +12,11 @@ import java.util.List;
 @Service
 public class FeedService {
 
-    private final FeedDao feedDao;
+    @Autowired
+    private FeedDao feedDao;
 
     @Autowired
-    public FeedService(FeedDao feedDao) {
-        this.feedDao = feedDao;
-    }
-
+    private FeedReaderService feedReaderService;
 
     @Transactional(readOnly = true)
     public List<Feed> getAllFeeds() {
@@ -56,6 +54,10 @@ public class FeedService {
     @Transactional
     public void delete(Long id) {
         feedDao.delete(this.getById(id));
+    }
+
+    public void readPosts(Feed feed) throws ServiceException {
+        feedReaderService.readFeed(feed);
     }
 
 }
