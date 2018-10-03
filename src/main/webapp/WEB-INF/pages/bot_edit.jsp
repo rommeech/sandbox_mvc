@@ -5,14 +5,16 @@
 <%@ taglib prefix="tg" tagdir="/WEB-INF/tags" %>
 
 <c:set var="isNew" value="${bot.id == null ? true : false}"/>
-<c:set var="title" value="${isNew ? 'Add new' : bot.name} / Telegram bots" scope="request"/>
+<spring:message var="baseTitle" code="bot.page.title"/>
+<spring:message var="addNewItem" code="bot.page.addNewItem" scope="request"/>
+<spring:message var="title" text="${isNew ? addNewItem : bot.name} / ${baseTitle}" scope="request"/>
 
 <spring:url var="linkSave" value="/bots/save/"/>
 <spring:url var="linkList" value="/bots/"/>
 
 <tg:wrapper>
     <jsp:attribute name="subnav">
-        <a href="${linkList}"><spring:message code="bot.linkList"/></a>
+        <a href="${linkList}"><spring:message code="bot.page.backToList"/></a>
     </jsp:attribute>
 
     <jsp:body>

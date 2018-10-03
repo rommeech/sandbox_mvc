@@ -2,89 +2,43 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="tg" tagdir="/WEB-INF/tags" %>
 
-<c:choose>
-    <c:when test="${feed.id != null}">
-        <c:set var="title" value="FeedId=${feed.id} / Feeds" scope="request"/>
-    </c:when>
-    <c:otherwise>
-        <c:set var="title" value="New Feed / Feeds" scope="request"/>
-    </c:otherwise>
-</c:choose>
+<c:set var="isNew" value="${feed.id == null ? true : false}"/>
+<spring:message var="baseTitle" code="feed.title"/>
+<spring:message var="addNewItem" code="feed.page.addNewItem" scope="request"/>
+<spring:message var="title" text="${isNew ? addNewItem : feed.title} / ${baseTitle}" scope="request"/>
 
-<!doctype html>
-<html>
-<jsp:include page="include/metadata.jsp"/>
-<body>
+<spring:url var="linkSave" value="/feeds/save/"/>
+<spring:url var="linkList" value="/feeds/"/>
 
-<jsp:include page="include/header.jsp"/>
+<tg:wrapper>
 
-<nav class="sub-nav">
-    <a href="<spring:url value='/feeds/'/>">Feed list</a>
-    <c:if test="${!empty feed.id}"><a href="<spring:url value='/posts/?feed=${feed.id}'/>">Posts</a></c:if>
-</nav>
+    <jsp:attribute name="subnav">
+        <a href="<spring:url value='/feeds/'/>"><spring:message code="feed.page.backToList"/></a>
+    </jsp:attribute>
 
-<jsp:include page="include/messages.jsp"/>
+    <jsp:body>
+        <tg:formWrapper model="feed" formAction="${linkSave}" cancelLink="${linkList}">
 
-<main>
-    <spring:url var="formAction" value="/feeds/save/"/>
-    <form:form modelAttribute="feed" acceptCharset="UTF-8" method="POST" action="${formAction}">
-        <form:hidden path="id"/>
-        <form:hidden path="version"/>
+            <jsp:attribute name="hiddenFields">
+                <form:hidden path="id"/>
+                <form:hidden path="version"/>
+            </jsp:attribute>
 
-        <table class="table_edit">
+            <jsp:body>
+                <tg:formSelect field="status" legendCode="feed.status" items="${statusList}"/>
+                <tg:formInput field="title" legendCode="feed.title"/>
+                <tg:formInput field="feedUrl" legendCode="feed.feedUrl"/>
+                <tg:formInput field="jobInterval" legendCode="feed.jobInterval" cssClass="small"/>
+                <tg:formInput field="nextJob" legendCode="feed.nextJob" cssClass="medium"/>
+                <tg:formInput field="author" legendCode="feed.author" cssClass="medium"/>
+                <tg:formInput field="logoUrl" legendCode="feed.logoUrl"/>
+                <tg:formInput field="iconUrl" legendCode="feed.iconUrl"/>
+                <tg:formTextarea rows="3" field="description" legendCode="feed.description"/>
+            </jsp:body>
 
-            <tr>
-                <td class="td_legend"><spring:message text="Status"/></td>
-                <td><form:select path="status">
-                    <form:options items="${statusList}" path="status" />
-                </form:select></td>
-            </tr>
-            <tr>
-                <td class="td_legend"><spring:message text="Icon URL"/></td>
-                <td><form:input path="iconUrl"/></td>
-            </tr>
-            <tr>
-                <td class="td_legend"><spring:message text="Logo URL"/></td>
-                <td><form:input path="logoUrl"/></td>
-            </tr>
-            <tr>
-                <td class="td_legend"><spring:message text="Feed URL"/></td>
-                <td><form:input path="feedUrl"/></td>
-            </tr>
-            <tr>
-                <td class="td_legend"><spring:message text="Title"/></td>
-                <td><form:input path="title"/></td>
-            </tr>
-            <tr>
-                <td class="td_legend"><spring:message text="Author"/></td>
-                <td><form:input path="author"/></td>
-            </tr>
-            <tr>
-                <td class="td_legend"><spring:message text="Description"/></td>
-                <td><form:input path="description"/></td>
-            </tr>
-            <tr>
-                <td class="td_legend"><spring:message text="Job interval, ms"/></td>
-                <td><form:input path="jobInterval"/></td>
-            </tr>
-            <tr>
-                <td class="td_legend"><spring:message text="Next job"/></td>
-                <td><form:input path="nextJob"/></td>
-            </tr>
+        </tg:formWrapper>
+    </jsp:body>
 
-            <tr>
-                <td></td>
-                <td>
-                    <form:button>Save</form:button>
-                    <a href="<spring:url value="/feeds/"/>">Cancel</a>
-                </td>
-            </tr>
-        </table>
-    </form:form>
-</main>
-
-<jsp:include page="include/footer.jsp"/>
-
-</body>
-</html>
+</tg:wrapper>

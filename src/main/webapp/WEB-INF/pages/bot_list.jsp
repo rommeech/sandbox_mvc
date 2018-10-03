@@ -3,12 +3,14 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <%@ taglib prefix="tg" tagdir="/WEB-INF/tags" %>
 
-<spring:message var="title" code="bot.title" scope="request"/>
+<spring:message var="title" code="bot.page.title" scope="request"/>
 
 <tg:wrapper>
+
     <jsp:attribute name="subnav">
-        <a href="<spring:url value='/bots/new/'/>"><spring:message code="bot.addList"/></a>
+        <a href="<spring:url value='/bots/new/'/>"><spring:message code="bot.page.addNewItem"/></a>
     </jsp:attribute>
+
     <jsp:body>
         <table class="table_list">
             <tr>
@@ -31,6 +33,6 @@
                 </tr>
             </c:forEach>
         </table>
-        <jsp:include page="/WEB-INF/pages/include/paginator.jsp"/>
     </jsp:body>
+
 </tg:wrapper>

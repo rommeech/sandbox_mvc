@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.Arrays;
 
 @Controller(value = "feedController")
 @RequestMapping(value = "/feeds")
@@ -71,7 +73,7 @@ public class FeedController extends AbstractController {
         Feed feed = getByIdOrShow404(id);
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("feed", feed);
-        modelAndView.addObject("statusList", Status.values());
+        modelAndView.addObject("statusList", Arrays.asList(Status.values()));
         modelAndView.setViewName("feed_edit");
         return modelAndView;
     }
@@ -80,6 +82,7 @@ public class FeedController extends AbstractController {
     public ModelAndView feedNew() {
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("feed", new Feed());
+        modelAndView.addObject("statusList", Arrays.asList(Status.values()));
         modelAndView.setViewName("feed_edit");
         return modelAndView;
     }

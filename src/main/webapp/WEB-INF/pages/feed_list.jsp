@@ -1,57 +1,45 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8"  pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
+<%@ taglib prefix="tg" tagdir="/WEB-INF/tags" %>
 
-<spring:message var="title" code="feed.title" scope="request"/>
+<spring:message var="title" code="feed.page.title" scope="request"/>
 
-<!doctype html>
-<html>
-<jsp:include page="include/metadata.jsp"/>
-<body>
+<tg:wrapper>
 
-<jsp:include page="include/header.jsp"/>
+    <jsp:attribute name="subnav">
+        <a href="<spring:url value='/feeds/new/'/>"><spring:message code="feed.page.addNewItem"/></a>
+    </jsp:attribute>
 
-<nav class="sub-nav">
-    <a href="<spring:url value='/feeds/new/'/>"><spring:message text="Add new feed"/></a>
-</nav>
-
-<jsp:include page="include/messages.jsp"/>
-
-<main>
-
-    <table class="table_list">
-        <tr>
-            <th class="numeric"><spring:message text="ID"/></th>
-            <th><spring:message text="Status"/></th>
-            <th><spring:message text="Title"/></th>
-            <th><spring:message text="Url"/></th>
-            <th class="numeric"><spring:message text="Job Interval, ms"/></th>
-            <th class="numeric"><spring:message text="Next Job"/></th>
-            <th>&nbsp;</th>
-        </tr>
-        <c:forEach items="${feeds}" var="feed">
+    <jsp:body>
+        <table class="table_list">
             <tr>
-                <td class="numeric">${feed.id}</td>
-                <td>${feed.status}</td>
-                <td>${feed.title}</td>
-                <td>${feed.feedUrl}</td>
-                <td class="numeric">${feed.jobInterval}</td>
-                <td class="numeric">${feed.nextJob}</td>
-                <td class="td_buttons">
-                    <a href="<spring:url value="/feeds/delete/${feed.id}/"/>"><spring:message code="action.delete"/></a>
-                    <a href="<spring:url value="/feeds/edit/${feed.id}/"/>"><spring:message code="action.edit"/></a>
-                    <a href="<spring:url value="/posts/?feed=${feed.id}"/>"><spring:message code="action.posts"/></a>
-                    <a href="<spring:url value="/feeds/read/${feed.id}/"/>"><spring:message code="action.read"/></a>
-                </td>
+                <th class="numeric"><spring:message code="feed.id"/></th>
+                <th><spring:message code="feed.status"/></th>
+                <th><spring:message code="feed.title"/></th>
+                <th><spring:message code="feed.feedUrl"/></th>
+                <th class="numeric"><spring:message code="feed.jobInterval"/></th>
+                <th class="numeric"><spring:message code="feed.nextJob"/></th>
+                <th>&nbsp;</th>
             </tr>
-        </c:forEach>
-    </table>
+            <c:forEach items="${feeds}" var="feed">
+                <tr>
+                    <td class="numeric">${feed.id}</td>
+                    <td>${feed.status}</td>
+                    <td>${feed.title}</td>
+                    <td>${feed.feedUrl}</td>
+                    <td class="numeric">${feed.jobInterval}</td>
+                    <td class="numeric">${feed.nextJob}</td>
+                    <td class="td_buttons">
+                        <a href="<spring:url value="/feeds/delete/${feed.id}/"/>"><spring:message code="action.delete"/></a>
+                        <a href="<spring:url value="/feeds/edit/${feed.id}/"/>"><spring:message code="action.edit"/></a>
+                        <a href="<spring:url value="/posts/?feed=${feed.id}"/>"><spring:message code="action.posts"/></a>
+                        <a href="<spring:url value="/feeds/read/${feed.id}/"/>"><spring:message code="action.read"/></a>
+                    </td>
+                </tr>
+            </c:forEach>
+        </table>
+    </jsp:body>
 
-    <jsp:include page="include/paginator.jsp"/>
+</tg:wrapper>
 
-</main>
-
-<jsp:include page="include/footer.jsp"/>
-
-</body>
-</html>
