@@ -44,6 +44,10 @@ input, textarea {
     min-width: 512px;
 }
 
+select, option {
+    padding: 4px 8px 4px 8px;
+}
+
 input.field_error {
     border-color: darkred;
 }
@@ -252,14 +256,16 @@ div.info_msg {
 }
 
 div.edit_form { padding: 0; margin: 0; display: inline-block; }
-div.edit_row { padding: 0; margin: 0 0 4px 0; vertical-align: top; border-bottom: 1px solid #515151; }
+div.edit_row { padding: 4px 0 0 0; margin: 0 0 0 0; vertical-align: top; border-top: 1px solid #515151; }
 div.edit_legend { width: 196px; display: inline-block; padding: 6px 4px 4px 0; margin: 0; font-weight: bold;
     text-align: right; vertical-align: top; }
 div.edit_input{ display: inline-block; padding: 0 32px 4px 4px; margin: 0; vertical-align: top; }
 
 div.form_buttons {
-    padding: 0;
-    margin: 8px 0 0 208px;
+    border-top: 1px solid #515151;
+    border-bottom: 1px solid #515151;
+    padding: 8px 0 8px 208px;
+    margin: 0;
 }
 
 div.field_radiobuttons span {

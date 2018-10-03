@@ -27,7 +27,8 @@
             </jsp:attribute>
 
             <jsp:body>
-                <tg:formSelect field="status" legendCode="feed.status" items="${statusList}"/>
+                <tg:formSelect field="status" legendCode="feed.status"
+                               items="${statusList}" itemLabel="itemLabel" itemValue="itemValue" />
                 <tg:formInput field="title" legendCode="feed.title"/>
                 <tg:formInput field="feedUrl" legendCode="feed.feedUrl"/>
                 <tg:formInput field="jobInterval" legendCode="feed.jobInterval" cssClass="small"/>

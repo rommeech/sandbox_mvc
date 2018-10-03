@@ -1,5 +1,17 @@
 package org.rp.sandboxmvc.model;
 
-public enum Status {
-    NEW, ACTIVE, DISABLED
+import org.rp.sandboxmvc.helper.JspListPompatibleItem;
+
+public enum Status implements JspListPompatibleItem<String, String> {
+    NEW, ACTIVE, DISABLED;
+
+    @Override
+    public String getItemValue() {
+        return name();
+    }
+
+    @Override
+    public String getItemLabel() {
+        return name();
+    }
 }
