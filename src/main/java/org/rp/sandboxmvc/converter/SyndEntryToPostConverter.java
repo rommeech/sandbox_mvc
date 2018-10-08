@@ -25,6 +25,9 @@ public class SyndEntryToPostConverter implements Converter<SyndEntry, Post> {
         if (syndEntry.getPublishedDate() != null) {
             post.setPubDate(new Timestamp(syndEntry.getPublishedDate().getTime()));
         }
+        else if (syndEntry.getUpdatedDate() != null) {
+            post.setPubDate(new Timestamp((syndEntry.getUpdatedDate().getTime())));
+        }
 
         post.setTitle(syndEntry.getTitle());
         return post;

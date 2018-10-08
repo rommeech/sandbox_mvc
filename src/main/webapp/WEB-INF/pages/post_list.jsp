@@ -49,7 +49,7 @@
         <c:forEach items="${posts}" var="post">
             <tr>
                 <td class="numeric">${post.id}</td>
-                <td>${post.author}</td>
+                <td>${post.pubDate != null ? post.pubDate : post.dateCreated}</td>
                 <td>${post.title}</td>
                 <td class="td_buttons"><a href="<spring:url value="/posts/view/${post.id}/"/>">view</a></td>
             </tr>
