@@ -1,7 +1,10 @@
 package org.rp.sandboxmvc.model;
 
+import org.springframework.stereotype.Component;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -34,6 +37,9 @@ public class Post extends AbstractModel<Long> {
     @NotNull
     @Column(name = "post_xid")
     private String postXid;
+
+    @Column(name = "pub_date")
+    private Timestamp pubDate;
 
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     private List<Publication> publications = new ArrayList<>();
@@ -106,6 +112,14 @@ public class Post extends AbstractModel<Long> {
         this.publications = publications;
     }
 
+    public Timestamp getPubDate() {
+        return pubDate;
+    }
+
+    public void setPubDate(Timestamp pubDate) {
+        this.pubDate = pubDate;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -141,6 +155,7 @@ public class Post extends AbstractModel<Long> {
                 ", postXid='" + postXid + '\'' +
                 '}';
     }
+
 
 
 }

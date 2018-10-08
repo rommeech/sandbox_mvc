@@ -4,6 +4,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.rp.sandboxmvc.helper.PostSearchCriteria;
 import org.rp.sandboxmvc.model.AbstractModel;
+import org.rp.sandboxmvc.model.Feed;
+import org.rp.sandboxmvc.model.Post;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
