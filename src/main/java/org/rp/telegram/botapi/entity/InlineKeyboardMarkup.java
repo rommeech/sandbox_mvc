@@ -3,8 +3,9 @@ package org.rp.telegram.botapi.entity;
 import java.util.List;
 import java.util.Objects;
 
-//TODO: add javadoc
-//TODO: add unit test for converter to json
+// TODO: add javadoc
+// TODO: add unit test for converter to json
+// TODO: add builder
 
 /**
  * This object represents an inline keyboard that appears right next to the message it belongs to.
@@ -20,6 +21,7 @@ public class InlineKeyboardMarkup extends AbstractEntity {
     private static final long serialVersionUID = 3870153957160849228L;
 
     // TODO: add smart setter methods and constructor
+    // TODO: @Required
     private List<List<InlineKeyboardButton>> inlineKeyboard;
 
     public InlineKeyboardMarkup() {
