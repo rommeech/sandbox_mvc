@@ -1,5 +1,9 @@
 package org.rp.telegram.botapi.request;
 
+import org.rp.telegram.botapi.entity.ForceReply;
+import org.rp.telegram.botapi.entity.InlineKeyboardMarkup;
+import org.rp.telegram.botapi.entity.ReplyKeyboardMarkup;
+import org.rp.telegram.botapi.entity.ReplyKeyboardRemove;
 import org.rp.telegram.botapi.helper.FormatOption;
 
 import java.io.Serializable;
@@ -7,6 +11,8 @@ import java.util.Objects;
 
 public class SendMessageRequest implements Serializable {
     private static final long serialVersionUID = 7472599720120541333L;
+
+    // TODO: Add some annotation to convert field to json-field in request
 
     // TODO: @Required // @NotEmpty
     private String chatId;
@@ -19,12 +25,10 @@ public class SendMessageRequest implements Serializable {
     private Boolean disableNotification;
     private Integer replyToMessageId;
 
-    /* TODO:
     private InlineKeyboardMarkup replyMarkupInlineKeyboardMarkup;
     private ReplyKeyboardMarkup replyMarkupReplyKeyboardMarkup;
     private ReplyKeyboardRemove replyMarkupReplyKeyboardRemove;
     private ForceReply replyMarkupForceReply;
-    */
 
     public SendMessageRequest() {
     }
