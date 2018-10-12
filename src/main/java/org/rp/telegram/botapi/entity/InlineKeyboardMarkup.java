@@ -37,6 +37,7 @@ public class InlineKeyboardMarkup extends AbstractEntity {
 
     /**
      * Each row represented by an Array of InlineKeyboardButton objects
+     *
      * @param   inlineKeyboard   Array of button rows
      */
     public void setInlineKeyboard(List<List<InlineKeyboardButton>> inlineKeyboard) {
