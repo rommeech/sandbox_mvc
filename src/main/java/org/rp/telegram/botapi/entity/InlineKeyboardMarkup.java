@@ -16,7 +16,7 @@ import java.util.Objects;
  * @since         1.0
  * @apiVersion    4.1
  */
-public class InlineKeyboardMarkup implements Serializable {
+public class InlineKeyboardMarkup extends AbstractEntity {
 
     private static final long serialVersionUID = 3870153957160849228L;
 

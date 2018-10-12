@@ -9,7 +9,9 @@ package org.rp.telegram.botapi.entity;
  * @since         1.0
  * @apiVersion    4.1
  */
-public class CallbackGame {
+public class CallbackGame extends AbstractEntity {
+    private static final long serialVersionUID = -5535788531965254402L;
+
     public CallbackGame() {
     }
 

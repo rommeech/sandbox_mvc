@@ -15,7 +15,7 @@ import java.util.Objects;
  * @since         1.0
  * @apiVersion    4.1
  */
-public class InlineKeyboardButton implements Serializable {
+public class InlineKeyboardButton extends AbstractEntity {
 
     private static final long serialVersionUID = 6257129681414814309L;
 

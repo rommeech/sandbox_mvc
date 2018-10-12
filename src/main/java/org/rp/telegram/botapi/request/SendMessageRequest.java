@@ -1,9 +1,6 @@
 package org.rp.telegram.botapi.request;
 
-import org.rp.telegram.botapi.entity.ForceReply;
-import org.rp.telegram.botapi.entity.InlineKeyboardMarkup;
-import org.rp.telegram.botapi.entity.ReplyKeyboardMarkup;
-import org.rp.telegram.botapi.entity.ReplyKeyboardRemove;
+import org.rp.telegram.botapi.entity.*;
 import org.rp.telegram.botapi.helper.FormatOption;
 
 import java.io.Serializable;
@@ -34,11 +31,7 @@ public class SendMessageRequest implements Serializable {
     private Boolean disableWebPagePreview;
     private Boolean disableNotification;
     private Integer replyToMessageId;
-
-    private InlineKeyboardMarkup replyMarkupInlineKeyboardMarkup;
-    private ReplyKeyboardMarkup replyMarkupReplyKeyboardMarkup;
-    private ReplyKeyboardRemove replyMarkupReplyKeyboardRemove;
-    private ForceReply replyMarkupForceReply;
+    private AbstractEntity replyMarkup;
 
     public SendMessageRequest() {
     }
@@ -50,6 +43,7 @@ public class SendMessageRequest implements Serializable {
         this.disableWebPagePreview = builder.disableWebPagePreview;
         this.disableNotification = builder.disableNotification;
         this.replyToMessageId = builder.replyToMessageId;
+        this.replyMarkup = builder.replyMarkup;
     }
 
     public String getChatId() {
@@ -100,6 +94,26 @@ public class SendMessageRequest implements Serializable {
         this.replyToMessageId = replyToMessageId;
     }
 
+    public AbstractEntity getReplyMarkup() {
+        return replyMarkup;
+    }
+
+    public void setReplyMarkup(InlineKeyboardMarkup replyMarkup) {
+        this.replyMarkup = replyMarkup;
+    }
+
+    public void setReplyMarkup(ReplyKeyboardMarkup replyMarkup) {
+        this.replyMarkup = replyMarkup;
+    }
+
+    public void setReplyMarkup(ReplyKeyboardRemove replyMarkup) {
+        this.replyMarkup = replyMarkup;
+    }
+
+    public void setReplyMarkup(ForceReply replyMarkup) {
+        this.replyMarkup = replyMarkup;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -139,6 +153,7 @@ public class SendMessageRequest implements Serializable {
         private Boolean disableWebPagePreview;
         private Boolean disableNotification;
         private Integer replyToMessageId;
+        private AbstractEntity replyMarkup;
 
         public Builder() {
 
@@ -171,6 +186,26 @@ public class SendMessageRequest implements Serializable {
 
         public Builder replyToMessageId(Integer replyToMessageId) {
             this.replyToMessageId = replyToMessageId;
+            return this;
+        }
+
+        public Builder replyMarkup(InlineKeyboardMarkup replyMarkup) {
+            this.replyMarkup = replyMarkup;
+            return this;
+        }
+
+        public Builder replyMarkup(ReplyKeyboardMarkup replyMarkup) {
+            this.replyMarkup = replyMarkup;
+            return this;
+        }
+
+        public Builder replyMarkup(ReplyKeyboardRemove replyMarkup) {
+            this.replyMarkup = replyMarkup;
+            return this;
+        }
+
+        public Builder replyMarkup(ForceReply replyMarkup) {
+            this.replyMarkup = replyMarkup;
             return this;
         }
 

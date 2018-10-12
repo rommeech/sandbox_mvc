@@ -3,7 +3,7 @@ package org.rp.telegram.botapi.entity;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class ResponseParameters implements Serializable {
+public class ResponseParameters extends AbstractEntity {
     private static final long serialVersionUID = 4377713734236387423L;
 
     private Long migrateToCharId;
