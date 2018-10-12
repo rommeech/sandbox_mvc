@@ -1,6 +1,5 @@
 package org.rp.telegram.botapi.entity;
 
-import java.io.Serializable;
 import java.util.List;
 import java.util.Objects;
 
@@ -27,10 +26,17 @@ public class InlineKeyboardMarkup extends AbstractEntity {
         this.inlineKeyboard = inlineKeyboard;
     }
 
+    /**
+     * @return   Array of button rows
+     */
     public List<List<InlineKeyboardButton>> getInlineKeyboard() {
         return inlineKeyboard;
     }
 
+    /**
+     * Each row represented by an Array of InlineKeyboardButton objects
+     * @param   inlineKeyboard   Array of button rows
+     */
     public void setInlineKeyboard(List<List<InlineKeyboardButton>> inlineKeyboard) {
         this.inlineKeyboard = inlineKeyboard;
     }
