@@ -1,7 +1,5 @@
 package org.rp.telegram.botapi.entity;
 
-import java.io.Serializable;
-import java.net.URI;
 import java.util.Objects;
 
 //TODO: add unit test for converter to json
@@ -18,8 +16,6 @@ import java.util.Objects;
 public class InlineKeyboardButton extends AbstractEntity {
 
     private static final long serialVersionUID = 6257129681414814309L;
-
-    private URI uri;
 
     // TODO: @Required
     private String text;
