@@ -9,6 +9,16 @@ import org.rp.telegram.botapi.helper.FormatOption;
 import java.io.Serializable;
 import java.util.Objects;
 
+//TODO: add javadoc
+//TODO: add unit test for converter to json
+
+/**
+ *
+ * @author        Roman Parshin, roman.dev@gmail.com
+ * @version       1.0
+ * @since         1.0
+ * @apiVersion    4.1
+ */
 public class SendMessageRequest implements Serializable {
     private static final long serialVersionUID = 7472599720120541333L;
 
