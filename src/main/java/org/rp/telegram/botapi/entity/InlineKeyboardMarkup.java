@@ -3,7 +3,6 @@ package org.rp.telegram.botapi.entity;
 import java.util.List;
 import java.util.Objects;
 
-// TODO: add javadoc
 // TODO: add unit test for converter to json
 // TODO: add builder
 
