@@ -5,7 +5,7 @@ import org.rp.telegram.botapi.entity.ResponseParameters;
 import java.io.Serializable;
 import java.util.Objects;
 
-public class BotApiResponse implements Serializable {
+public class Response implements Serializable {
     private static final long serialVersionUID = 6914036374719917628L;
 
     private boolean ok;
@@ -17,7 +17,7 @@ public class BotApiResponse implements Serializable {
     private String httpMessage;
     private String httpContent;
 
-    public BotApiResponse() {
+    public Response() {
     }
 
     public boolean isOk() {
@@ -87,8 +87,8 @@ public class BotApiResponse implements Serializable {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof BotApiResponse)) return false;
-        BotApiResponse that = (BotApiResponse) o;
+        if (!(o instanceof Response)) return false;
+        Response that = (Response) o;
         return ok == that.ok &&
                 httpCode == that.httpCode &&
                 Objects.equals(description, that.description) &&
@@ -107,7 +107,7 @@ public class BotApiResponse implements Serializable {
 
     @Override
     public String toString() {
-        return "BotApiResponse{" +
+        return "Response{" +
                 "ok=" + ok +
                 ", description='" + description + '\'' +
                 ", result='" + result + '\'' +

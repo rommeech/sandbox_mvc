@@ -1,8 +1,6 @@
-package org.rp.sandboxmvc.testapp;
+package org.rp.testapp;
 
-import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.AbstractApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.context.support.FileSystemXmlApplicationContext;
 
 public class RssReaderApp {
