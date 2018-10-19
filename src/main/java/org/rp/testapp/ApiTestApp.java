@@ -11,7 +11,7 @@ public class ApiTestApp {
 
         GetMeRequest request = new GetMeRequest();
         try {
-            request.doRequest("468561122:AAHdWFuL5s0meYG9fcJOR6VkEiH1iu7cpU8");
+            request.doRequest("...");
         } catch (HttpException | IOException e) {
             e.printStackTrace();
         }
