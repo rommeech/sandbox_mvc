@@ -1,5 +1,6 @@
 package org.rp.telegram.botapi.http;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -20,10 +21,12 @@ public class ApiHttpRequest {
 
     private static final String API_URL = "https://api.telegram.org/";
     private static OkHttpClient client;
+    private static ObjectMapper mapper;
 
     // TODO: do we really need this?
     static {
         client = new OkHttpClient();
+        mapper = new ObjectMapper();
     }
 
     private String url;
@@ -32,7 +35,7 @@ public class ApiHttpRequest {
     private AbstractApiRequest request;
     private Class<? extends AbstractEntity> responseClass;
 
-    public ApiHttpRequest(Builder builder) {
+    private ApiHttpRequest(Builder builder) {
         this.url = builder.url;
         this.token = builder.token;
         this.httpMethod = builder.httpMethod;
@@ -50,7 +53,7 @@ public class ApiHttpRequest {
     }
     */
 
-    public void doRequest() throws HttpException {
+    public void doRequest() throws HttpException, IOException {
         checkRequestParameters();
         if (httpMethod == HttpMethod.GET) {
             doGetRequest();
@@ -62,19 +65,20 @@ public class ApiHttpRequest {
         }
     }
 
-    private void doGetRequest() throws HttpException {
+    private void doGetRequest() throws IOException {
         String url = buildRequestUrl();
         Request request = new Request.Builder().url(url).build();
-        Response response;
-        try {
-            response = client.newCall(request).execute();
-            System.out.println("[RESPONSE]");
-            System.out.println(response.code() + " " + response.message());
-            System.out.println(response.headers());
-            System.out.println(response.body().string());
-        } catch (IOException e) {
-            throw new HttpException(e);
-        }
+        Response response  = client.newCall(request).execute();
+        String jsonResponse = response.body().string();
+
+        System.out.println("[RESPONSE]");
+        System.out.println(response.code() + " " + response.message());
+        System.out.println(response.headers());
+        System.out.println(jsonResponse);
+
+        ApiHttpResponse apiHttpResponse = mapper.readValue(jsonResponse, ApiHttpResponse.class);
+        System.out.println(apiHttpResponse);
+
     }
 
     private String buildRequestUrl() {

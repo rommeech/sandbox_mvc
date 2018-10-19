@@ -2,6 +2,7 @@ package org.rp.telegram.botapi.request;
 
 import org.rp.telegram.botapi.entity.*;
 import org.rp.telegram.botapi.helper.FormatOption;
+import org.rp.telegram.botapi.http.ApiHttpResponse;
 
 import java.io.Serializable;
 import java.util.Objects;
@@ -44,6 +45,7 @@ public class SendMessageRequest extends AbstractApiRequest {
     @Override
     public void doRequest(String token) {
 
+        //return null;
     }
 
     public SendMessageRequest(Builder builder) {
