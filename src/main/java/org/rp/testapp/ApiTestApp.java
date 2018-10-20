@@ -11,7 +11,7 @@ public class ApiTestApp {
 
         GetMeRequest request = new GetMeRequest();
         try {
-            request.doRequest(args[0]);
+            request.doRequest("...");
         } catch (HttpException | IOException e) {
             e.printStackTrace();
         }
