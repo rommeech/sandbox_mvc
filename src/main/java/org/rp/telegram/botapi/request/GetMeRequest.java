@@ -9,7 +9,7 @@ import java.io.IOException;
 
 public class GetMeRequest extends AbstractApiRequest {
 
-    // TODO: maybe use
+    // TODO: it is ugly, do something else
     @Override
     public String getApiMethodName() {
         return "getMe";

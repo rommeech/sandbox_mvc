@@ -118,7 +118,7 @@ public class BotController extends AbstractController {
 
         try {
             botService.doGetMeRequest(bot);
-            messageProvider.addInfoMessage("GetMe request successfully sent");
+            messageProvider.addInfoMessage("GetMe request successfully processed");
         } catch (ServiceException e) {
             logger.error("[botGetMe] " + e.getStackTrace());
             messageProvider.addErrorMessage("Problem with GetMe request, check logs");

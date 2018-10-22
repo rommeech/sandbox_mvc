@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.rp.telegram.botapi.request.AbstractApiRequest;
 import org.rp.telegram.botapi.response.AbstractApiResponse;
 
@@ -18,6 +20,8 @@ There are four ways of passing parameters in Bot API requests, but we support on
  */
 
 public class HttpClient {
+
+    Logger logger = LogManager.getLogger(HttpClient.class);
 
     private static final String API_URL = "https://api.telegram.org/";
     private static OkHttpClient client;
@@ -68,17 +72,20 @@ public class HttpClient {
 
     private AbstractApiResponse doGetRequest() throws IOException {
         String url = buildRequestUrl();
+
+        logger.info("GET " + url);
+
         Request request = new Request.Builder().url(url).build();
         Response response  = client.newCall(request).execute();
         String jsonResponse = response.body().string();
 
-        System.out.println("[RESPONSE]");
-        System.out.println(response.code() + " " + response.message());
-        System.out.println(response.headers());
-        System.out.println(jsonResponse);
+        // System.out.println(response.code() + " " + response.message());
+        // System.out.println(response.headers());
+        // System.out.println(jsonResponse);
+
+        logger.info(String.format("Response: %d %s %s", response.code(), response.message(), jsonResponse));
 
         AbstractApiResponse apiResponse = mapper.readValue(jsonResponse, responseClass);
-        System.out.println(apiResponse);
 
         return apiResponse;
     }
