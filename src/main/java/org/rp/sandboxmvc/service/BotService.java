@@ -90,4 +90,9 @@ public class BotService extends AbstractService {
     }
 
 
+    public void doGetMeRequest(Bot bot) {
+
+
+
+    }
 }

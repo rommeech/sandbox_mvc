@@ -34,7 +34,7 @@ public class BotValidator implements Validator {
 
         Bot bot = (Bot) target;
 
-        ValidationUtils.rejectIfEmpty(errors, "name", "bot.validator.error.name.empty");
+        ValidationUtils.rejectIfEmpty(errors, "firstName", "bot.validator.error.firstName.empty");
 
         /*if (bot.getName() == null || bot.getName().isEmpty()) {
             errors.rejectValue("name", "bot.validator.error.name.empty");

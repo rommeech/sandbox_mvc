@@ -15,6 +15,7 @@
         <table class="table_list">
             <tr>
                 <th class="numeric"><spring:message code="bot.id"/></th>
+                <th><spring:message code="bot.userId"/></th>
                 <th><spring:message code="bot.name"/></th>
                 <th><spring:message code="bot.username"/></th>
                 <th><spring:message code="bot.token"/></th>
@@ -23,12 +24,14 @@
             <c:forEach items="${bots}" var="bot">
                 <tr>
                     <td class="numeric">${bot.id}</td>
-                    <td>${bot.name}</td>
+                    <td class="numeric">${bot.userId}</td>
+                    <td>${bot.firstName} ${bot.lastName}</td>
                     <td>${bot.username}</td>
                     <td>${bot.token}</td>
                     <td class="td_buttons">
                         <a href="<spring:url value="/bots/delete/${bot.id}/"/>"><spring:message code="action.delete"/></a>
                         <a href="<spring:url value="/bots/edit/${bot.id}/"/>"><spring:message code="action.edit"/></a>
+                        <a href="<spring:url value="/bots/getme/${bot.id}/"/>"><spring:message code="action.getMe"/></a>
                     </td>
                 </tr>
             </c:forEach>

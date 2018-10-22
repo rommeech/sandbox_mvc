@@ -7,7 +7,7 @@
 <c:set var="isNew" value="${bot.id == null ? true : false}"/>
 <spring:message var="baseTitle" code="bot.page.title"/>
 <spring:message var="addNewItem" code="bot.page.addNewItem" scope="request"/>
-<spring:message var="title" text="${isNew ? addNewItem : bot.name} / ${baseTitle}" scope="request"/>
+<spring:message var="title" text="${isNew ? addNewItem : bot.username} / ${baseTitle}" scope="request"/>
 
 <spring:url var="linkSave" value="/bots/save/"/>
 <spring:url var="linkList" value="/bots/"/>
@@ -24,12 +24,12 @@
                 <form:hidden path="version"/>
             </jsp:attribute>
             <jsp:body>
-                <tg:formInput field="name" legendCode="bot.name"/>
-                <tg:formInput field="username" legendCode="bot.username"/>
+                <tg:formInput field="userId" legendCode="bot.userId"/>
                 <tg:formInput field="token" legendCode="bot.token"/>
-                <tg:formInput field="botpic" legendCode="bot.botpic"/>
+                <tg:formInput field="username" legendCode="bot.username"/>
+                <tg:formInput field="firstName" legendCode="bot.firstName"/>
+                <tg:formInput field="lastName" legendCode="bot.lastName"/>
                 <tg:formTextarea rows="3" field="about" legendCode="bot.about"/>
-                <tg:formTextarea rows="3" field="description" legendCode="bot.about"/>
             </jsp:body>
         </tg:formWrapper>
     </jsp:body>

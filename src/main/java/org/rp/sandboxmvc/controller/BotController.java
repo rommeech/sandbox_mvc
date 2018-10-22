@@ -43,7 +43,7 @@ public class BotController extends AbstractController {
         Bot bot = botService.getById(id);
 
         if (bot == null) {
-            logger.error("Bot not found, unknown id=" + id);
+            logger.error("[botEdit] Bot not found, unknown id=" + id);
             throw new NotFoundException("Bot not found, unknown id=" + id);
         }
 
@@ -94,7 +94,7 @@ public class BotController extends AbstractController {
         Bot bot = botService.getById(id);
 
         if (bot == null) {
-            logger.error("Bot not found, unknown id=" + id);
+            logger.error("[botDelete] Bot not found, unknown id=" + id);
             throw new NotFoundException("Bot not found, unknown id=" + id);
         }
 
@@ -102,6 +102,25 @@ public class BotController extends AbstractController {
 
         ModelAndView model = new ModelAndView();
         messageProvider.addInfoMessage("Successfully deleted");
+        model.setViewName("redirect:/bots/");
+        return model;
+    }
+
+    @RequestMapping(value = "/getme/{id}/")
+    public ModelAndView botGetMe(@PathVariable Long id) {
+        Bot bot = botService.getById(id);
+
+        if (bot == null) {
+            logger.error("[botGetMe] Bot not found, unknown id=" + id);
+            throw new NotFoundException("Bot not found, unknown id=" + id);
+        }
+
+        botService.doGetMeRequest(bot);
+
+        // No exception? Assume request was successful
+        messageProvider.addInfoMessage("GetMe request successfully sent");
+
+        ModelAndView model = new ModelAndView();
         model.setViewName("redirect:/bots/");
         return model;
     }

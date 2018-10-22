@@ -6,7 +6,6 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.rp.telegram.botapi.request.AbstractApiRequest;
 import org.rp.telegram.botapi.response.AbstractApiResponse;
-import org.rp.telegram.botapi.response.UserResponse;
 
 import java.io.IOException;
 
