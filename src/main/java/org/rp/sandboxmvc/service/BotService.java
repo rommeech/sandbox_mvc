@@ -4,20 +4,24 @@ import org.rp.sandboxmvc.dao.OrderDirection;
 import org.rp.sandboxmvc.dao.SearchCriteria;
 import org.rp.sandboxmvc.dao.BotDao;
 import org.rp.sandboxmvc.model.Bot;
+import org.rp.telegram.botapi.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
 @Service
 public class BotService extends AbstractService {
 
-    private final BotDao botDao;
+    @Autowired
+    private BotDao botDao;
 
     @Autowired
-    public BotService(BotDao botDao) {
-        this.botDao = botDao;
+    private TelegramApiService telegramApiService;
+
+    public BotService() {
     }
 
     @Transactional(readOnly = true)
@@ -89,10 +93,17 @@ public class BotService extends AbstractService {
         }
     }
 
+    @Transactional
+    public void doGetMeRequest(Bot bot) throws ServiceException {
+        User tgUser = telegramApiService.sendGetMeRequest(bot.getToken());
+        updateBotFromTgUser(bot, tgUser);
+    }
 
-    public void doGetMeRequest(Bot bot) {
-
-
-
+    private void updateBotFromTgUser(Bot bot, User tgUser) {
+        bot.setUserId(tgUser.getId());
+        bot.setUsername(tgUser.getUsername());
+        bot.setFirstName(tgUser.getFirstName());
+        bot.setLastName(tgUser.getLastName());
+        botDao.update(bot);
     }
 }

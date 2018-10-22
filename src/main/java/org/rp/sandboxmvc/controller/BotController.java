@@ -6,6 +6,7 @@ import org.rp.sandboxmvc.dao.SearchCriteria;
 import org.rp.sandboxmvc.helper.MessageProvider;
 import org.rp.sandboxmvc.model.Bot;
 import org.rp.sandboxmvc.service.BotService;
+import org.rp.sandboxmvc.service.ServiceException;
 import org.rp.sandboxmvc.validator.BotValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -115,10 +116,13 @@ public class BotController extends AbstractController {
             throw new NotFoundException("Bot not found, unknown id=" + id);
         }
 
-        botService.doGetMeRequest(bot);
-
-        // No exception? Assume request was successful
-        messageProvider.addInfoMessage("GetMe request successfully sent");
+        try {
+            botService.doGetMeRequest(bot);
+            messageProvider.addInfoMessage("GetMe request successfully sent");
+        } catch (ServiceException e) {
+            logger.error("[botGetMe] " + e.getStackTrace());
+            messageProvider.addErrorMessage("Problem with GetMe request, check logs");
+        }
 
         ModelAndView model = new ModelAndView();
         model.setViewName("redirect:/bots/");
