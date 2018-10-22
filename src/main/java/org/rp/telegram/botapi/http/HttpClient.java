@@ -4,8 +4,9 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import org.rp.telegram.botapi.entity.AbstractEntity;
 import org.rp.telegram.botapi.request.AbstractApiRequest;
+import org.rp.telegram.botapi.response.AbstractApiResponse;
+import org.rp.telegram.botapi.response.UserResponse;
 
 import java.io.IOException;
 
@@ -17,7 +18,7 @@ There are four ways of passing parameters in Bot API requests, but we support on
  - multipart/form-data (use to upload files) - for some requests httpMethod will be set automatically to POST
  */
 
-public class ApiHttpRequest {
+public class HttpClient {
 
     private static final String API_URL = "https://api.telegram.org/";
     private static OkHttpClient client;
@@ -33,9 +34,9 @@ public class ApiHttpRequest {
     private String token;
     private HttpMethod httpMethod;
     private AbstractApiRequest request;
-    private Class<? extends AbstractEntity> responseClass;
+    private Class<? extends AbstractApiResponse> responseClass;
 
-    private ApiHttpRequest(Builder builder) {
+    private HttpClient(Builder builder) {
         this.url = builder.url;
         this.token = builder.token;
         this.httpMethod = builder.httpMethod;
@@ -45,7 +46,7 @@ public class ApiHttpRequest {
 
     /* public static void sendGetRequest(String url) throws IOException {
         Request request = new Request.Builder().url(url).build();
-        Response response = client.newCall(request).execute();
+        Response response = http.newCall(request).execute();
         System.out.println("[RESPONSE]");
         System.out.println(response.code() + " " + response.message());
         System.out.println(response.headers());
@@ -53,19 +54,20 @@ public class ApiHttpRequest {
     }
     */
 
-    public void doRequest() throws HttpException, IOException {
+    public AbstractApiResponse doRequest() throws HttpException, IOException {
         checkRequestParameters();
+
         if (httpMethod == HttpMethod.GET) {
-            doGetRequest();
+            return doGetRequest();
         }
         // TODO: for some API methods should perform multipart/form-data POST request
         // TODO: on demand should be possible to perform application/x-www-form-urlencoded request
         else {
-            doJsonRequest();
+            return doJsonRequest();
         }
     }
 
-    private void doGetRequest() throws IOException {
+    private AbstractApiResponse doGetRequest() throws IOException {
         String url = buildRequestUrl();
         Request request = new Request.Builder().url(url).build();
         Response response  = client.newCall(request).execute();
@@ -76,9 +78,10 @@ public class ApiHttpRequest {
         System.out.println(response.headers());
         System.out.println(jsonResponse);
 
-        ApiHttpResponse apiHttpResponse = mapper.readValue(jsonResponse, ApiHttpResponse.class);
-        System.out.println(apiHttpResponse);
+        AbstractApiResponse apiResponse = mapper.readValue(jsonResponse, responseClass);
+        System.out.println(apiResponse);
 
+        return apiResponse;
     }
 
     private String buildRequestUrl() {
@@ -88,8 +91,8 @@ public class ApiHttpRequest {
     // private void doPostRequest() {}
     // private void doMultipartPostRequest() {}
 
-    private void doJsonRequest() {
-
+    private AbstractApiResponse doJsonRequest() {
+        return null;
     }
 
 
@@ -107,6 +110,9 @@ public class ApiHttpRequest {
         if (request == null) {
             throw new HttpException("ApiHttpRequestException: Request object method cannot be null");
         }
+        if (responseClass == null) {
+            throw new HttpException("ApiHttpRequestException: Response class d cannot be null");
+        }
     }
 
     public static class Builder {
@@ -114,14 +120,14 @@ public class ApiHttpRequest {
         private String token;
         private HttpMethod httpMethod;
         private AbstractApiRequest request;
-        private Class<? extends AbstractEntity> responseClass;
+        private Class<? extends AbstractApiResponse> responseClass;
 
         public Builder() {
             url = API_URL;
             httpMethod = HttpMethod.POST;
         }
 
-        public Builder(ApiHttpRequest httpApiRequest) {
+        public Builder(HttpClient httpApiRequest) {
             this.url = httpApiRequest.url;
             this.token = httpApiRequest.token;
             this.httpMethod = httpApiRequest.httpMethod;
@@ -129,33 +135,33 @@ public class ApiHttpRequest {
             this.responseClass = httpApiRequest.responseClass;
         }
 
-        public ApiHttpRequest.Builder url(String url) {
+        public HttpClient.Builder url(String url) {
             this.url = url;
             return this;
         }
 
-        public ApiHttpRequest.Builder token(String token) {
+        public HttpClient.Builder token(String token) {
             this.token = token;
             return this;
         }
 
-        public ApiHttpRequest.Builder httpMethod(HttpMethod httpMethod) {
+        public HttpClient.Builder httpMethod(HttpMethod httpMethod) {
             this.httpMethod = httpMethod;
             return this;
         }
 
-        public ApiHttpRequest.Builder request(AbstractApiRequest request) {
+        public HttpClient.Builder request(AbstractApiRequest request) {
             this.request = request;
             return this;
         }
 
-        public ApiHttpRequest.Builder responseClass(Class<? extends AbstractEntity> responseClass) {
+        public HttpClient.Builder responseClass(Class<? extends AbstractApiResponse> responseClass) {
             this.responseClass = responseClass;
             return this;
         }
 
-        public ApiHttpRequest build() {
-            return new ApiHttpRequest(this);
+        public HttpClient build() {
+            return new HttpClient(this);
         }
 
     }

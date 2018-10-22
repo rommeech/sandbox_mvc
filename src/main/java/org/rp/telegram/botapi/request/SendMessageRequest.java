@@ -2,9 +2,8 @@ package org.rp.telegram.botapi.request;
 
 import org.rp.telegram.botapi.entity.*;
 import org.rp.telegram.botapi.helper.FormatOption;
-import org.rp.telegram.botapi.http.ApiHttpResponse;
+import org.rp.telegram.botapi.response.UserResponse;
 
-import java.io.Serializable;
 import java.util.Objects;
 
 //TODO: add unit test for converter to json
@@ -43,9 +42,9 @@ public class SendMessageRequest extends AbstractApiRequest {
     }
 
     @Override
-    public void doRequest(String token) {
+    public UserResponse doRequest(String token) {
 
-        //return null;
+        return null;
     }
 
     public SendMessageRequest(Builder builder) {

@@ -1,29 +1,32 @@
 package org.rp.telegram.botapi.request;
 
-import org.rp.telegram.botapi.http.ApiHttpRequest;
+import org.rp.telegram.botapi.http.HttpClient;
 import org.rp.telegram.botapi.http.HttpException;
 import org.rp.telegram.botapi.http.HttpMethod;
+import org.rp.telegram.botapi.response.UserResponse;
 
 import java.io.IOException;
 
 public class GetMeRequest extends AbstractApiRequest {
 
+    // TODO: maybe use
     @Override
     public String getApiMethodName() {
         return "getMe";
     }
 
     @Override
-    public void doRequest(String token) throws HttpException, IOException {
+    public UserResponse doRequest(String token) throws HttpException, IOException {
 
-        ApiHttpRequest request = new ApiHttpRequest.Builder()
+        HttpClient request = new HttpClient.Builder()
                 .httpMethod(HttpMethod.GET)
                 .request(this)
+                .responseClass(UserResponse.class)
                 .token(token)
                 .build();
-        request.doRequest();
 
-        //return null;
+        UserResponse response = (UserResponse) request.doRequest();
+        return response;
     }
 
 

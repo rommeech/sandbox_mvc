@@ -1,5 +1,7 @@
 package org.rp.telegram.botapi.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.Objects;
 
 // TODO: add unit test for converter to json
@@ -21,7 +23,7 @@ public class User extends AbstractEntity {
     private Boolean isBot;
     private String firstName;
     private String lastName;
-    private String userName;
+    private String username;
     // TODO: use enum or locale class for this field. But it is optional, so maybe later.
     private String languageCode;
 
@@ -43,6 +45,7 @@ public class User extends AbstractEntity {
      *
      * @param   id   Unique identifier
      */
+    @JsonProperty(value = "id")
     public void setId(Integer id) {
         this.id = id;
     }
@@ -58,6 +61,7 @@ public class User extends AbstractEntity {
      * True, if this user is a bot
      * @param   bot
      */
+    @JsonProperty(value = "is_bot")
     public void setBot(Boolean bot) {
         isBot = bot;
     }
@@ -74,6 +78,7 @@ public class User extends AbstractEntity {
      *
      * @param   firstName   First name
      */
+    @JsonProperty(value = "first_name")
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
@@ -90,6 +95,7 @@ public class User extends AbstractEntity {
      *
      * @param   lastName   Last name
      */
+    @JsonProperty(value = "last_name")
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
@@ -97,17 +103,18 @@ public class User extends AbstractEntity {
     /**
      * @return   username
      */
-    public String getUserName() {
-        return userName;
+    public String getUsername() {
+        return username;
     }
 
     /**
      * Optional. User‘s or bot’s username
      *
-     * @param   userName   username
+     * @param   username   username
      */
-    public void setUserName(String userName) {
-        this.userName = userName;
+    @JsonProperty(value = "username")
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     /**
@@ -121,6 +128,7 @@ public class User extends AbstractEntity {
      * Optional. IETF language tag of the user's language
      * @param   languageCode   IETF language tag
      */
+    @JsonProperty(value = "language_code")
     public void setLanguageCode(String languageCode) {
         this.languageCode = languageCode;
     }
@@ -145,7 +153,7 @@ public class User extends AbstractEntity {
                 ", isBot=" + isBot +
                 ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", userName='" + userName + '\'' +
+                ", username='" + username + '\'' +
                 ", languageCode='" + languageCode + '\'' +
                 '}';
     }

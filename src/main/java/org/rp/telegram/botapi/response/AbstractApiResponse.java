@@ -1,19 +1,24 @@
-package org.rp.telegram.botapi.http;
+package org.rp.telegram.botapi.response;
+
+import org.rp.telegram.botapi.entity.AbstractEntity;
 
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
 
-public class ApiHttpResponse implements Serializable {
+public abstract class AbstractApiResponse<T extends AbstractEntity> implements Serializable {
     private static final long serialVersionUID = -5416870816262578210L;
 
     private Boolean ok;
     private String description;
-    private Map<String, Object> result;
+    private T result;
     private Integer errorCode;
     private Map<String, Object> parameters;
+    private int httpCode;
+    private String httpMessage;
+    private String httpContent;
 
-    public ApiHttpResponse() {
+    public AbstractApiResponse() {
     }
 
     public Boolean getOk() {
@@ -32,11 +37,11 @@ public class ApiHttpResponse implements Serializable {
         this.description = description;
     }
 
-    public Map<String, Object> getResult() {
+    public T getResult() {
         return result;
     }
 
-    public void setResult(Map<String, Object> result) {
+    public void setResult(T result) {
         this.result = result;
     }
 
@@ -56,31 +61,61 @@ public class ApiHttpResponse implements Serializable {
         this.parameters = parameters;
     }
 
+    public int getHttpCode() {
+        return httpCode;
+    }
+
+    public void setHttpCode(int httpCode) {
+        this.httpCode = httpCode;
+    }
+
+    public String getHttpMessage() {
+        return httpMessage;
+    }
+
+    public void setHttpMessage(String httpMessage) {
+        this.httpMessage = httpMessage;
+    }
+
+    public String getHttpContent() {
+        return httpContent;
+    }
+
+    public void setHttpContent(String httpContent) {
+        this.httpContent = httpContent;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof ApiHttpResponse)) return false;
-        ApiHttpResponse that = (ApiHttpResponse) o;
-        return Objects.equals(ok, that.ok) &&
+        if (!(o instanceof AbstractApiResponse)) return false;
+        AbstractApiResponse that = (AbstractApiResponse) o;
+        return httpCode == that.httpCode &&
+                Objects.equals(ok, that.ok) &&
                 Objects.equals(description, that.description) &&
                 Objects.equals(result, that.result) &&
                 Objects.equals(errorCode, that.errorCode) &&
-                Objects.equals(parameters, that.parameters);
+                Objects.equals(parameters, that.parameters) &&
+                Objects.equals(httpMessage, that.httpMessage) &&
+                Objects.equals(httpContent, that.httpContent);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(ok, description, result, errorCode, parameters);
+        return Objects.hash(ok, description, result, errorCode, parameters, httpCode, httpMessage, httpContent);
     }
 
     @Override
     public String toString() {
-        return "ApiHttpResponse{" +
+        return "AbstractApiResponse{" +
                 "ok=" + ok +
                 ", description='" + description + '\'' +
                 ", result=" + result +
                 ", errorCode=" + errorCode +
                 ", parameters=" + parameters +
+                ", httpCode=" + httpCode +
+                ", httpMessage='" + httpMessage + '\'' +
+                ", httpContent='" + httpContent + '\'' +
                 '}';
     }
 }
