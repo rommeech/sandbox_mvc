@@ -37,13 +37,7 @@ public class SendMessageRequest extends AbstractApiRequest {
     }
 
     @Override
-    public String getApiMethodName() {
-        return "sendMessage";
-    }
-
-    @Override
     public UserResponse doRequest(String token) {
-
         return null;
     }
 

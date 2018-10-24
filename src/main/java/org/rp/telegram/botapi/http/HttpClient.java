@@ -6,6 +6,7 @@ import okhttp3.Request;
 import okhttp3.Response;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.rp.telegram.botapi.helper.ApiMethod;
 import org.rp.telegram.botapi.request.AbstractApiRequest;
 import org.rp.telegram.botapi.response.AbstractApiResponse;
 
@@ -36,6 +37,7 @@ public class HttpClient {
     private String url;
     private String token;
     private HttpMethod httpMethod;
+    private ApiMethod apiMethod;
     private AbstractApiRequest request;
     private Class<? extends AbstractApiResponse> responseClass;
 
@@ -45,6 +47,7 @@ public class HttpClient {
         this.httpMethod = builder.httpMethod;
         this.request = builder.request;
         this.responseClass = builder.responseClass;
+        this.apiMethod = builder.apiMethod;
     }
 
     /* public static void sendGetRequest(String url) throws IOException {
@@ -91,7 +94,7 @@ public class HttpClient {
     }
 
     private String buildRequestUrl() {
-        return String.format("%sbot%s/%s", this.url, this.token, this.request.getApiMethodName());
+        return String.format("%sbot%s/%s", this.url, this.token, this.apiMethod.getMethodName());
     }
 
     // private void doPostRequest() {}
@@ -117,7 +120,10 @@ public class HttpClient {
             throw new HttpException("ApiHttpRequestException: Request object method cannot be null");
         }
         if (responseClass == null) {
-            throw new HttpException("ApiHttpRequestException: Response class d cannot be null");
+            throw new HttpException("ApiHttpRequestException: Response class cannot be null");
+        }
+        if (apiMethod == null) {
+            throw new HttpException("ApiHttpRequestException: API method cannot be null");
         }
     }
 
@@ -126,6 +132,7 @@ public class HttpClient {
         private String token;
         private HttpMethod httpMethod;
         private AbstractApiRequest request;
+        private ApiMethod apiMethod;
         private Class<? extends AbstractApiResponse> responseClass;
 
         public Builder() {
@@ -139,6 +146,7 @@ public class HttpClient {
             this.httpMethod = httpApiRequest.httpMethod;
             this.request = httpApiRequest.request;
             this.responseClass = httpApiRequest.responseClass;
+            this.apiMethod = httpApiRequest.apiMethod;
         }
 
         public HttpClient.Builder url(String url) {
@@ -153,6 +161,11 @@ public class HttpClient {
 
         public HttpClient.Builder httpMethod(HttpMethod httpMethod) {
             this.httpMethod = httpMethod;
+            return this;
+        }
+
+        public HttpClient.Builder apiMethod(ApiMethod apiMethod) {
+            this.apiMethod = apiMethod;
             return this;
         }
 
