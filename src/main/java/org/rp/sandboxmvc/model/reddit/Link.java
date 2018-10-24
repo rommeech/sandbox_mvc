@@ -1,4 +1,4 @@
-package org.rp.sandboxmvc.model.rss;
+package org.rp.sandboxmvc.model.reddit;
 
 import java.io.Serializable;
 import java.util.Objects;

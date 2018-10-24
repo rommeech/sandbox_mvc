@@ -1,7 +1,5 @@
 package org.rp.sandboxmvc.model.reddit;
 
-import org.rp.sandboxmvc.model.rss.Link;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;

@@ -1,6 +1,6 @@
 package org.rp.sandboxmvc.helper;
 
-public interface JspListPompatibleItem<V, L> {
+public interface JspListCompatibleItem<V, L> {
     V getItemValue();
     L getItemLabel();
 }
