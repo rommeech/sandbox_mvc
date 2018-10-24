@@ -4,7 +4,6 @@ import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -29,8 +28,8 @@ public class Channel extends AbstractModel<Long> {
     private String name;
 
     @NotNull
-    @Column(name = "token", nullable = false, unique = true)
-    private String token;
+    @Column(name = "username", nullable = false, unique = true)
+    private String username;
 
     @NotNull
     @Column(name = "status", nullable = false)
@@ -68,12 +67,12 @@ public class Channel extends AbstractModel<Long> {
         this.name = name;
     }
 
-    public String getToken() {
-        return token;
+    public String getUsername() {
+        return username;
     }
 
-    public void setToken(String token) {
-        this.token = token;
+    public void setUsername(String token) {
+        this.username = token;
     }
 
     public Status getStatus() {
@@ -101,14 +100,14 @@ public class Channel extends AbstractModel<Long> {
         return Objects.equals(bot, channel.bot) &&
                 Objects.equals(feed, channel.feed) &&
                 Objects.equals(name, channel.name) &&
-                Objects.equals(token, channel.token) &&
+                Objects.equals(username, channel.username) &&
                 status == channel.status;
     }
 
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), bot, feed, name, token, status);
+        return Objects.hash(super.hashCode(), bot, feed, name, username, status);
     }
 
     @Override
@@ -117,7 +116,7 @@ public class Channel extends AbstractModel<Long> {
                 ", bot=" + bot +
                 ", feed=" + feed +
                 ", name='" + name + '\'' +
-                ", token='" + token + '\'' +
+                ", token='" + username + '\'' +
                 ", status=" + status +
                 '}';
     }

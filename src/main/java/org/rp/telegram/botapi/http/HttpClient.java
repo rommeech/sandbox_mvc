@@ -9,7 +9,6 @@ import org.apache.logging.log4j.Logger;
 import org.rp.telegram.botapi.helper.ApiMethod;
 import org.rp.telegram.botapi.request.AbstractApiRequest;
 import org.rp.telegram.botapi.response.AbstractApiResponse;
-
 import java.io.IOException;
 
 /*
@@ -50,17 +49,7 @@ public class HttpClient {
         this.apiMethod = builder.apiMethod;
     }
 
-    /* public static void sendGetRequest(String url) throws IOException {
-        Request request = new Request.Builder().url(url).build();
-        Response response = http.newCall(request).execute();
-        System.out.println("[RESPONSE]");
-        System.out.println(response.code() + " " + response.message());
-        System.out.println(response.headers());
-        System.out.println(response.body().string());
-    }
-    */
-
-    public AbstractApiResponse doRequest() throws HttpException, IOException {
+    public AbstractApiResponse doRequest() throws HttpException {
         checkRequestParameters();
 
         if (httpMethod == HttpMethod.GET) {
@@ -73,23 +62,35 @@ public class HttpClient {
         }
     }
 
-    private AbstractApiResponse doGetRequest() throws IOException {
+    private AbstractApiResponse doGetRequest() throws HttpException {
         String url = buildRequestUrl();
 
         logger.info("GET " + url);
 
         Request request = new Request.Builder().url(url).build();
-        Response response  = client.newCall(request).execute();
-        String jsonResponse = response.body().string();
+        String jsonText;
+        Response response;
+        try {
+            response = client.newCall(request).execute();
+            jsonText = response.body().string();
+        } catch (IOException e) {
+            logger.error("doGetRequest error: " + e);
+            throw new HttpException(e);
+        }
 
-        // System.out.println(response.code() + " " + response.message());
-        // System.out.println(response.headers());
-        // System.out.println(jsonResponse);
+        logger.info(String.format("Response: %d %s %s", response.code(), response.message(), jsonText));
 
-        logger.info(String.format("Response: %d %s %s", response.code(), response.message(), jsonResponse));
+        return parseResponseText(jsonText);
+    }
 
-        AbstractApiResponse apiResponse = mapper.readValue(jsonResponse, responseClass);
-
+    private AbstractApiResponse parseResponseText(String jsonText) throws HttpException {
+        AbstractApiResponse apiResponse;
+        try {
+            apiResponse = mapper.readValue(jsonText, responseClass);
+        } catch (IOException e) {
+            logger.error("parseResponseText error: " + e);
+            throw new HttpException(e);
+        }
         return apiResponse;
     }
 
@@ -108,22 +109,22 @@ public class HttpClient {
 
     private void checkRequestParameters() throws HttpException {
         if (this.url == null) {
-            throw new HttpException("ApiHttpRequestException: URL cannot be null");
+            throw new HttpException("Wrong parameter: URL cannot be null");
         }
         if (httpMethod == null) {
-            throw new HttpException("ApiHttpRequestException: HTTP method cannot be null");
+            throw new HttpException("Wrong parameter: HTTP method cannot be null");
         }
         if (token == null) {
-            throw new HttpException("ApiHttpRequestException: token method cannot be null");
+            throw new HttpException("Wrong parameter: token method cannot be null");
         }
         if (request == null) {
-            throw new HttpException("ApiHttpRequestException: Request object method cannot be null");
+            throw new HttpException("Wrong parameter: Request object method cannot be null");
         }
         if (responseClass == null) {
-            throw new HttpException("ApiHttpRequestException: Response class cannot be null");
+            throw new HttpException("Wrong parameter: Response class cannot be null");
         }
         if (apiMethod == null) {
-            throw new HttpException("ApiHttpRequestException: API method cannot be null");
+            throw new HttpException("Wrong parameter: API method cannot be null");
         }
     }
 

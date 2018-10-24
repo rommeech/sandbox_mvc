@@ -23,10 +23,10 @@
             </jsp:attribute>
             <jsp:body>
                 <tg:formInput field="name" legendCode="channel.name"/>
-                <tg:formInput field="token" legendCode="channel.token"/>
+                <tg:formInput field="username" legendCode="channel.username"/>
                 <tg:formRadioButtons items="${statuses}" legendCode="channel.status" field="status" />
                 <tg:formSelect items="${feeds}" field="feed.id" legendCode="channel.feed" itemValue="id" itemLabel="title"/>
-                <tg:formSelect items="${bots}" field="bot.id" legendCode="channel.bot" itemValue="id" itemLabel="name"/>
+                <tg:formSelect items="${bots}" field="bot.id" legendCode="channel.bot" itemValue="id" itemLabel="username"/>
             </jsp:body>
         </tg:formWrapper>
     </jsp:body>

@@ -1,17 +1,19 @@
 package org.rp.telegram.botapi.request;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.rp.telegram.botapi.helper.ApiMethod;
 import org.rp.telegram.botapi.http.HttpClient;
 import org.rp.telegram.botapi.http.HttpException;
 import org.rp.telegram.botapi.http.HttpMethod;
 import org.rp.telegram.botapi.response.UserResponse;
 
-import java.io.IOException;
-
 public class GetMeRequest extends AbstractApiRequest {
 
+    private final static Logger logger = LogManager.getLogger(GetMeRequest.class);
+
     @Override
-    public UserResponse doRequest(String token) throws HttpException, IOException {
+    public UserResponse doRequest(String token) throws RequestException {
 
         HttpClient request = new HttpClient.Builder()
                 .httpMethod(HttpMethod.GET)
@@ -21,7 +23,13 @@ public class GetMeRequest extends AbstractApiRequest {
                 .token(token)
                 .build();
 
-        UserResponse response = (UserResponse) request.doRequest();
+        UserResponse response;
+        try {
+            response = (UserResponse) request.doRequest();
+        } catch (HttpException e) {
+            logger.error("GetMeRequest error: " + e);
+            throw new RequestException("GetMeRequest error", e);
+        }
         return response;
     }
 

@@ -1,9 +1,14 @@
 package org.rp.telegram.botapi.request;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.rp.telegram.botapi.entity.*;
+import org.rp.telegram.botapi.helper.ApiMethod;
 import org.rp.telegram.botapi.helper.FormatOption;
-import org.rp.telegram.botapi.response.UserResponse;
-
+import org.rp.telegram.botapi.http.HttpClient;
+import org.rp.telegram.botapi.http.HttpException;
+import org.rp.telegram.botapi.http.HttpMethod;
+import org.rp.telegram.botapi.response.MessageResponse;
 import java.util.Objects;
 
 //TODO: add unit test for converter to json
@@ -18,6 +23,8 @@ import java.util.Objects;
  */
 public class SendMessageRequest extends AbstractApiRequest {
     private static final long serialVersionUID = 7472599720120541333L;
+
+    private static final Logger logger = LogManager.getLogger(SendMessageRequest.class);
 
     // TODO: Add some annotation to convert field to json-field in request
 
@@ -37,8 +44,24 @@ public class SendMessageRequest extends AbstractApiRequest {
     }
 
     @Override
-    public UserResponse doRequest(String token) {
-        return null;
+    public MessageResponse doRequest(String token) throws RequestException {
+        HttpClient request = new HttpClient.Builder()
+                .httpMethod(HttpMethod.POST)
+                .apiMethod(ApiMethod.SEND_MESSAGE)
+                .request(this)
+                .responseClass(MessageResponse.class)
+                .token(token)
+                .build();
+
+        MessageResponse response;
+        try {
+            response = (MessageResponse) request.doRequest();
+        } catch (HttpException e) {
+            logger.error("SendMessageRequest: " + e);
+            throw new RequestException("SendMessageRequest error");
+
+        }
+        return response;
     }
 
     public SendMessageRequest(Builder builder) {
@@ -167,7 +190,7 @@ public class SendMessageRequest extends AbstractApiRequest {
          * @param    chatId   Unique identifier for the target chat
          * @return   a reference to this object.
          */
-        public Builder chatId(Integer chatId) {
+        public SendMessageRequest.Builder chatId(Integer chatId) {
             this.chatId = chatId.toString();
             return this;
         }
@@ -176,7 +199,7 @@ public class SendMessageRequest extends AbstractApiRequest {
          * @param    username   Unique username of the target channel (in the format @channelusername)
          * @return   a reference to this object.
          */
-        public Builder chatId(String username) {
+        public SendMessageRequest.Builder chatId(String username) {
             this.chatId = username;
             return this;
         }
@@ -185,7 +208,7 @@ public class SendMessageRequest extends AbstractApiRequest {
          * @param    text   Text of the message to be sent
          * @return   a reference to this object.
          */
-        public Builder text(String text) {
+        public SendMessageRequest.Builder text(String text) {
             this.text = text;
             return this;
         }
@@ -197,7 +220,7 @@ public class SendMessageRequest extends AbstractApiRequest {
          * @param    parseMode   Markdown or HTML
          * @return   a reference to this object.
          */
-        public Builder parseMode(FormatOption parseMode) {
+        public SendMessageRequest.Builder parseMode(FormatOption parseMode) {
             this.parseMode = parseMode;
             return this;
         }
@@ -208,7 +231,7 @@ public class SendMessageRequest extends AbstractApiRequest {
          * @param    disableWebPagePreview   disable_web_page_preview
          * @return   a reference to this object.
          */
-        public Builder disableWebPagePreview(Boolean disableWebPagePreview) {
+        public SendMessageRequest.Builder disableWebPagePreview(Boolean disableWebPagePreview) {
             this.disableWebPagePreview = disableWebPagePreview;
             return this;
         }
@@ -219,7 +242,7 @@ public class SendMessageRequest extends AbstractApiRequest {
          * @param    disableNotification   disable_notification
          * @return   a reference to this object.
          */
-        public Builder disableNotification(Boolean disableNotification) {
+        public SendMessageRequest.Builder disableNotification(Boolean disableNotification) {
             this.disableNotification = disableNotification;
             return this;
         }
@@ -230,7 +253,7 @@ public class SendMessageRequest extends AbstractApiRequest {
          * @param    replyToMessageId   ID of the original message
          * @return   a reference to this object.
          */
-        public Builder replyToMessageId(Integer replyToMessageId) {
+        public SendMessageRequest.Builder replyToMessageId(Integer replyToMessageId) {
             this.replyToMessageId = replyToMessageId;
             return this;
         }
@@ -241,7 +264,7 @@ public class SendMessageRequest extends AbstractApiRequest {
          * @param    replyMarkup   InlineKeyboardMarkup object
          * @return   a reference to this object.
          */
-        public Builder replyMarkup(InlineKeyboardMarkup replyMarkup) {
+        public SendMessageRequest.Builder replyMarkup(InlineKeyboardMarkup replyMarkup) {
             this.replyMarkup = replyMarkup;
             return this;
         }
@@ -252,7 +275,7 @@ public class SendMessageRequest extends AbstractApiRequest {
          * @param    replyMarkup   ReplyKeyboardMarkup object
          * @return   a reference to this object.
          */
-        public Builder replyMarkup(ReplyKeyboardMarkup replyMarkup) {
+        public SendMessageRequest.Builder replyMarkup(ReplyKeyboardMarkup replyMarkup) {
             this.replyMarkup = replyMarkup;
             return this;
         }
@@ -263,7 +286,7 @@ public class SendMessageRequest extends AbstractApiRequest {
          * @param    replyMarkup   ReplyKeyboardRemove object
          * @return   a reference to this object.
          */
-        public Builder replyMarkup(ReplyKeyboardRemove replyMarkup) {
+        public SendMessageRequest.Builder replyMarkup(ReplyKeyboardRemove replyMarkup) {
             this.replyMarkup = replyMarkup;
             return this;
         }
@@ -274,7 +297,7 @@ public class SendMessageRequest extends AbstractApiRequest {
          * @param    replyMarkup   ForceReply object
          * @return   a reference to this object.
          */
-        public Builder replyMarkup(ForceReply replyMarkup) {
+        public SendMessageRequest.Builder replyMarkup(ForceReply replyMarkup) {
             this.replyMarkup = replyMarkup;
             return this;
         }
