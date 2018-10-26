@@ -1,9 +1,9 @@
 package org.rp.telegram.botapi.http;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import okhttp3.*;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.rp.telegram.botapi.helper.ApiMethod;
@@ -24,13 +24,16 @@ public class HttpClient {
     Logger logger = LogManager.getLogger(HttpClient.class);
 
     private static final String API_URL = "https://api.telegram.org/";
-    private static OkHttpClient client;
-    private static ObjectMapper mapper;
+    private static OkHttpClient httpClient;
+    private static ObjectMapper jsonMapper;
+
+    private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
 
     // TODO: do we really need this?
     static {
-        client = new OkHttpClient();
-        mapper = new ObjectMapper();
+        httpClient = new OkHttpClient();
+        jsonMapper = new ObjectMapper();
+        jsonMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
     }
 
     private String url;
@@ -62,50 +65,82 @@ public class HttpClient {
         }
     }
 
+    // TODO: add parameters
     private AbstractApiResponse doGetRequest() throws HttpException {
         String url = buildRequestUrl();
-
-        logger.info("GET " + url);
+        logger.info("DoGetRequest: GET " + url);
 
         Request request = new Request.Builder().url(url).build();
-        String jsonText;
+        Response response = sendHttpRequest(request);
+        String responseBody = getResponseBody(response);
+
+        logger.info(String.format("DoGetRequest: %d %s %s", response.code(), response.message(), responseBody));
+
+        return parseResponseText(responseBody);
+    }
+
+    // private void doPostRequest() {}
+    // private void doMultipartPostRequest() {}
+
+    private AbstractApiResponse doJsonRequest() throws HttpException {
+
+        String url = buildRequestUrl();
+
+        String json;
+        try {
+            json = jsonMapper.writeValueAsString(request);
+        } catch (JsonProcessingException e) {
+            throw new HttpException(e);
+        }
+
+        logger.info("DoJsonRequest: POST " + url + " " + json);
+
+        RequestBody requestBody = RequestBody.create(JSON, json);
+        Request request = new Request.Builder().url(url).post(requestBody).build();
+        Response response = sendHttpRequest(request);
+        String responseBody = getResponseBody(response);
+
+        logger.info(String.format("DoJsonResponse: %d %s %s", response.code(), response.message(), responseBody));
+
+        return parseResponseText(responseBody);
+    }
+
+    private String getResponseBody(Response response) throws HttpException {
+        try {
+            return response.body().string();
+        } catch (IOException e) {
+            throw new HttpException(e);
+        }
+    }
+
+    private Response sendHttpRequest(Request request) throws HttpException {
         Response response;
         try {
-            response = client.newCall(request).execute();
-            jsonText = response.body().string();
+            response = httpClient.newCall(request).execute();
         } catch (IOException e) {
             logger.error("doGetRequest error: " + e);
             throw new HttpException(e);
         }
-
-        logger.info(String.format("Response: %d %s %s", response.code(), response.message(), jsonText));
-
-        return parseResponseText(jsonText);
+        return response;
     }
 
     private AbstractApiResponse parseResponseText(String jsonText) throws HttpException {
         AbstractApiResponse apiResponse;
         try {
-            apiResponse = mapper.readValue(jsonText, responseClass);
+            apiResponse = jsonMapper.readValue(jsonText, responseClass);
         } catch (IOException e) {
             logger.error("parseResponseText error: " + e);
             throw new HttpException(e);
         }
+
+        logger.info("Response object: " + apiResponse);
+
         return apiResponse;
     }
 
     private String buildRequestUrl() {
         return String.format("%sbot%s/%s", this.url, this.token, this.apiMethod.getMethodName());
     }
-
-    // private void doPostRequest() {}
-    // private void doMultipartPostRequest() {}
-
-    private AbstractApiResponse doJsonRequest() {
-        return null;
-    }
-
-
 
     private void checkRequestParameters() throws HttpException {
         if (this.url == null) {

@@ -1,10 +1,11 @@
 package org.rp.telegram.botapi.request;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.rp.telegram.botapi.entity.*;
 import org.rp.telegram.botapi.helper.ApiMethod;
-import org.rp.telegram.botapi.helper.FormatOption;
+import org.rp.telegram.botapi.entity.FormatOption;
 import org.rp.telegram.botapi.http.HttpClient;
 import org.rp.telegram.botapi.http.HttpException;
 import org.rp.telegram.botapi.http.HttpMethod;
@@ -12,6 +13,7 @@ import org.rp.telegram.botapi.response.MessageResponse;
 import java.util.Objects;
 
 //TODO: add unit test for converter to json
+//TODO: split this class to SendMessageEntity and SendMessageRequest (model + logic)
 
 /**
  * Use this method to send text messages. On success, the sent Message is returned.
@@ -29,15 +31,26 @@ public class SendMessageRequest extends AbstractApiRequest {
     // TODO: Add some annotation to convert field to json-field in request
 
     // TODO: @Required // @NotEmpty
+    @JsonProperty(value = "chat_id")
     private String chatId;
 
     // TODO: @Required // @NotEmpty
+    @JsonProperty(value = "text")
     private String text;
 
+    @JsonProperty(value = "parse_mode")
     private FormatOption parseMode;
+
+    @JsonProperty(value = "disable_web_page_preview")
     private Boolean disableWebPagePreview;
+
+    @JsonProperty(value = "disable_notification")
     private Boolean disableNotification;
+
+    @JsonProperty(value = "reply_to_message_id")
     private Integer replyToMessageId;
+
+    @JsonProperty(value = "reply_markup")
     private AbstractEntity replyMarkup;
 
     public SendMessageRequest() {

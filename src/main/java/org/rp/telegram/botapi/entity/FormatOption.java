@@ -1,4 +1,4 @@
-package org.rp.telegram.botapi.helper;
+package org.rp.telegram.botapi.entity;
 
 public enum FormatOption {
 
