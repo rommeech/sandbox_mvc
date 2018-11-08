@@ -24,11 +24,9 @@ import java.util.Objects;
  * @apiVersion    4.1
  */
 public class SendMessageRequest extends AbstractApiRequest {
+    
     private static final long serialVersionUID = 7472599720120541333L;
-
     private static final Logger logger = LogManager.getLogger(SendMessageRequest.class);
-
-    // TODO: Add some annotation to convert field to json-field in request
 
     // TODO: @Required // @NotEmpty
     @JsonProperty(value = "chat_id")
@@ -56,6 +54,16 @@ public class SendMessageRequest extends AbstractApiRequest {
     public SendMessageRequest() {
     }
 
+    public SendMessageRequest(SendMessageRequest.Builder builder) {
+        this.chatId = builder.chatId;
+        this.text = builder.text;
+        this.parseMode = builder.parseMode;
+        this.disableWebPagePreview = builder.disableWebPagePreview;
+        this.disableNotification = builder.disableNotification;
+        this.replyToMessageId = builder.replyToMessageId;
+        this.replyMarkup = builder.replyMarkup;
+    }
+
     @Override
     public MessageResponse doRequest(String token) throws RequestException {
         HttpClient request = new HttpClient.Builder()
@@ -75,16 +83,6 @@ public class SendMessageRequest extends AbstractApiRequest {
 
         }
         return response;
-    }
-
-    public SendMessageRequest(Builder builder) {
-        this.chatId = builder.chatId;
-        this.text = builder.text;
-        this.parseMode = builder.parseMode;
-        this.disableWebPagePreview = builder.disableWebPagePreview;
-        this.disableNotification = builder.disableNotification;
-        this.replyToMessageId = builder.replyToMessageId;
-        this.replyMarkup = builder.replyMarkup;
     }
 
     public String getChatId() {
@@ -139,19 +137,7 @@ public class SendMessageRequest extends AbstractApiRequest {
         return replyMarkup;
     }
 
-    public void setReplyMarkup(InlineKeyboardMarkup replyMarkup) {
-        this.replyMarkup = replyMarkup;
-    }
-
-    public void setReplyMarkup(ReplyKeyboardMarkup replyMarkup) {
-        this.replyMarkup = replyMarkup;
-    }
-
-    public void setReplyMarkup(ReplyKeyboardRemove replyMarkup) {
-        this.replyMarkup = replyMarkup;
-    }
-
-    public void setReplyMarkup(ForceReply replyMarkup) {
+    public void setReplyMarkup(AbstractEntity replyMarkup) {
         this.replyMarkup = replyMarkup;
     }
 
@@ -159,31 +145,34 @@ public class SendMessageRequest extends AbstractApiRequest {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof SendMessageRequest)) return false;
-        SendMessageRequest that = (SendMessageRequest) o;
-        return Objects.equals(chatId, that.chatId) &&
-                Objects.equals(text, that.text) &&
-                parseMode == that.parseMode &&
-                Objects.equals(disableWebPagePreview, that.disableWebPagePreview) &&
-                Objects.equals(disableNotification, that.disableNotification) &&
-                Objects.equals(replyToMessageId, that.replyToMessageId);
+        SendMessageRequest request = (SendMessageRequest) o;
+        return Objects.equals(chatId, request.chatId) &&
+                Objects.equals(text, request.text) &&
+                parseMode == request.parseMode &&
+                Objects.equals(disableWebPagePreview, request.disableWebPagePreview) &&
+                Objects.equals(disableNotification, request.disableNotification) &&
+                Objects.equals(replyToMessageId, request.replyToMessageId) &&
+                Objects.equals(replyMarkup, request.replyMarkup);
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(chatId, text, parseMode, disableWebPagePreview, disableNotification, replyToMessageId);
+        return Objects.hash(chatId, text, parseMode, disableWebPagePreview, disableNotification,
+                replyToMessageId, replyMarkup);
     }
 
     @Override
     public String toString() {
-        return "SendMessageRequest{" +
-                "chatId='" + chatId + '\'' +
-                ", text='" + text + '\'' +
-                ", parseMode=" + parseMode +
-                ", disableWebPagePreview=" + disableWebPagePreview +
-                ", disableNotification=" + disableNotification +
-                ", replyToMessageId=" + replyToMessageId +
-                '}';
+        final StringBuilder sb = new StringBuilder("SendMessageRequest{");
+        sb.append("chatId='").append(chatId).append('\'');
+        sb.append(", text='").append(text).append('\'');
+        sb.append(", parseMode=").append(parseMode);
+        sb.append(", disableWebPagePreview=").append(disableWebPagePreview);
+        sb.append(", disableNotification=").append(disableNotification);
+        sb.append(", replyToMessageId=").append(replyToMessageId);
+        sb.append(", replyMarkup=").append(replyMarkup);
+        sb.append('}');
+        return sb.toString();
     }
 
     public static class Builder {
@@ -316,13 +305,15 @@ public class SendMessageRequest extends AbstractApiRequest {
         }
 
         /**
-         * Build and return SendMessageRequest object.
+         * Build and return SendMessage object.
          *
-         * @return   SendMessageRequest object.
+         * @return   SendMessage object.
          */
         public SendMessageRequest build() {
             return new SendMessageRequest(this);
         }
 
     }
+
+
 }

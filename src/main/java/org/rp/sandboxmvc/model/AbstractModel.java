@@ -51,8 +51,8 @@ public abstract class AbstractModel<T extends Serializable> implements Serializa
 
     public void setId(T id) throws ModelException {
         if (this.id != null && !id.equals(this.id)) {
-            logger.error("Cannot change ID " + this.id + " => " + id);
-            throw new ModelException("Cannot change ID");
+            logger.error("Cannot change primary key ID " + this.id + " => " + id);
+            throw new ModelException("Cannot change primary key");
         }
         this.id = id;
     }
@@ -77,23 +77,33 @@ public abstract class AbstractModel<T extends Serializable> implements Serializa
         return version;
     }
 
+    /* READ-ONLY for humans
     public void setVersion(Integer version) {
         this.version = version;
     }
+    */
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof AbstractModel)) return false;
         AbstractModel<?> model = (AbstractModel<?>) o;
-        return Objects.equals(id, model.id) &&
-                Objects.equals(dateCreated, model.dateCreated) &&
-                Objects.equals(lastUpdated, model.lastUpdated);
+        return Objects.equals(id, model.id);
     }
 
     @Override
     public int hashCode() {
+        return Objects.hash(id);
+    }
 
-        return Objects.hash(id, dateCreated, lastUpdated);
+    @Override
+    public String toString() {
+        final StringBuilder sb = new StringBuilder("AbstractModel{");
+        sb.append("id=").append(id);
+        sb.append(", dateCreated=").append(dateCreated);
+        sb.append(", lastUpdated=").append(lastUpdated);
+        sb.append(", version=").append(version);
+        sb.append('}');
+        return sb.toString();
     }
 }

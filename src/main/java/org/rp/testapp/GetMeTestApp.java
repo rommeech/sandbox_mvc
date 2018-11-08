@@ -1,8 +1,6 @@
 package org.rp.testapp;
 
 // TODO: Add "sdk" to package
-import org.rp.telegram.botapi.TelegramBotClient;
-import org.rp.telegram.botapi.entity.User;
 
 public class GetMeTestApp {
 
