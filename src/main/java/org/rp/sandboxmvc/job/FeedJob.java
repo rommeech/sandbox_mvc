@@ -12,9 +12,9 @@ import javax.transaction.Transactional;
 
 @Transactional
 @Component
-public class RssReaderJob {
+public class FeedJob {
 
-    private static final Logger logger = LogManager.getLogger(RssReaderJob.class);
+    private static final Logger logger = LogManager.getLogger(FeedJob.class);
 
     private static final int SECOND = 1_000;
     private static final int MINUTE = 60 * SECOND;
@@ -24,7 +24,7 @@ public class RssReaderJob {
     private FeedReaderService feedReaderService;
 
     @Scheduled(initialDelay = 10 * SECOND, fixedDelay = 3 * MINUTE)
-    public void readRss() {
+    public void executeReadFeeds() {
         logger.info("Rss reader job started");
 
         try {
