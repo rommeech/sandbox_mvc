@@ -10,15 +10,15 @@ import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
 
+import static org.rp.sandboxmvc.helper.TimeInterval.MINUTE;
+import static org.rp.sandboxmvc.helper.TimeInterval.SECOND;
+
+
 @Transactional
 @Component
 public class FeedJob {
 
     private static final Logger logger = LogManager.getLogger(FeedJob.class);
-
-    private static final int SECOND = 1_000;
-    private static final int MINUTE = 60 * SECOND;
-    private static final int HOUR   = 60 * MINUTE;
 
     @Autowired
     private FeedReaderService feedReaderService;
