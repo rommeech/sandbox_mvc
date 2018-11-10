@@ -20,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Service
@@ -36,8 +37,8 @@ public class FeedReaderService {
     @Autowired
     private SyndEntryToPostConverter syndEntryToPostConverter;
 
-    public void readAllFeeds() throws ServiceException {
-        List<Feed> feeds = feedDao.getAllFeeds();
+    public void readFeeds() throws ServiceException {
+        List<Feed> feeds = feedDao.getFeedsReadyForReading();
         for (Feed feed : feeds) {
             readFeed(feed);
         }
@@ -46,9 +47,14 @@ public class FeedReaderService {
     @Transactional
     public void readFeed(Feed feed) throws ServiceException {
         SyndFeed syndFeed = getSyndFeed(feed);
-        logger.debug(syndFeed);
         updateFeed(feed, syndFeed);
         savePosts(feed, syndFeed);
+        setNextJobTime(feed);
+    }
+
+    private void setNextJobTime(Feed feed) {
+        feed.setNextJob(new Timestamp(feed.getJobInterval() + System.currentTimeMillis()));
+        feedDao.update(feed);
     }
 
     private void savePosts(Feed feed, SyndFeed syndFeed) {
@@ -57,7 +63,8 @@ public class FeedReaderService {
                 savePostFromSyndEntry(feed, entry);
             }
             else {
-                logger.info(String.format("Feed=%s: Post %s %s already saved", feed.getId(), entry.getUri(), entry.getTitle()));
+                logger.info(String.format("Feed=%s: Post %s %s already saved",
+                        feed.getId(), entry.getUri(), entry.getTitle()));
             }
         }
     }
@@ -67,7 +74,8 @@ public class FeedReaderService {
         Post post = syndEntryToPostConverter.convert(entry);
         post.setFeed(feed);
         postDao.insert(post);
-        logger.info(String.format("Feed=%s: Post %s %s %s successfully saved", feed.getId(), post.getId(), post.getPostXid(), post.getTitle()));
+        logger.info(String.format("Feed=%s: Post %s %s %s successfully saved",
+                feed.getId(), post.getId(), post.getPostXid(), post.getTitle()));
     }
 
     private boolean syndEntryAlreadySaved(Feed feed, SyndEntry entry) {
@@ -90,14 +98,14 @@ public class FeedReaderService {
 
     private SyndFeed getSyndFeed(Feed feed) throws ServiceException {
 
-        URL feedUrl = null;
+        URL feedUrl;
         try {
             feedUrl = new URL(feed.getFeedUrl());
         } catch (MalformedURLException e) {
             throw new ServiceException(e);
         }
 
-        SyndFeed syndFeed = null;
+        SyndFeed syndFeed;
         SyndFeedInput feedInput = new SyndFeedInput();
         try {
             syndFeed = feedInput.build(new XmlReader(feedUrl));

@@ -38,7 +38,7 @@ public class BotControllerTest {
        ReflectionTestUtils.setField(botController, "botService", botService);
 
         ExtendedModelMap uiModel = new ExtendedModelMap();
-        uiModel.addAttribute("bots", )
+        //uiModel.addAttribute("bots", )
 
     }
 
