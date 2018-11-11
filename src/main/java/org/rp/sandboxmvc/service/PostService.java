@@ -4,6 +4,7 @@ import org.rp.sandboxmvc.dao.OrderDirection;
 import org.rp.sandboxmvc.dao.PostDao;
 import org.rp.sandboxmvc.dao.SearchCriteria;
 import org.rp.sandboxmvc.helper.PostSearchCriteria;
+import org.rp.sandboxmvc.model.Channel;
 import org.rp.sandboxmvc.model.Feed;
 import org.rp.sandboxmvc.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,9 +42,7 @@ public class PostService extends AbstractService {
     }
 
     @Transactional(readOnly = true)
-    public List<Post> getUnpublishedPosts(Feed feed) {
-        return postDao.getUnpublishedPostsByFeed(feed);
+    public List<Post> getUnpublishedPostsByChannel(Channel channel) {
+        return postDao.getUnpublishedPostsByChannel(channel);
     }
-
-
 }

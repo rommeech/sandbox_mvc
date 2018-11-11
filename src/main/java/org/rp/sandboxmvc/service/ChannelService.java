@@ -4,6 +4,7 @@ import org.rp.sandboxmvc.dao.OrderDirection;
 import org.rp.sandboxmvc.dao.SearchCriteria;
 import org.rp.sandboxmvc.dao.ChannelDao;
 import org.rp.sandboxmvc.model.Channel;
+import org.rp.sandboxmvc.model.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -53,4 +54,8 @@ public class ChannelService extends AbstractService {
         channelDao.delete(entity);
     }
 
+    @Transactional(readOnly = true)
+    public List<Channel> getActiveChannels() {
+        return channelDao.getAllByStatus(Status.ACTIVE);
+    }
 }
