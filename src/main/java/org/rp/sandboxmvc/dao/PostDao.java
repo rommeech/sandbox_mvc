@@ -16,11 +16,10 @@ public class PostDao extends AbstractDao<Post, Long> {
 
         return this.getEntityManager()
                 .createQuery(
-                        "FROM Post AS p1 WHERE feed = :feed AND id NOT IN (SELECT p2.post.id FROM Publication AS p2 WHERE channel = :channel) ORDER BY p1.pubDate ASC"
+                        "FROM Post AS p1 WHERE feed = :feed AND id NOT IN (SELECT p2.post.id FROM Publication AS p2 WHERE channel = :channel) ORDER BY p1.pubDate ASC, p1.dateCreated ASC"
                 )
                 .setParameter("channel", channel)
                 .setParameter("feed", channel.getFeed())
-                .setMaxResults(5)
                 .getResultList();
     }
 

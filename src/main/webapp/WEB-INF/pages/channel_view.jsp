@@ -4,44 +4,71 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="tg" tagdir="/WEB-INF/tags" %>
 
-<c:set var="title" value="${channel.name} / Telegram Channels" scope="request"/>
+<spring:message var="baseTitle" code="channel.page.title" scope="request"/>
+<spring:message var="title" text="${channel.name} / ${baseTitle}" scope="request"/>
 
 <spring:url var="linkList" value="/channels/"/>
 <spring:url var="linkEdit" value="/channels/edit/${channel.id}/"/>
 <spring:url var="linkNew"  value="/channels/new/"/>
 
 <tg:wrapper>
+
     <jsp:attribute name="subnav">
-        <a href="${linkList}">Back to channel list</a>
-        <a href="${linkEdit}">Edit channel</a>
-        <a href="${linkNew}">Add new channel</a>
+        <a href="${linkList}"><spring:message code="channel.menu.back"/></a>
+        <a href="${linkEdit}"><spring:message code="channel.menu.edit"/></a>
+        <a href="${linkNew}"><spring:message code="channel.menu.add"/></a>
     </jsp:attribute>
 
     <jsp:body>
-        <h2>Overview</h2>
-        <p>Id: ${channel.id}
-            <br>Name: ${channel.name}
-            <br>Token: ${channel.token}
-            <br>Feed: ${channel.feed.title}
-            <br>Bot: ${channel.bot.name}</p>
+        <h2><spring:message code="channel.page.overview"/></h2>
 
-        <h2>Unpublished posts</h2>
-        <c:forEach items="${unpublishedPosts}" var="post">
-            ${post.id}<br>
-        </c:forEach>
+        <div class="view_layer">
+            <div class="view_row">
+                <div class="view_legend"><spring:message code="channel.id"/></div>
+                <div class="view_data">${channel.id}</div>
+            </div>
 
-        <h2>Published posts</h2>
+            <div class="view_row">
+                <div class="view_legend"><spring:message code="channel.name"/></div>
+                <div class="view_data">${channel.name}</div>
+            </div>
+
+            <div class="view_row">
+                <div class="view_legend"><spring:message code="channel.username"/></div>
+                <div class="view_data">${channel.username}</div>
+            </div>
+        </div>
+
+        <p>&nbsp;</p>
+        <h2><spring:message code="channel.page.notPubPosts"/></h2>
         <table class="table_list">
             <tr>
-                <th class="numeric"><spring:message text="ID"/></th>
-                <th class="numeric"><spring:message text="Pub Date"/></th>
-                <th><spring:message text="Post"/></th>
-                <th><spring:message text="Request"/></th>
-                <th><spring:message text="Response"/></th>
+                <th class="numeric"><spring:message code="channel.post.id"/></th>
+                <th class="numeric"><spring:message code="channel.post.date"/></th>
+                <th><spring:message code="channel.post.info"/></th>
             </tr>
-            <c:forEach items="${publications}" var="publication">
+            <c:forEach items="${unpublishedPosts}" var="post">
                 <tr>
-                    <td class="numeric">${publication.id}</td>
+                    <td class="numeric">${post.id}</td>
+                    <td>${post.pubDate}</td>
+                    <td>${post.title}</td>
+                </tr>
+            </c:forEach>
+        </table>
+
+        <p>&nbsp;</p>
+        <h2><spring:message code="channel.page.pubPosts"/></h2>
+        <table class="table_list">
+            <tr>
+                <th class="numeric"><spring:message code="channel.post.id"/></th>
+                <th class="numeric"><spring:message code="channel.post.date"/></th>
+                <th><spring:message code="channel.post.info"/></th>
+                <th><spring:message code="channel.post.request"/></th>
+                <th><spring:message code="channel.post.response"/></th>
+            </tr>
+            <c:forEach items="${publishedPosts}" var="publication">
+                <tr>
+                    <td class="numeric">${publication.post.id}</td>
                     <td>${publication.dateCreated}</td>
                     <td>${publication.post.title}</td>
                     <td class="word_break">${publication.request}</td>
@@ -49,5 +76,7 @@
                 </tr>
             </c:forEach>
         </table>
+
     </jsp:body>
+
 </tg:wrapper>

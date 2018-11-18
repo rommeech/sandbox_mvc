@@ -6,10 +6,7 @@ import org.rp.sandboxmvc.dao.SearchCriteria;
 import org.rp.sandboxmvc.helper.BotEditor;
 import org.rp.sandboxmvc.helper.FeedEditor;
 import org.rp.sandboxmvc.helper.MessageProvider;
-import org.rp.sandboxmvc.model.Status;
-import org.rp.sandboxmvc.model.Feed;
-import org.rp.sandboxmvc.model.Bot;
-import org.rp.sandboxmvc.model.Channel;
+import org.rp.sandboxmvc.model.*;
 import org.rp.sandboxmvc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,6 +16,7 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 
 @Controller
 @RequestMapping(value = "/channels/")
@@ -35,6 +33,12 @@ public class ChannelController {
 
     @Autowired
     private MessageProvider messageProvider;
+
+    @Autowired
+    private PublicationService publicationService;
+
+    @Autowired
+    private PostService postService;
 
     private static final Logger logger = LogManager.getLogger(ChannelController.class);
 
@@ -64,6 +68,27 @@ public class ChannelController {
         initEditModel(model);
         model.addAttribute("channel", channel);
         return "channel_edit";
+    }
+
+    @RequestMapping(value = "/view/{id}/", method = RequestMethod.GET)
+    public String channelView(Model model, @PathVariable("id") Long id, SearchCriteria searchCriteria) {
+
+        Channel channel = channelService.getById(id);
+        if (channel == null) {
+            throw new NotFoundException("Invalid URL, channel not found");
+        }
+
+        // Channel (bot, feed)
+        // Published posts
+        // Not published posts
+        // Paginator
+
+        model.addAttribute("channel", channel);
+        model.addAttribute("publishedPosts", publicationService.getPublicationsByChannel(channel));
+        model.addAttribute("unpublishedPosts", postService.getUnpublishedPostsByChannel(channel));
+        //model.addAttribute("publications", );
+
+        return "channel_view";
     }
 
     @RequestMapping(value = "/new/", method = RequestMethod.GET)
@@ -110,25 +135,6 @@ public class ChannelController {
         messageProvider.addInfoMessage("Successfully deleted");
 
         return "redirect:/channels/";
-    }
-
-    @RequestMapping(value = "/view/{id}/", method = RequestMethod.GET)
-    public String channelView(Model model, @PathVariable("id") Long id, SearchCriteria searchCriteria) {
-
-        Channel channel = channelService.getById(id);
-        if (channel == null) {
-            throw new NotFoundException("Invalid URL, channel not found");
-        }
-
-        // Channel (bot, feed)
-        // Published posts
-        // Not published posts
-        // Paginator
-
-        model.addAttribute("channel", channel);
-        //model.addAttribute("pubReports", channelService.getPublicationReports(channel, searchCriteria));
-
-        return "channel_view";
     }
 
     private void initEditModel(Model model) {

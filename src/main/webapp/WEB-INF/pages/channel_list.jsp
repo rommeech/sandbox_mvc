@@ -29,9 +29,9 @@
                     <td>${channel.feed.title}</td>
                     <td>X / XXX</td>
                     <td class="td_buttons">
-                        <a href="<spring:url value="/channels/view/${channel.id}/"/>"><spring:message text="overview"/></a>
-                        <a href="<spring:url value="/channels/edit/${channel.id}/"/>"><spring:message text="edit"/></a>
-                        <a href="<spring:url value="/channels/delete/${channel.id}/"/>"><spring:message text="delete"/></a>
+                        <a href="<spring:url value="/channels/view/${channel.id}/"/>"><spring:message code="action.view"/></a>
+                        <a href="<spring:url value="/channels/edit/${channel.id}/"/>"><spring:message code="action.edit"/></a>
+                        <a href="<spring:url value="/channels/delete/${channel.id}/"/>"><spring:message code="action.delete"/></a>
                     </td>
                 </tr>
             </c:forEach>

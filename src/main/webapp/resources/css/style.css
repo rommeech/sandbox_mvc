@@ -90,7 +90,7 @@ th {
     padding: 8px 8px 8px 8px;
     border-bottom: 3px double #454545;
     font-weight: bold;
-    background-color: #292A2C;
+    background-color: #35393A;
     text-align: left;
 }
 
@@ -124,6 +124,10 @@ table.table_list td.word_break {
 
 table.table_list a {
     margin: 0 2px 0 2px;
+}
+
+table.table_list td {
+    vertical-align: top;
 }
 
 table.table_edit {
@@ -260,6 +264,12 @@ div.edit_row { padding: 4px 0 0 0; margin: 0 0 0 0; vertical-align: top; border-
 div.edit_legend { width: 196px; display: inline-block; padding: 6px 4px 4px 0; margin: 0; font-weight: bold;
     text-align: right; vertical-align: top; }
 div.edit_input{ display: inline-block; padding: 0 32px 4px 4px; margin: 0; vertical-align: top; }
+
+div.view_layer { padding: 0; margin: 0; }
+div.view_row { padding: 0; margin: 0; vertical-align: top; border-bottom: 1px solid #515151; }
+div.view_legend { width: 196px; display: inline-block; padding: 4px; margin: 0; font-weight: bold;
+    text-align: right; vertical-align: top; }
+div.view_data{ min-width: 320px; display: inline-block; padding: 4px 32px 4px 4px; margin: 0; vertical-align: top; }
 
 div.form_buttons {
     border-top: 1px solid #515151;

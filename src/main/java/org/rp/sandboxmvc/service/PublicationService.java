@@ -31,8 +31,8 @@ public class PublicationService extends AbstractService {
     }
 
     @Transactional(readOnly = true)
-    public List<Publication> getPublicationsByChannel(Channel channel, SearchCriteria searchCriteria) {
-        return publicationDao.getPublicationsByChannel(channel, searchCriteria);
+    public List<Publication> getPublicationsByChannel(Channel channel) {
+        return publicationDao.getPublicationsByChannel(channel);
     }
 
 }
