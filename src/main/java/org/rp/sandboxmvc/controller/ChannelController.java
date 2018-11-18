@@ -85,7 +85,7 @@ public class ChannelController {
 
         model.addAttribute("channel", channel);
         model.addAttribute("publishedPosts", publicationService.getPublicationsByChannel(channel));
-        model.addAttribute("unpublishedPosts", postService.getUnpublishedPostsByChannel(channel));
+        model.addAttribute("unpublishedPosts", postService.getUnpublishedPostsByChannel(channel, 1000));
         //model.addAttribute("publications", );
 
         return "channel_view";

@@ -1,10 +1,13 @@
 package org.rp.telegram.botapi.response;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import org.rp.telegram.botapi.entity.AbstractEntity;
 
 import java.io.Serializable;
 import java.util.Map;
 import java.util.Objects;
+
+// TODO: Add javadoc
 
 public abstract class AbstractApiResponse<T extends AbstractEntity> implements Serializable {
     private static final long serialVersionUID = -5416870816262578210L;
@@ -25,6 +28,7 @@ public abstract class AbstractApiResponse<T extends AbstractEntity> implements S
         return ok;
     }
 
+    @JsonProperty(value = "ok")
     public void setOk(Boolean ok) {
         this.ok = ok;
     }
@@ -33,6 +37,7 @@ public abstract class AbstractApiResponse<T extends AbstractEntity> implements S
         return description;
     }
 
+    @JsonProperty(value = "description")
     public void setDescription(String description) {
         this.description = description;
     }
@@ -41,6 +46,7 @@ public abstract class AbstractApiResponse<T extends AbstractEntity> implements S
         return result;
     }
 
+    @JsonProperty(value = "result")
     public void setResult(T result) {
         this.result = result;
     }
@@ -49,6 +55,7 @@ public abstract class AbstractApiResponse<T extends AbstractEntity> implements S
         return errorCode;
     }
 
+    @JsonProperty(value = "error_code")
     public void setErrorCode(Integer errorCode) {
         this.errorCode = errorCode;
     }
@@ -56,6 +63,18 @@ public abstract class AbstractApiResponse<T extends AbstractEntity> implements S
     public Map<String, Object> getParameters() {
         return parameters;
     }
+
+
+
+
+
+
+
+
+
+
+
+
 
     public void setParameters(Map<String, Object> parameters) {
         this.parameters = parameters;

@@ -5,8 +5,8 @@ import java.util.Map;
 
 public class SearchCriteria {
 
-    public static final int DEFAULT_PAGE =  1;
-    public static final int DEFAULT_SIZE = 50;
+    private static final int DEFAULT_PAGE =  1;
+    private static final int DEFAULT_SIZE = 50;
 
     private int page;
     private int size;

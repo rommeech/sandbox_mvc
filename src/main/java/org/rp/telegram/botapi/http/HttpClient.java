@@ -69,14 +69,11 @@ public class HttpClient {
     private AbstractApiResponse doGetRequest() throws HttpException {
         String url = buildRequestUrl();
         logger.info("DoGetRequest: GET " + url);
-
         Request request = new Request.Builder().url(url).build();
         Response response = sendHttpRequest(request);
-        String responseBody = getResponseBody(response);
-
-        logger.info(String.format("DoGetRequest: %d %s %s", response.code(), response.message(), responseBody));
-
-        return parseResponseText(responseBody);
+        AbstractApiResponse apiResponse = parseResponse(response);
+        logApiResponse("DoGetResponse", apiResponse);
+        return apiResponse;
     }
 
     // private void doPostRequest() {}
@@ -85,7 +82,6 @@ public class HttpClient {
     private AbstractApiResponse doJsonRequest() throws HttpException {
 
         String url = buildRequestUrl();
-
         String json;
         try {
             json = jsonMapper.writeValueAsString(request);
@@ -98,11 +94,36 @@ public class HttpClient {
         RequestBody requestBody = RequestBody.create(JSON, json);
         Request request = new Request.Builder().url(url).post(requestBody).build();
         Response response = sendHttpRequest(request);
+        AbstractApiResponse apiResponse = parseResponse(response);
+
+        logApiResponse("DoJsonResponse", apiResponse);
+
+        return apiResponse;
+    }
+
+    private void logApiResponse(String caller, AbstractApiResponse apiResponse) {
+        String output = String.format(
+                "%s: %s %s %s",
+                caller,
+                apiResponse.getHttpCode(),
+                apiResponse.getHttpMessage(),
+                apiResponse.getHttpContent()
+        );
+        if (apiResponse.getOk()) {
+            logger.info(output);
+        }
+        else {
+            logger.error(output);
+        }
+    }
+
+    private AbstractApiResponse parseResponse(Response response) throws HttpException {
         String responseBody = getResponseBody(response);
-
-        logger.info(String.format("DoJsonResponse: %d %s %s", response.code(), response.message(), responseBody));
-
-        return parseResponseText(responseBody);
+        AbstractApiResponse apiResponse = parseResponseText(responseBody);
+        apiResponse.setHttpCode(response.code());
+        apiResponse.setHttpMessage(response.message());
+        apiResponse.setHttpContent(responseBody);
+        return apiResponse;
     }
 
     private String getResponseBody(Response response) throws HttpException {

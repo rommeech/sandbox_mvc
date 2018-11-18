@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.Date;
 import java.util.Objects;
 
+// TODO: Add javadoc
+
 public class Message extends AbstractEntity {
     private static final long serialVersionUID = 5854342279136595699L;
 

@@ -4,9 +4,12 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.rp.sandboxmvc.model.Channel;
 import org.rp.sandboxmvc.model.Post;
+import org.rp.telegram.botapi.entity.FormatOption;
 import org.rp.telegram.botapi.entity.User;
 import org.rp.telegram.botapi.request.GetMeRequest;
 import org.rp.telegram.botapi.request.RequestException;
+import org.rp.telegram.botapi.request.SendMessageRequest;
+import org.rp.telegram.botapi.response.MessageResponse;
 import org.rp.telegram.botapi.response.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +19,7 @@ import java.util.List;
 @Service(value = "telegramApiService")
 public class TelegramApiService {
 
-    public static final Logger logger = LogManager.getLogger(TelegramApiService.class);
+    private static final Logger logger = LogManager.getLogger(TelegramApiService.class);
 
     @Autowired
     private ChannelService channelService;
@@ -38,7 +41,7 @@ public class TelegramApiService {
         return response.getResult();
     }
 
-    public void sendPostsToChannels() {
+    public void sendPostsToChannels() throws RequestException {
         List<Channel> channels = getActiveChannels();
         for (Channel channel : channels) {
             List<Post> posts = getUnpublishedPostsByChannel(channel);
@@ -53,9 +56,16 @@ public class TelegramApiService {
     }
 
     private List<Post> getUnpublishedPostsByChannel(Channel channel) {
-        return postService.getUnpublishedPostsByChannel(channel);
+        return postService.getUnpublishedPostsByChannel(channel, 1);
     }
 
-    private void sendPostToChannel(Channel channel, Post post) {
+    private void sendPostToChannel(Channel channel, Post post) throws RequestException {
+        SendMessageRequest request = new SendMessageRequest.Builder()
+                .chatId(channel.getUsername())
+                .parseMode(FormatOption.HTML)
+                .text(post.getContent())
+                .build();
+        MessageResponse messageResponse = request.doRequest(channel.getBot().getToken());
+
     }
 }

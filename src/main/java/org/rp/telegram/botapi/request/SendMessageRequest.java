@@ -79,7 +79,7 @@ public class SendMessageRequest extends AbstractApiRequest {
             response = (MessageResponse) request.doRequest();
         } catch (HttpException e) {
             logger.error("SendMessageRequest: " + e);
-            throw new RequestException("SendMessageRequest error");
+            throw new RequestException("SendMessageRequest error", e);
 
         }
         return response;

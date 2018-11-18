@@ -42,7 +42,7 @@ public class PostService extends AbstractService {
     }
 
     @Transactional(readOnly = true)
-    public List<Post> getUnpublishedPostsByChannel(Channel channel) {
-        return postDao.getUnpublishedPostsByChannel(channel);
+    public List<Post> getUnpublishedPostsByChannel(Channel channel, int limit) {
+        return postDao.getUnpublishedPostsByChannel(channel, limit);
     }
 }

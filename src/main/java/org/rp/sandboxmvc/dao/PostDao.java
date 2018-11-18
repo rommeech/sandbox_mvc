@@ -12,7 +12,7 @@ import java.util.Map;
 @Repository
 public class PostDao extends AbstractDao<Post, Long> {
 
-    public List<Post> getUnpublishedPostsByChannel(Channel channel) {
+    public List<Post> getUnpublishedPostsByChannel(Channel channel, int limit) {
 
         return this.getEntityManager()
                 .createQuery(
@@ -20,6 +20,7 @@ public class PostDao extends AbstractDao<Post, Long> {
                 )
                 .setParameter("channel", channel)
                 .setParameter("feed", channel.getFeed())
+                .setMaxResults(limit)
                 .getResultList();
     }
 
