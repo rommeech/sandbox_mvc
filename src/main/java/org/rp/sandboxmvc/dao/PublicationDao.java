@@ -12,34 +12,6 @@ import java.util.List;
 @Repository
 public class PublicationDao extends AbstractDao<Publication, Long> {
 
-    public List<Publication> getAllByChannel(Channel channel) {
-
-        /*CriteriaBuilder criteriaBuilder = this.getEntityManager().getCriteriaBuilder();
-        CriteriaQuery<Publication> criteriaQuery = criteriaBuilder.createQuery(Publication.class);
-        Root<Publication> root = criteriaQuery.from(Publication.class);
-        criteriaQuery.select(root);
-        criteriaQuery.where(criteriaBuilder.equal(root.get("channel"), channel.getId()));
-
-        return this.getEntityManager()
-                .createQuery(criteriaQuery)
-                .getResultList();
-                */
-
-
-        /*return this.getEntityManager()
-                .createQuery("FROM Publication WHERE 'channel_id'=:channelId")
-                .setParameter("channelId", channel.getId().toString())
-                .getResultList();
-                */
-
-        return this.getEntityManager()
-                .createQuery("FROM Publication WHERE channel = :channel")
-                .setParameter("channel", channel)
-                .setMaxResults(30)
-                .getResultList();
-
-    }
-
     public List<Publication> getPublicationsByChannel(Channel channel) {
         SearchCriteria searchCriteria = new SearchCriteria();
         searchCriteria.addWhere("channel", channel);
