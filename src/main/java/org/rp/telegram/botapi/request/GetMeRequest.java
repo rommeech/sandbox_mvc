@@ -15,7 +15,7 @@ public class GetMeRequest extends AbstractApiRequest {
     @Override
     public UserResponse doRequest(String token) throws RequestException {
 
-        HttpClient request = new HttpClient.Builder()
+        HttpClient httpClient = new HttpClient.Builder()
                 .httpMethod(HttpMethod.GET)
                 .apiMethod(ApiMethod.GET_ME)
                 .request(this)
@@ -23,9 +23,11 @@ public class GetMeRequest extends AbstractApiRequest {
                 .token(token)
                 .build();
 
+        this.setHttpClient(httpClient);
+
         UserResponse response;
         try {
-            response = (UserResponse) request.doRequest();
+            response = (UserResponse) httpClient.doRequest();
         } catch (HttpException e) {
             logger.error("GetMeRequest error: " + e);
             throw new RequestException("GetMeRequest error", e);

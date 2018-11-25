@@ -6,6 +6,8 @@ import org.rp.sandboxmvc.model.Channel;
 import org.rp.sandboxmvc.model.Post;
 import org.rp.telegram.botapi.entity.FormatOption;
 import org.rp.telegram.botapi.entity.User;
+import org.rp.telegram.botapi.http.HttpClient;
+import org.rp.telegram.botapi.request.AbstractApiRequest;
 import org.rp.telegram.botapi.request.GetMeRequest;
 import org.rp.telegram.botapi.request.RequestException;
 import org.rp.telegram.botapi.request.SendMessageRequest;
@@ -16,13 +18,19 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
-@Service(value = "telegramApiService")
-public class TelegramApiService {
+@Service(value = "telegramService")
+public class TelegramService {
 
-    private static final Logger logger = LogManager.getLogger(TelegramApiService.class);
+    private static final Logger logger = LogManager.getLogger(TelegramService.class);
 
     @Autowired
     private ChannelService channelService;
+
+    @Autowired
+    private PublicationService publicationService;
+
+    @Autowired
+    private RequestLogService requestLogService;
 
     @Autowired
     private PostService postService;
@@ -37,6 +45,8 @@ public class TelegramApiService {
             logger.error("sendGetMeRequest", e);
             throw new ServiceException("GetMeRequest error", e);
         }
+
+        this.logRequest(request.getHttpClient());
 
         return response.getResult();
     }
@@ -66,6 +76,14 @@ public class TelegramApiService {
                 .text(post.getContent())
                 .build();
         MessageResponse messageResponse = request.doRequest(channel.getBot().getToken());
+    }
 
+    private void logRequest(HttpClient client) {
+        requestLogService.logRequest(
+                client.getApiMethod().getMethodName(),
+                client.getHttpRequestDuration(),
+                client.getHttpRequest(),
+                client.getHttpResponse()
+        );
     }
 }

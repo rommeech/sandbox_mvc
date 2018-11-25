@@ -2,7 +2,7 @@ package org.rp.sandboxmvc.job;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.rp.sandboxmvc.service.TelegramApiService;
+import org.rp.sandboxmvc.service.TelegramService;
 import org.rp.telegram.botapi.request.RequestException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -20,7 +20,7 @@ public class TelegramJob {
     private static final Logger logger = LogManager.getLogger(TelegramJob.class);
 
     @Autowired
-    TelegramApiService telegramApiService;
+    TelegramService telegramApiService;
 
     @Scheduled(initialDelay = 10 * SECOND, fixedDelay = 1 * MINUTE)
     public void sendTelegramPosts() throws RequestException {

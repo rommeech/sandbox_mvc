@@ -1,5 +1,7 @@
 package org.rp.sandboxmvc.service;
 
+import okhttp3.Request;
+import okhttp3.Response;
 import org.rp.sandboxmvc.dao.RequestLogDao;
 import org.rp.sandboxmvc.model.RequestLog;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,4 +25,18 @@ public class RequestLogService extends AbstractService {
     }
 
 
+    public void logRequest(String apiMethodName, Double duration, Request request, Response response) {
+        RequestLog requestLog = new RequestLog.Builder()
+                .publication(null)
+                .apiMethod(apiMethodName)
+                .requestMethod(request.method())
+                .requestUrl(request.url().toString())
+                .requestBody(request.body().toString())
+                .duration(duration)
+                .responseHttpCode(response.code())
+                .responseHttpMessage(response.message())
+                .responseBody(response.body().toString())
+                .build();
+        this.insert(requestLog);
+    }
 }

@@ -21,16 +21,17 @@ There are four ways of passing parameters in Bot API requests, but we support on
 
 public class HttpClient {
 
-    Logger logger = LogManager.getLogger(HttpClient.class);
+    private static final Logger logger = LogManager.getLogger(HttpClient.class);
 
     private static final String API_URL = "https://api.telegram.org/";
+    private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+
     private static OkHttpClient httpClient;
     private static ObjectMapper jsonMapper;
 
-    private static final MediaType JSON = MediaType.parse("application/json; charset=utf-8");
-
-    // TODO: do we really need this?
+    // TODO: do we really need this in static?
     static {
+        logger.info("Init static objects");
         httpClient = new OkHttpClient();
         jsonMapper = new ObjectMapper();
         jsonMapper.setSerializationInclusion(JsonInclude.Include.NON_NULL);
@@ -42,6 +43,10 @@ public class HttpClient {
     private ApiMethod apiMethod;
     private AbstractApiRequest request;
     private Class<? extends AbstractApiResponse> responseClass;
+
+    private Request httpRequest;
+    private Response httpResponse;
+    private Double httpRequestDuration;
 
     private HttpClient(Builder builder) {
         this.url = builder.url;
@@ -136,12 +141,16 @@ public class HttpClient {
 
     private Response sendHttpRequest(Request request) throws HttpException {
         Response response;
+        long startTime = System.currentTimeMillis();
         try {
             response = httpClient.newCall(request).execute();
         } catch (IOException e) {
             logger.error("doGetRequest error: " + e);
             throw new HttpException(e);
         }
+        this.httpRequestDuration = (System.currentTimeMillis() - startTime) / 1000D;
+        this.httpRequest = request;
+        this.httpResponse = response;
         return response;
     }
 
@@ -182,6 +191,66 @@ public class HttpClient {
         if (apiMethod == null) {
             throw new HttpException("Wrong parameter: API method cannot be null");
         }
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public HttpMethod getHttpMethod() {
+        return httpMethod;
+    }
+
+    public void setHttpMethod(HttpMethod httpMethod) {
+        this.httpMethod = httpMethod;
+    }
+
+    public ApiMethod getApiMethod() {
+        return apiMethod;
+    }
+
+    public void setApiMethod(ApiMethod apiMethod) {
+        this.apiMethod = apiMethod;
+    }
+
+    public AbstractApiRequest getRequest() {
+        return request;
+    }
+
+    public void setRequest(AbstractApiRequest request) {
+        this.request = request;
+    }
+
+    public Class<? extends AbstractApiResponse> getResponseClass() {
+        return responseClass;
+    }
+
+    public void setResponseClass(Class<? extends AbstractApiResponse> responseClass) {
+        this.responseClass = responseClass;
+    }
+
+    public Request getHttpRequest() {
+        return httpRequest;
+    }
+
+    public Response getHttpResponse() {
+        return httpResponse;
+    }
+
+    public Double getHttpRequestDuration() {
+        return httpRequestDuration;
     }
 
     public static class Builder {

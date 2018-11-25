@@ -14,12 +14,8 @@ public class RequestLog extends AbstractModel<Long> {
     private Publication publication;
 
     @NotNull
-    @Column(name = "service_provider")
-    private String serviceProvider;
-
-    @NotNull
-    @Column(name = "service_type")
-    private String serviceType;
+    @Column(name = "api_method")
+    private String apiMethod;
 
     @NotNull
     @Column(name = "request_method")
@@ -38,7 +34,7 @@ public class RequestLog extends AbstractModel<Long> {
     private String requestBody;
 
     @Column(name = "duration")
-    private Float duration;
+    private Double duration;
 
     @Column(name = "response_http_code")
     private int responseHttpCode;
@@ -52,6 +48,19 @@ public class RequestLog extends AbstractModel<Long> {
     public RequestLog() {
     }
 
+    public RequestLog(Builder builder) {
+        this.publication = builder.publication;
+        this.apiMethod = builder.apiMethod;
+        this.requestMethod = builder.requestMethod;
+        this.requestUrl = builder.requestUrl;
+        this.requestContentType = builder.requestContentType;
+        this.requestBody = builder.requestBody;
+        this.duration = builder.duration;
+        this.responseHttpCode = builder.responseHttpCode;
+        this.responseHttpMessage = builder.responseHttpMessage;
+        this.responseBody = builder.responseBody;
+    }
+
     public Publication getPublication() {
         return publication;
     }
@@ -60,20 +69,12 @@ public class RequestLog extends AbstractModel<Long> {
         this.publication = publication;
     }
 
-    public String getServiceProvider() {
-        return serviceProvider;
+    public String getApiMethod() {
+        return apiMethod;
     }
 
-    public void setServiceProvider(String serviceProvider) {
-        this.serviceProvider = serviceProvider;
-    }
-
-    public String getServiceType() {
-        return serviceType;
-    }
-
-    public void setServiceType(String serviceType) {
-        this.serviceType = serviceType;
+    public void setApiMethod(String apiMethod) {
+        this.apiMethod = apiMethod;
     }
 
     public String getRequestMethod() {
@@ -108,11 +109,11 @@ public class RequestLog extends AbstractModel<Long> {
         this.requestBody = requestBody;
     }
 
-    public Float getDuration() {
+    public Double getDuration() {
         return duration;
     }
 
-    public void setDuration(Float duration) {
+    public void setDuration(Double duration) {
         this.duration = duration;
     }
 
@@ -148,8 +149,7 @@ public class RequestLog extends AbstractModel<Long> {
         RequestLog that = (RequestLog) o;
         return responseHttpCode == that.responseHttpCode &&
                 Objects.equals(publication, that.publication) &&
-                Objects.equals(serviceProvider, that.serviceProvider) &&
-                Objects.equals(serviceType, that.serviceType) &&
+                Objects.equals(apiMethod, that.apiMethod) &&
                 Objects.equals(requestMethod, that.requestMethod) &&
                 Objects.equals(requestUrl, that.requestUrl) &&
                 Objects.equals(requestContentType, that.requestContentType) &&
@@ -161,16 +161,15 @@ public class RequestLog extends AbstractModel<Long> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), publication, serviceProvider, serviceType, requestMethod, requestUrl,
-                requestContentType, requestBody, duration, responseHttpCode, responseHttpMessage, responseBody);
+        return Objects.hash(super.hashCode(), publication, apiMethod, requestMethod, requestUrl, requestContentType,
+                requestBody, duration, responseHttpCode, responseHttpMessage, responseBody);
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("RequestLog{");
         sb.append("publication=").append(publication);
-        sb.append(", serviceProvider='").append(serviceProvider).append('\'');
-        sb.append(", serviceType='").append(serviceType).append('\'');
+        sb.append(", apiMethod='").append(apiMethod).append('\'');
         sb.append(", requestMethod='").append(requestMethod).append('\'');
         sb.append(", requestUrl='").append(requestUrl).append('\'');
         sb.append(", requestContentType='").append(requestContentType).append('\'');
@@ -181,5 +180,78 @@ public class RequestLog extends AbstractModel<Long> {
         sb.append(", responseBody='").append(responseBody).append('\'');
         sb.append('}');
         return sb.toString();
+    }
+
+    public static class Builder {
+
+        private Publication publication;
+        private String apiMethod;
+        private String requestMethod;
+        private String requestUrl;
+        private String requestContentType;
+        private String requestBody;
+        private Double duration;
+        private int responseHttpCode;
+        private String responseHttpMessage;
+        private String responseBody;
+
+        public Builder() {
+
+        }
+
+        public RequestLog.Builder publication(Publication publication) {
+            this.publication = publication;
+            return this;
+        }
+
+        public RequestLog.Builder apiMethod(String apiMethod) {
+            this.apiMethod = apiMethod;
+            return this;
+        }
+
+        public RequestLog.Builder requestMethod(String requestMethod) {
+            this.requestMethod = requestMethod;
+            return this;
+        }
+
+        public RequestLog.Builder requestUrl(String requestUrl) {
+            this.requestUrl = requestUrl;
+            return this;
+        }
+
+        public RequestLog.Builder requestContentType(String requestContentType) {
+            this.requestContentType = requestContentType;
+            return this;
+        }
+
+        public RequestLog.Builder requestBody(String requestBody) {
+            this.requestBody = requestBody;
+            return this;
+        }
+
+        public RequestLog.Builder duration(Double duration) {
+            this.duration = duration;
+            return this;
+        }
+
+        public RequestLog.Builder responseHttpCode(int responseHttpCode) {
+            this.responseHttpCode = responseHttpCode;
+            return this;
+        }
+
+        public RequestLog.Builder responseHttpMessage(String responseHttpMessage) {
+            this.responseHttpMessage = responseHttpMessage;
+            return this;
+        }
+
+        public RequestLog.Builder responseBody(String responseBody) {
+            this.responseBody = responseBody;
+            return this;
+        }
+
+        public RequestLog build() {
+            return new RequestLog(this);
+        }
+
     }
 }

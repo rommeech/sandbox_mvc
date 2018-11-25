@@ -8,7 +8,6 @@ import org.rp.telegram.botapi.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -19,7 +18,7 @@ public class BotService extends AbstractService {
     private BotDao botDao;
 
     @Autowired
-    private TelegramApiService telegramApiService;
+    private TelegramService telegramApiService;
 
     public BotService() {
     }
