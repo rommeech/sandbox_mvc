@@ -23,8 +23,8 @@ public class Publication extends AbstractModel<Long> {
     @JoinColumn(name = "channel_id")
     private Channel channel;
 
-    @OneToMany(mappedBy = "publication", fetch = FetchType.LAZY)
-    private List<RequestLog> requestLogs;
+    /*@OneToMany(mappedBy = "publication", fetch = FetchType.LAZY)
+    private List<RequestLog> requestLogs;*/
 
     public Publication() {
         super();
@@ -54,13 +54,13 @@ public class Publication extends AbstractModel<Long> {
         this.channel = channel;
     }
 
-    public List<RequestLog> getRequestLogs() {
+    /*public List<RequestLog> getRequestLogs() {
         return requestLogs;
     }
 
     public void setRequestLogs(List<RequestLog> requestLogs) {
         this.requestLogs = requestLogs;
-    }
+    }*/
 
     @Override
     public boolean equals(Object o) {
@@ -70,13 +70,14 @@ public class Publication extends AbstractModel<Long> {
         Publication that = (Publication) o;
         return Objects.equals(isSuccessful, that.isSuccessful) &&
                 Objects.equals(post, that.post) &&
-                Objects.equals(channel, that.channel) &&
-                Objects.equals(requestLogs, that.requestLogs);
+                Objects.equals(channel, that.channel)
+                //Objects.equals(requestLogs, that.requestLogs)
+                ;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), isSuccessful, post, channel, requestLogs);
+        return Objects.hash(super.hashCode(), isSuccessful, post, channel);
     }
 
     @Override
@@ -85,7 +86,7 @@ public class Publication extends AbstractModel<Long> {
         sb.append("isSuccessful=").append(isSuccessful);
         sb.append(", post=").append(post);
         sb.append(", channel=").append(channel);
-        sb.append(", requestLogs=").append(requestLogs);
+        //sb.append(", requestLogs=").append(requestLogs);
         sb.append('}');
         return sb.toString();
     }

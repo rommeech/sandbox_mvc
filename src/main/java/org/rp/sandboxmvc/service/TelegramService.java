@@ -15,6 +15,7 @@ import org.rp.telegram.botapi.response.MessageResponse;
 import org.rp.telegram.botapi.response.UserResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -35,6 +36,7 @@ public class TelegramService {
     @Autowired
     private PostService postService;
 
+    @Transactional
     public User sendGetMeRequest(String token) throws ServiceException {
 
         GetMeRequest request = new GetMeRequest();
@@ -83,7 +85,8 @@ public class TelegramService {
                 client.getApiMethod().getMethodName(),
                 client.getHttpRequestDuration(),
                 client.getHttpRequest(),
-                client.getHttpResponse()
+                client.getHttpResponse(),
+                client.getRawResponseBody()
         );
     }
 }

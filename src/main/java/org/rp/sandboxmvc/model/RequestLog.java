@@ -9,27 +9,22 @@ import java.util.Objects;
 public class RequestLog extends AbstractModel<Long> {
     private static final long serialVersionUID = 4355766629611168233L;
 
-    @ManyToOne
+    /*@ManyToOne
     @JoinColumn(name = "publication_id")
-    private Publication publication;
+    private Publication publication;*/
 
-    @NotNull
     @Column(name = "api_method")
     private String apiMethod;
 
-    @NotNull
     @Column(name = "request_method")
     private String requestMethod;
 
-    @NotNull
     @Column(name = "request_url")
     private String requestUrl;
 
-    @NotNull
     @Column(name = "request_content_type")
     private String requestContentType;
 
-    @NotNull
     @Column(name = "request_body")
     private String requestBody;
 
@@ -49,7 +44,7 @@ public class RequestLog extends AbstractModel<Long> {
     }
 
     public RequestLog(Builder builder) {
-        this.publication = builder.publication;
+        //this.publication = builder.publication;
         this.apiMethod = builder.apiMethod;
         this.requestMethod = builder.requestMethod;
         this.requestUrl = builder.requestUrl;
@@ -61,13 +56,14 @@ public class RequestLog extends AbstractModel<Long> {
         this.responseBody = builder.responseBody;
     }
 
-    public Publication getPublication() {
+    /*public Publication getPublication() {
         return publication;
     }
 
     public void setPublication(Publication publication) {
         this.publication = publication;
     }
+    */
 
     public String getApiMethod() {
         return apiMethod;
@@ -148,7 +144,7 @@ public class RequestLog extends AbstractModel<Long> {
         if (!super.equals(o)) return false;
         RequestLog that = (RequestLog) o;
         return responseHttpCode == that.responseHttpCode &&
-                Objects.equals(publication, that.publication) &&
+                //Objects.equals(publication, that.publication) &&
                 Objects.equals(apiMethod, that.apiMethod) &&
                 Objects.equals(requestMethod, that.requestMethod) &&
                 Objects.equals(requestUrl, that.requestUrl) &&
@@ -161,15 +157,15 @@ public class RequestLog extends AbstractModel<Long> {
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), publication, apiMethod, requestMethod, requestUrl, requestContentType,
+        return Objects.hash(super.hashCode(), apiMethod, requestMethod, requestUrl, requestContentType,
                 requestBody, duration, responseHttpCode, responseHttpMessage, responseBody);
     }
 
     @Override
     public String toString() {
         final StringBuilder sb = new StringBuilder("RequestLog{");
-        sb.append("publication=").append(publication);
-        sb.append(", apiMethod='").append(apiMethod).append('\'');
+        //sb.append("publication=").append(publication);
+        sb.append("apiMethod='").append(apiMethod).append('\'');
         sb.append(", requestMethod='").append(requestMethod).append('\'');
         sb.append(", requestUrl='").append(requestUrl).append('\'');
         sb.append(", requestContentType='").append(requestContentType).append('\'');
@@ -184,7 +180,7 @@ public class RequestLog extends AbstractModel<Long> {
 
     public static class Builder {
 
-        private Publication publication;
+        //private Publication publication;
         private String apiMethod;
         private String requestMethod;
         private String requestUrl;
@@ -199,10 +195,10 @@ public class RequestLog extends AbstractModel<Long> {
 
         }
 
-        public RequestLog.Builder publication(Publication publication) {
+        /*public RequestLog.Builder publication(Publication publication) {
             this.publication = publication;
             return this;
-        }
+        }*/
 
         public RequestLog.Builder apiMethod(String apiMethod) {
             this.apiMethod = apiMethod;

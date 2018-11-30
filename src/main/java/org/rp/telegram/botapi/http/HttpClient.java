@@ -47,6 +47,7 @@ public class HttpClient {
     private Request httpRequest;
     private Response httpResponse;
     private Double httpRequestDuration;
+    private String rawResponseBody;
 
     private HttpClient(Builder builder) {
         this.url = builder.url;
@@ -132,11 +133,14 @@ public class HttpClient {
     }
 
     private String getResponseBody(Response response) throws HttpException {
-        try {
-            return response.body().string();
-        } catch (IOException e) {
-            throw new HttpException(e);
+        if (this.rawResponseBody == null) {
+            try {
+                this.rawResponseBody = response.body().string();
+            } catch (IOException e) {
+                throw new HttpException(e);
+            }
         }
+        return this.rawResponseBody;
     }
 
     private Response sendHttpRequest(Request request) throws HttpException {
@@ -251,6 +255,14 @@ public class HttpClient {
 
     public Double getHttpRequestDuration() {
         return httpRequestDuration;
+    }
+
+    public String getRawResponseBody() {
+        return rawResponseBody;
+    }
+
+    public void setRawResponseBody(String rawResponseBody) {
+        this.rawResponseBody = rawResponseBody;
     }
 
     public static class Builder {
