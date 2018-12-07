@@ -10,13 +10,11 @@ import org.rp.sandboxmvc.service.FeedService;
 import org.rp.sandboxmvc.service.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.Arrays;
 
 @Controller(value = "feedController")
