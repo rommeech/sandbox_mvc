@@ -1,58 +1,25 @@
 package org.rp.sandboxmvc.service;
 
-import org.rp.sandboxmvc.dao.OrderDirection;
 import org.rp.sandboxmvc.dao.SearchCriteria;
-import org.rp.sandboxmvc.dao.ChannelDao;
 import org.rp.sandboxmvc.model.Channel;
-import org.rp.sandboxmvc.model.Status;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
-public class ChannelService extends AbstractService {
+public interface ChannelService {
 
-    @Autowired
-    private final ChannelDao channelDao;
+    Channel getById(Long id);
 
-    public ChannelService(ChannelDao channelDao) {
-        this.channelDao = channelDao;
-    }
+    List<Channel> getChannels(SearchCriteria searchCriteria);
 
-    @Transactional(readOnly = true)
-    public Channel getById(Long id) {
-        return channelDao.getById(id);
-    }
+    Long countChannels(SearchCriteria searchCriteria);
 
-    @Transactional(readOnly = true)
-    public List<Channel> getChannels(SearchCriteria searchCriteria) {
-        return channelDao.search(searchCriteria);
-    }
+    void update(Channel entity);
 
-    @Transactional(readOnly = true)
-    public Long countChannels(SearchCriteria searchCriteria) {
-        return channelDao.count(searchCriteria);
-    }
+    void insert(Channel entity);
 
-    @Transactional
-    public void update(Channel entity) {
-        channelDao.update(entity);
-    }
+    void delete(Channel entity);
 
-    @Transactional
-    public void insert(Channel entity) {
-        channelDao.insert(entity);
-    }
+    List<Channel> getActiveChannels();
 
-    @Transactional
-    public void delete(Channel entity) {
-        channelDao.delete(entity);
-    }
-
-    @Transactional(readOnly = true)
-    public List<Channel> getActiveChannels() {
-        return channelDao.getAllByStatus(Status.ACTIVE);
-    }
+    void fixSearchCriteria(SearchCriteria searchCriteria);
 }

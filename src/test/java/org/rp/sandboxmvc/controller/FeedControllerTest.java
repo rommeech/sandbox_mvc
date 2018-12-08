@@ -31,11 +31,11 @@ public class FeedControllerTest {
     @Autowired
     private WebApplicationContext webApplicationContext;
 
-    @Before
+    /*@Before
     public void setUp() {
         Mockito.reset(feedServiceMock);
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
-    }
+    }*/
 
     /*@Test
     public void feedList() {

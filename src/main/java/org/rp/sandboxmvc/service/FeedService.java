@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 @Service
-public class FeedService {
+public class FeedService extends AbstractService {
 
     @Autowired
     private FeedDao feedDao;
@@ -59,5 +59,8 @@ public class FeedService {
     public void readPosts(Feed feed) throws ServiceException {
         feedReaderService.readFeed(feed);
     }
+
+
+
 
 }
