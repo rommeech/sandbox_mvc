@@ -51,6 +51,7 @@ public class ChannelController {
 
     @RequestMapping(value = {"/", "/list/"}, method = RequestMethod.GET)
     public String channelList(Model model, SearchCriteria searchCriteria) {
+        channelService.fixSearchCriteria(searchCriteria);
         model.addAttribute("channels", channelService.getChannels(searchCriteria));
         model.addAttribute("total", channelService.countChannels(searchCriteria));
         return "channel_list";

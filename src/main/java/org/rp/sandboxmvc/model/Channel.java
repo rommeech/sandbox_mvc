@@ -43,6 +43,17 @@ public class Channel extends AbstractModel<Long> {
         super();
     }
 
+    public Channel(Channel.Builder builder) throws ModelException {
+        super();
+        this.setId(builder.id);
+        this.bot = builder.bot;
+        this.feed = builder.feed;
+        this.name = builder.name;
+        this.username = builder.username;
+        this.status = builder.status;
+        this.publications = builder.publications;
+    }
+
     public Bot getBot() {
         return bot;
     }
@@ -119,5 +130,55 @@ public class Channel extends AbstractModel<Long> {
                 ", token='" + username + '\'' +
                 ", status=" + status +
                 '}';
+    }
+
+    public static class Builder {
+
+        private Long id;
+        private Bot bot;
+        private Feed feed;
+        private String name;
+        private String username;
+        private Status status;
+        private List<Publication> publications;
+
+        public Channel.Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Channel.Builder bot(Bot bot) {
+            this.bot = bot;
+            return this;
+        }
+
+        public Channel.Builder feed(Feed feed) {
+            this.feed = feed;
+            return this;
+        }
+
+        public Channel.Builder name(String name) {
+            this.name = name;
+            return this;
+        }
+
+        public Channel.Builder username(String username) {
+            this.username = username;
+            return this;
+        }
+
+        public Channel.Builder status(Status status) {
+            this.status = status;
+            return this;
+        }
+
+        public Channel.Builder publications(List<Publication> publications) {
+            this.publications = publications;
+            return this;
+        }
+
+        public Channel build() throws ModelException {
+            return new Channel(this);
+        }
     }
 }

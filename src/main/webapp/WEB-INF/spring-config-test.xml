@@ -8,4 +8,8 @@
         <constructor-arg value="org.rp.sandboxmvc.service.FeedService"/>
     </bean>
 
+    <bean id="channelService" name="channelService" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="org.rp.sandboxmvc.service.ChannelService"/>
+    </bean>
+
 </beans>

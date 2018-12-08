@@ -28,9 +28,6 @@ public class ChannelService extends AbstractService {
 
     @Transactional(readOnly = true)
     public List<Channel> getChannels(SearchCriteria searchCriteria) {
-        if (searchCriteria.getOrderBy() == null) {
-            searchCriteria.setOrder("id", OrderDirection.ASC);
-        }
         return channelDao.search(searchCriteria);
     }
 

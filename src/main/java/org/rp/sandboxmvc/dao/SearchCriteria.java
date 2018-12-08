@@ -2,6 +2,7 @@ package org.rp.sandboxmvc.dao;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class SearchCriteria {
 
@@ -18,6 +19,7 @@ public class SearchCriteria {
         this.where = new HashMap<>();
         this.page = DEFAULT_PAGE;
         this.size = DEFAULT_SIZE;
+        this.orderDir = OrderDirection.ASC;
     }
 
     public SearchCriteria setLimit(int page, int size) {
@@ -101,5 +103,20 @@ public class SearchCriteria {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof SearchCriteria)) return false;
+        SearchCriteria that = (SearchCriteria) o;
+        return page == that.page &&
+                size == that.size &&
+                Objects.equals(orderBy, that.orderBy) &&
+                orderDir == that.orderDir &&
+                Objects.equals(where, that.where);
+    }
 
+    @Override
+    public int hashCode() {
+        return Objects.hash(page, size, orderBy, orderDir, where);
+    }
 }
