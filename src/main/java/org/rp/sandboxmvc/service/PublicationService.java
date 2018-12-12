@@ -1,7 +1,6 @@
 package org.rp.sandboxmvc.service;
 
 import org.rp.sandboxmvc.dao.PublicationDao;
-import org.rp.sandboxmvc.dao.SearchCriteria;
 import org.rp.sandboxmvc.model.Channel;
 import org.rp.sandboxmvc.model.Publication;
 import org.springframework.beans.factory.annotation.Autowired;

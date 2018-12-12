@@ -2,7 +2,6 @@ package org.rp.sandboxmvc.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.rp.sandboxmvc.dao.SearchCriteria;
 import org.rp.sandboxmvc.helper.MessageProvider;
 import org.rp.sandboxmvc.model.Status;
 import org.rp.sandboxmvc.model.Feed;
@@ -30,11 +29,10 @@ public class FeedController extends AbstractController {
     private MessageProvider messageProvider;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public ModelAndView feedList(SearchCriteria searchCriteria) {
+    public ModelAndView feedList() {
         ModelAndView model = new ModelAndView();
-        model.addObject("feeds", feedService.getFeeds(searchCriteria));
-        model.addObject("total", feedService.countFeeds(searchCriteria));
-        model.addObject("searchCriteria", searchCriteria);
+        model.addObject("feeds", feedService.getFeeds());
+        model.addObject("total", feedService.countFeeds());
         model.setViewName("feed_list");
         return model;
     }

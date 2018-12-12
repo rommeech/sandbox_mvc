@@ -2,7 +2,6 @@ package org.rp.sandboxmvc.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.rp.sandboxmvc.dao.SearchCriteria;
 import org.rp.sandboxmvc.helper.BotEditor;
 import org.rp.sandboxmvc.helper.FeedEditor;
 import org.rp.sandboxmvc.helper.MessageProvider;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.ArrayList;
 
 @Controller
 @RequestMapping(value = "/channels/")
@@ -50,10 +48,9 @@ public class ChannelController {
     }
 
     @RequestMapping(value = {"/", "/list/"}, method = RequestMethod.GET)
-    public String channelList(Model model, SearchCriteria searchCriteria) {
-        channelService.fixSearchCriteria(searchCriteria);
-        model.addAttribute("channels", channelService.getChannels(searchCriteria));
-        model.addAttribute("total", channelService.countChannels(searchCriteria));
+    public String channelList(Model model) {
+        model.addAttribute("channels", channelService.getChannels());
+        model.addAttribute("total", channelService.countChannels());
         return "channel_list";
     }
 
@@ -72,7 +69,7 @@ public class ChannelController {
     }
 
     @RequestMapping(value = "/view/{id}/", method = RequestMethod.GET)
-    public String channelView(Model model, @PathVariable("id") Long id, SearchCriteria searchCriteria) {
+    public String channelView(Model model, @PathVariable("id") Long id) {
 
         Channel channel = channelService.getById(id);
         if (channel == null) {
@@ -86,8 +83,7 @@ public class ChannelController {
 
         model.addAttribute("channel", channel);
         model.addAttribute("publishedPosts", publicationService.getPublicationsByChannel(channel));
-        model.addAttribute("unpublishedPosts", postService.getUnpublishedPostsByChannel(channel, 1000));
-        //model.addAttribute("publications", );
+        model.addAttribute("unpublishedPosts", postService.getUnpublishedPostsByChannel(channel));
 
         return "channel_view";
     }

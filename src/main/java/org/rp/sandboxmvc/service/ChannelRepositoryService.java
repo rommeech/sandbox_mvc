@@ -1,8 +1,6 @@
 package org.rp.sandboxmvc.service;
 
 import org.rp.sandboxmvc.dao.ChannelDao;
-import org.rp.sandboxmvc.dao.OrderDirection;
-import org.rp.sandboxmvc.dao.SearchCriteria;
 import org.rp.sandboxmvc.model.Channel;
 import org.rp.sandboxmvc.model.Status;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,14 +27,14 @@ public class ChannelRepositoryService implements ChannelService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Channel> getChannels(SearchCriteria searchCriteria) {
-        return channelDao.search(searchCriteria);
+    public List<Channel> getChannels() {
+        return channelDao.getByCriteria();
     }
 
     @Override
     @Transactional(readOnly = true)
-    public Long countChannels(SearchCriteria searchCriteria) {
-        return channelDao.count(searchCriteria);
+    public Long countChannels() {
+        return channelDao.countByCriteria();
     }
 
     @Override
@@ -61,13 +59,6 @@ public class ChannelRepositoryService implements ChannelService {
     @Transactional(readOnly = true)
     public List<Channel> getActiveChannels() {
         return channelDao.getAllByStatus(Status.ACTIVE);
-    }
-
-    @Override
-    public void fixSearchCriteria(SearchCriteria searchCriteria) {
-        if (searchCriteria.getOrderBy() == null) {
-            searchCriteria.setOrder("username", OrderDirection.ASC);
-        }
     }
 
 }

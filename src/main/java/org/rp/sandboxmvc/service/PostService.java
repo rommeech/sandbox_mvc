@@ -2,10 +2,7 @@ package org.rp.sandboxmvc.service;
 
 import org.rp.sandboxmvc.dao.OrderDirection;
 import org.rp.sandboxmvc.dao.PostDao;
-import org.rp.sandboxmvc.dao.SearchCriteria;
-import org.rp.sandboxmvc.helper.PostSearchCriteria;
 import org.rp.sandboxmvc.model.Channel;
-import org.rp.sandboxmvc.model.Feed;
 import org.rp.sandboxmvc.model.Post;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,21 +21,23 @@ public class PostService extends AbstractService {
     }
 
     @Transactional(readOnly = true)
-    public List<Post> getPosts(PostSearchCriteria criteria) {
-        if (criteria.getOrderBy() == null) {
-            criteria.setOrder("id", OrderDirection.DESC);
-        }
-        return postDao.search(criteria);
+    public List<Post> getPosts() {
+        return postDao.getByCriteria();
     }
 
     @Transactional(readOnly = true)
-    public long countPosts(PostSearchCriteria criteria) {
-        return postDao.count(criteria);
+    public long countPosts() {
+        return postDao.countByCriteria();
     }
 
     @Transactional(readOnly = true)
     public Post getById(Long id) {
         return postDao.getById(id);
+    }
+
+    @Transactional(readOnly = true)
+    public List<Post> getUnpublishedPostsByChannel(Channel channel) {
+        return getUnpublishedPostsByChannel(channel, 100);
     }
 
     @Transactional(readOnly = true)

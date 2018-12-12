@@ -2,10 +2,7 @@ package org.rp.sandboxmvc.dao;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.rp.sandboxmvc.helper.PostSearchCriteria;
 import org.rp.sandboxmvc.model.AbstractModel;
-import org.rp.sandboxmvc.model.Feed;
-import org.rp.sandboxmvc.model.Post;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -61,15 +58,15 @@ public abstract class AbstractDao<T extends AbstractModel<K>, K extends Serializ
     // TODO: use metamodel here
     // https://www.ibm.com/developerworks/java/library/j-typesafejpa/#N102F2
 
-    public List<T>
-
-    search(SearchCriteria criteria) {
+    // TODO: add criteria, paginator, order objects
+    public List<T> getByCriteria() {
         //EntityManager entityManager = DaoEntityManagerFactory.getEntityManager();
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<T> criteriaQuery = criteriaBuilder.createQuery(persistenceClass);
         Root<T> root = criteriaQuery.from(persistenceClass);
         criteriaQuery.select(root);
 
+        /*
         if (criteria.isWhereNotEmpty()) {
             criteria.getWhere().forEach((k, v) ->
                 criteriaQuery.where(criteriaBuilder.equal(root.get(k), v))
@@ -91,19 +88,29 @@ public abstract class AbstractDao<T extends AbstractModel<K>, K extends Serializ
                 .setMaxResults(criteria.getSize())
                 .getResultList();
         //entityManager.close();
+                */
+
+        // TODO: again - add criteria, paginator, order objects
+        criteriaQuery.orderBy(criteriaBuilder.asc(root.get("id")));
+        List<T> list = entityManager
+                .createQuery(criteriaQuery)
+                .setFirstResult(0)
+                .setMaxResults(100)
+                .getResultList();
+
         return list;
     }
 
-    public Long count(SearchCriteria criteria) {
+    public Long countByCriteria() {
         CriteriaBuilder criteriaBuilder = entityManager.getCriteriaBuilder();
         CriteriaQuery<Long> criteriaQuery = criteriaBuilder.createQuery(Long.class);
         Root<T> root = criteriaQuery.from(persistenceClass);
         criteriaQuery.select(criteriaBuilder.count(root));
-        if (criteria.isWhereNotEmpty()) {
+        /*if (criteria.isWhereNotEmpty()) {
             criteria.getWhere().forEach((k, v) ->
                     criteriaQuery.where(criteriaBuilder.equal(root.get(k), v))
             );
-        }
+        }*/
         return entityManager.createQuery(criteriaQuery).getSingleResult();
     }
 

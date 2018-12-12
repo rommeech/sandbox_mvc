@@ -18,11 +18,11 @@ import static org.junit.Assert.assertTrue;
 @WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
-        "file:src/main/webapp/WEB-INF/spring-config.xml",
         "file:src/main/webapp/WEB-INF/spring-config-test.xml"
 })
 public class FeedControllerTest {
 
+    /*
     private MockMvc mockMvc;
 
     @Autowired
@@ -30,6 +30,7 @@ public class FeedControllerTest {
 
     @Autowired
     private WebApplicationContext webApplicationContext;
+    */
 
     /*@Before
     public void setUp() {

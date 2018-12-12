@@ -1,6 +1,5 @@
 package org.rp.sandboxmvc.service;
 
-import org.rp.sandboxmvc.dao.SearchCriteria;
 import org.rp.sandboxmvc.dao.FeedDao;
 import org.rp.sandboxmvc.model.Feed;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,16 +23,13 @@ public class FeedService extends AbstractService {
     }
 
     @Transactional(readOnly = true)
-    public List<Feed> getFeeds(SearchCriteria criteria) {
-        if (criteria.getOrderBy() == null) {
-            criteria.setOrderBy("id");
-        }
-        return feedDao.search(criteria);
+    public List<Feed> getFeeds() {
+        return feedDao.getByCriteria();
     }
 
     @Transactional(readOnly = true)
-    public Long countFeeds(SearchCriteria criteria) {
-        return feedDao.count(criteria);
+    public Long countFeeds() {
+        return feedDao.countByCriteria();
     }
 
     @Transactional(readOnly = true)

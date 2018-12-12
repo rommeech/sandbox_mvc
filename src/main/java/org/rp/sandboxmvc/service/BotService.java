@@ -1,7 +1,6 @@
 package org.rp.sandboxmvc.service;
 
 import org.rp.sandboxmvc.dao.OrderDirection;
-import org.rp.sandboxmvc.dao.SearchCriteria;
 import org.rp.sandboxmvc.dao.BotDao;
 import org.rp.sandboxmvc.model.Bot;
 import org.rp.telegram.botapi.entity.User;
@@ -49,16 +48,13 @@ public class BotService extends AbstractService {
     }
 
     @Transactional(readOnly = true)
-    public List<Bot> getBots(SearchCriteria searchCriteria) {
-        if (searchCriteria.getOrderBy() == null) {
-            searchCriteria.setOrder("id", OrderDirection.ASC);
-        }
-        return botDao.search(searchCriteria);
+    public List<Bot> getBots() {
+        return botDao.getByCriteria();
     }
 
     @Transactional(readOnly = true)
-    public Long countBots(SearchCriteria searchCriteria) {
-        return botDao.count(searchCriteria);
+    public Long countBots() {
+        return botDao.countByCriteria();
     }
 
 
