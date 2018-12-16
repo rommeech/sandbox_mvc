@@ -15,11 +15,11 @@ import org.springframework.web.context.WebApplicationContext;
 
 import static org.junit.Assert.assertTrue;
 
-@WebAppConfiguration
+/*@WebAppConfiguration
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {
         "file:src/main/webapp/WEB-INF/spring-config-test.xml"
-})
+})*/
 public class FeedControllerTest {
 
     /*

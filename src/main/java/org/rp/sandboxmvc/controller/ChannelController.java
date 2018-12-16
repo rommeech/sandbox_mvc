@@ -21,6 +21,9 @@ import javax.validation.Valid;
 public class ChannelController {
 
     @Autowired
+    private MessageProvider messageProvider;
+
+    @Autowired
     private ChannelService channelService;
 
     @Autowired
@@ -28,9 +31,6 @@ public class ChannelController {
 
     @Autowired
     private FeedService feedService;
-
-    @Autowired
-    private MessageProvider messageProvider;
 
     @Autowired
     private PublicationService publicationService;

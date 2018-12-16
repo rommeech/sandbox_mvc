@@ -1,62 +1,25 @@
 package org.rp.sandboxmvc.service;
 
-import org.rp.sandboxmvc.dao.FeedDao;
 import org.rp.sandboxmvc.model.Feed;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
-public class FeedService extends AbstractService {
+public interface FeedService {
 
-    @Autowired
-    private FeedDao feedDao;
+    List<Feed> getAllFeeds();
 
-    @Autowired
-    private FeedReaderService feedReaderService;
+    List<Feed> getFeeds();
 
-    @Transactional(readOnly = true)
-    public List<Feed> getAllFeeds() {
-        return feedDao.getAllFeeds();
-    }
+    Long countFeeds();
 
-    @Transactional(readOnly = true)
-    public List<Feed> getFeeds() {
-        return feedDao.getByCriteria();
-    }
+    Feed getById(Long id);
 
-    @Transactional(readOnly = true)
-    public Long countFeeds() {
-        return feedDao.countByCriteria();
-    }
+    void insert(Feed model);
 
-    @Transactional(readOnly = true)
-    public Feed getById(Long id) {
-        return feedDao.getById(id);
-    }
+    void update(Feed model);
 
-    @Transactional
-    public void insert(Feed model) {
-        feedDao.insert(model);
-    }
+    void delete(Long id);
 
-    @Transactional
-    public void update(Feed model) {
-        feedDao.update(model);
-    }
-
-    @Transactional
-    public void delete(Long id) {
-        feedDao.delete(this.getById(id));
-    }
-
-    public void readPosts(Feed feed) throws ServiceException {
-        feedReaderService.readFeed(feed);
-    }
-
-
-
+    void readPosts(Feed feed) throws ServiceException;
 
 }

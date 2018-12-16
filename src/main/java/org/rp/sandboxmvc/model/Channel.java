@@ -44,7 +44,7 @@ public class Channel extends AbstractModel<Long> {
     }
 
     public Channel(Channel.Builder builder) throws ModelException {
-        super();
+        this();
         this.setId(builder.id);
         this.bot = builder.bot;
         this.feed = builder.feed;
@@ -141,6 +141,10 @@ public class Channel extends AbstractModel<Long> {
         private String username;
         private Status status;
         private List<Publication> publications;
+
+        public Builder() {
+
+        }
 
         public Channel.Builder id(Long id) {
             this.id = id;

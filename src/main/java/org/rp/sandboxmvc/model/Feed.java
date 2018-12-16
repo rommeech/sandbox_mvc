@@ -49,13 +49,29 @@ public class Feed extends AbstractModel<Long> {
     private Timestamp nextJob;
 
     @OneToMany(mappedBy = "feed", fetch = FetchType.LAZY) // , orphanRemoval = true
-    private List<Post> posts = new ArrayList<>();
+    private List<Post> posts;
 
     @OneToMany(mappedBy = "feed", fetch = FetchType.LAZY)
     private List<Channel> channels;
 
     public Feed() {
         super();
+    }
+
+    public Feed(Builder builder) throws ModelException {
+        this();
+        this.setId(builder.id);
+        this.status = builder.status;
+        this.iconUrl = builder.iconUrl;
+        this.logoUrl = builder.logoUrl;
+        this.title = builder.title;
+        this.feedUrl = builder.feedUrl;
+        this.author = builder.author;
+        this.description = builder.description;
+        this.jobInterval = builder.jobInterval;
+        this.nextJob = builder.nextJob;
+        this.posts = builder.posts;
+        this.channels = builder.channels;
     }
 
     public Status getStatus() {
@@ -179,4 +195,90 @@ public class Feed extends AbstractModel<Long> {
                 ", nextJob=" + nextJob +
                 '}';
     }
+
+    public static class Builder {
+
+        private Long id;
+        private Status status;
+        private String iconUrl;
+        private String logoUrl;
+        private String title;
+        private String feedUrl;
+        private String author;
+        private String description;
+        private Long jobInterval;
+        private Timestamp nextJob;
+        private List<Post> posts;
+        private List<Channel> channels;
+
+        public Builder() {
+        }
+
+        public Feed.Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Feed.Builder status(Status status) {
+            this.status = status;
+            return this;
+        }
+
+        public Feed.Builder iconUrl(String iconUrl) {
+            this.iconUrl = iconUrl;
+            return this;
+        }
+
+        public Feed.Builder logoUrl(String logoUrl) {
+            this.logoUrl = logoUrl;
+            return this;
+        }
+
+        public Feed.Builder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Feed.Builder feedUrl(String feedUrl) {
+            this.feedUrl = feedUrl;
+            return this;
+        }
+
+        public Feed.Builder author(String author) {
+            this.author = author;
+            return this;
+        }
+
+        public Feed.Builder description(String description) {
+            this.description = description;
+            return this;
+        }
+
+        public Feed.Builder jobInterval(Long jobInterval) {
+            this.jobInterval = jobInterval;
+            return this;
+        }
+
+        public Feed.Builder nextJob(Timestamp nextJob) {
+            this.nextJob = nextJob;
+            return this;
+        }
+
+        public Feed.Builder posts(List<Post> posts) {
+            this.posts = posts;
+            return this;
+        }
+
+        public Feed.Builder channels(List<Channel> channels) {
+            this.channels = channels;
+            return this;
+        }
+
+        public Feed build() throws ModelException {
+            return new Feed(this);
+        }
+
+
+    }
+
 }

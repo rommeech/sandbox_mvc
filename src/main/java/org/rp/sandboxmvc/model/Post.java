@@ -1,14 +1,10 @@
 package org.rp.sandboxmvc.model;
 
-import org.springframework.stereotype.Component;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
-
 
 @Entity
 @Table(name = "post")
@@ -42,10 +38,24 @@ public class Post extends AbstractModel<Long> {
     private Timestamp pubDate;
 
     @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
-    private List<Publication> publications = new ArrayList<>();
+    private List<Publication> publications;
 
     public Post() {
         super();
+    }
+
+    public Post(Builder builder) throws ModelException {
+        this();
+        this.setId(builder.id);
+        this.feed = builder.feed;
+        this.author = builder.author;
+        this.authorUrl = builder.authorUrl;
+        this.title = builder.title;
+        this.content = builder.content;
+        this.postUrl = builder.postUrl;
+        this.postXid = builder.postXid;
+        this.pubDate = builder.pubDate;
+        this.publications = builder.publications;
     }
 
     public Feed getFeed() {
@@ -156,6 +166,76 @@ public class Post extends AbstractModel<Long> {
                 '}';
     }
 
+    public static class Builder {
 
+        private Long id;
+        private Feed feed;
+        private String author;
+        private String authorUrl;
+        private String title;
+        private String content;
+        private String postUrl;
+        private String postXid;
+        private Timestamp pubDate;
+        private List<Publication> publications;
+
+        public Builder() {
+        }
+
+        public Post.Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Post.Builder feed(Feed feed) {
+            this.feed = feed;
+            return this;
+        }
+
+        public Post.Builder author(String author) {
+            this.author = author;
+            return this;
+        }
+
+        public Post.Builder authorUrl(String authorUrl) {
+            this.authorUrl = authorUrl;
+            return this;
+        }
+
+        public Post.Builder title(String title) {
+            this.title = title;
+            return this;
+        }
+
+        public Post.Builder content(String content) {
+            this.content = content;
+            return this;
+        }
+
+        public Post.Builder postUrl(String postUrl) {
+            this.postUrl = postUrl;
+            return this;
+        }
+
+        public Post.Builder postXid(String postXid) {
+            this.postXid = postXid;
+            return this;
+        }
+
+        public Post.Builder pubDate(Timestamp pubDate) {
+            this.pubDate = pubDate;
+            return this;
+        }
+
+        public Post.Builder publications(List<Publication> publications) {
+            this.publications = publications;
+            return this;
+        }
+
+        public Post build() throws ModelException {
+            return new Post(this);
+        }
+
+    }
 
 }

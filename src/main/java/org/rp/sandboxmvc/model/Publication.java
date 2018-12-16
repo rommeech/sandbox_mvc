@@ -2,7 +2,6 @@ package org.rp.sandboxmvc.model;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
-import java.util.List;
 import java.util.Objects;
 
 @Entity(name = "Publication")
@@ -28,6 +27,14 @@ public class Publication extends AbstractModel<Long> {
 
     public Publication() {
         super();
+    }
+
+    public Publication(Builder builder) throws ModelException {
+        this();
+        this.setId(builder.id);
+        this.isSuccessful = builder.isSuccessful;
+        this.post = builder.post;
+        this.channel = builder.channel;
     }
 
     public Boolean getSuccessful() {
@@ -89,5 +96,41 @@ public class Publication extends AbstractModel<Long> {
         //sb.append(", requestLogs=").append(requestLogs);
         sb.append('}');
         return sb.toString();
+    }
+
+    public static class Builder {
+
+        private Long id;
+        private Boolean isSuccessful;
+        private Post post;
+        private Channel channel;
+
+        public Builder() {
+        }
+
+        public Publication.Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Publication.Builder isSuccessful(Boolean isSuccessful) {
+            this.isSuccessful = isSuccessful;
+            return this;
+        }
+
+        public Publication.Builder post(Post post) {
+            this.post = post;
+            return this;
+        }
+
+        public Publication.Builder channel(Channel channel) {
+            this.channel = channel;
+            return this;
+        }
+
+        public Publication build() throws ModelException {
+            return new Publication(this);
+        }
+
     }
 }

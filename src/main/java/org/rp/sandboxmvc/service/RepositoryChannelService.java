@@ -9,13 +9,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Service
-public class ChannelRepositoryService implements ChannelService {
+@Service(value = "channelService")
+public class RepositoryChannelService implements ChannelService {
 
     @Autowired
     private final ChannelDao channelDao;
 
-    public ChannelRepositoryService(ChannelDao channelDao) {
+    public RepositoryChannelService(ChannelDao channelDao) {
         this.channelDao = channelDao;
     }
 

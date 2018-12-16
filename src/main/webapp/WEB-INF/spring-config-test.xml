@@ -9,12 +9,24 @@
 
     <!-- context:component-scan base-package="org.rp.sandboxmvc"/ -->
 
-    <bean id="feedService" name="feedService" class="org.mockito.Mockito" factory-method="mock">
-        <constructor-arg value="org.rp.sandboxmvc.service.FeedService"/>
+    <bean id="botService" name="botService" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="org.rp.sandboxmvc.service.BotService"/>
     </bean>
 
     <bean id="channelService" name="channelService" class="org.mockito.Mockito" factory-method="mock">
         <constructor-arg value="org.rp.sandboxmvc.service.ChannelService"/>
+    </bean>
+
+    <bean id="feedService" name="feedService" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="org.rp.sandboxmvc.service.FeedService"/>
+    </bean>
+
+    <bean id="postService" name="postService" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="org.rp.sandboxmvc.service.PostService"/>
+    </bean>
+
+    <bean id="publicationService" name="publicationService" class="org.mockito.Mockito" factory-method="mock">
+        <constructor-arg value="org.rp.sandboxmvc.service.PublicationService"/>
     </bean>
 
 </beans>

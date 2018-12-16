@@ -1,7 +1,6 @@
 package org.rp.sandboxmvc.model;
 
 import javax.persistence.*;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
@@ -34,6 +33,17 @@ public class Bot extends AbstractModel<Long> {
 
     public Bot() {
         super();
+    }
+
+    public Bot(Builder builder) throws ModelException {
+        this.setId(builder.id);
+        this.userId = builder.userId;
+        this.firstName = builder.firstName;
+        this.lastName = builder.lastName;
+        this.username = builder.username;
+        this.token = builder.token;
+        this.about = builder.about;
+        this.channels = builder.channels;
     }
 
     public String getAbout() {
@@ -119,5 +129,65 @@ public class Bot extends AbstractModel<Long> {
                 ", about='" + about + '\'' +
                 ", channels=" + channels +
                 '}';
+    }
+
+    public static class Builder {
+
+        private Long id;
+        private Integer userId;
+        private String firstName;
+        private String lastName;
+        private String username;
+        private String token;
+        private String about;
+        private List<Channel> channels;
+
+        public Builder() {
+        }
+
+        public Bot.Builder id(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        private Bot.Builder userId(Integer userId) {
+            this.userId = userId;
+            return this;
+        }
+
+        private Bot.Builder firstName(String firstName) {
+            this.firstName = firstName;
+            return this;
+        }
+
+        private Bot.Builder lastName(String lastName) {
+            this.lastName = lastName;
+            return this;
+        }
+
+        private Bot.Builder username(String username) {
+            this.username = username;
+            return this;
+        }
+
+        private Bot.Builder token(String token) {
+            this.token = token;
+            return this;
+        }
+
+        private Bot.Builder about(String about) {
+            this.about = about;
+            return this;
+        }
+
+        private Bot.Builder channels(List<Channel> channels) {
+            this.channels = channels;
+            return this;
+        }
+
+        private Bot build() throws ModelException {
+            return new Bot(this);
+        }
+
     }
 }
