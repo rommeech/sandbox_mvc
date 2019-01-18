@@ -23,7 +23,7 @@
     <mvc:resources mapping="/resources/**" location="/resources/"/>
     <!-- mvc:default-servlet-handler/ -->
 
-    <task:scheduler id="tgScheduler" pool-size="10"/>
+    <task:scheduler id="tgScheduler" pool-size="3"/>
     <task:annotation-driven scheduler="tgScheduler"/>
 
     <context:annotation-config/>

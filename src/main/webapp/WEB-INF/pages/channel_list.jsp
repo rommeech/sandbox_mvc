@@ -36,7 +36,6 @@
                 </tr>
             </c:forEach>
         </table>
-        <jsp:include page="/WEB-INF/pages/include/paginator.jsp"/>
     </jsp:body>
 </tg:wrapper>
 

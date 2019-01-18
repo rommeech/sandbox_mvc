@@ -50,13 +50,21 @@ public class FeedController extends AbstractController {
 
     @RequestMapping(value = "/read/{id}/", method = RequestMethod.GET)
     public ModelAndView feedRead(@PathVariable Long id) {
-        Feed feed = getByIdOrShow404(id);
+        Feed feed = getById(id);
+
+        if (feed == null) {
+            show404("feedRead: feed not found, id=" + id);
+        }
 
         try {
             feedService.readPosts(feed);
             messageProvider.addInfoMessage("Feed " + feed.getId() + " " + feed.getFeedUrl() + " read successfully");
         } catch (ServiceException e) {
-            messageProvider.addErrorMessage("Cannot read feed: " + e.getStackTrace());
+            messageProvider.addErrorMessage("Cannot read feed, error " + e);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            throw e;
         }
 
         ModelAndView model = new ModelAndView();
@@ -66,7 +74,12 @@ public class FeedController extends AbstractController {
 
     @RequestMapping(value = "/edit/{id}/", method = RequestMethod.GET)
     public ModelAndView feedEdit(@PathVariable Long id) {
-        Feed feed = getByIdOrShow404(id);
+        Feed feed = getById(id);
+
+        if (feed == null) {
+            show404("feedEdit: feed not found, id=" + id);
+        }
+
         ModelAndView modelAndView = new ModelAndView();
         modelAndView.addObject("feed", feed);
         modelAndView.addObject("statusList", Arrays.asList(Status.values()));
@@ -107,12 +120,12 @@ public class FeedController extends AbstractController {
         return model;
     }
 
-    private Feed getByIdOrShow404(Long id) {
-        Feed feed = feedService.getById(id);
-        if (feed == null) {
-            logger.error("Feed not found, invalid id=" + id);
-            throw new NotFoundException();
-        }
-        return feed;
+    private Feed getById(Long id) {
+        return feedService.getById(id);
+    }
+
+    private void show404(String errorMsg) {
+        logger.error(errorMsg);
+        throw new NotFoundException();
     }
 }

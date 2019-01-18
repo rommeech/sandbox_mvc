@@ -77,11 +77,9 @@ public abstract class AbstractModel<T extends Serializable> implements Serializa
         return version;
     }
 
-    /* READ-ONLY for humans
     public void setVersion(Integer version) {
         this.version = version;
     }
-    */
 
     @Override
     public boolean equals(Object o) {

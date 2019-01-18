@@ -23,9 +23,11 @@ public class PostDao extends AbstractDao<Post, Long> {
     }
 
     public Post getPostByFeedAndXid(Feed feed, String xid) {
-        return (Post) this.getEntityManager().createQuery("FROM Post WHERE feed = :feed AND postXid = :postXid")
+         List<Post> posts = this.getEntityManager().createQuery("FROM Post WHERE feed = :feed AND postXid = :postXid")
                 .setParameter("feed", feed)
                 .setParameter("postXid", xid)
-                .setMaxResults(1);
+                .setMaxResults(1)
+                .getResultList();
+         return posts.size() == 1 ? posts.get(0) : null;
     }
 }

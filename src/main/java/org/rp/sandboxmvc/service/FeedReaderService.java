@@ -5,7 +5,6 @@ import com.rometools.rome.feed.synd.SyndFeed;
 import com.rometools.rome.io.FeedException;
 import com.rometools.rome.io.SyndFeedInput;
 import com.rometools.rome.io.XmlReader;
-import net.bytebuddy.asm.Advice;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.rp.sandboxmvc.converter.SyndEntryToPostConverter;
@@ -49,7 +48,7 @@ public class FeedReaderService {
         SyndFeed syndFeed = getSyndFeed(feed);
         updateFeed(feed, syndFeed);
         savePosts(feed, syndFeed);
-        setNextJobTime(feed);
+        //setNextJobTime(feed);
     }
 
     private void setNextJobTime(Feed feed) {
@@ -59,7 +58,7 @@ public class FeedReaderService {
 
     private void savePosts(Feed feed, SyndFeed syndFeed) {
         for(SyndEntry entry : syndFeed.getEntries()) {
-            if (!syndEntryAlreadySaved(feed, entry)) {
+            if (!isSyndEntryAlreadySaved(feed, entry)) {
                 savePostFromSyndEntry(feed, entry);
             }
             else {
@@ -78,7 +77,7 @@ public class FeedReaderService {
                 feed.getId(), post.getId(), post.getPostXid(), post.getTitle()));
     }
 
-    private boolean syndEntryAlreadySaved(Feed feed, SyndEntry entry) {
+    private boolean isSyndEntryAlreadySaved(Feed feed, SyndEntry entry) {
         Post post = postDao.getPostByFeedAndXid(feed, entry.getUri());
         return post != null;
     }
