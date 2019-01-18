@@ -48,7 +48,7 @@ public class FeedReaderService {
         SyndFeed syndFeed = getSyndFeed(feed);
         updateFeed(feed, syndFeed);
         savePosts(feed, syndFeed);
-        //setNextJobTime(feed);
+        setNextJobTime(feed);
     }
 
     private void setNextJobTime(Feed feed) {
