@@ -17,6 +17,7 @@
                 <th class="numeric"><spring:message code="feed.id"/></th>
                 <th><spring:message code="feed.status"/></th>
                 <th><spring:message code="feed.title"/></th>
+                <th></th>
                 <th><spring:message code="feed.feedUrl"/></th>
                 <th class="numeric"><spring:message code="feed.jobInterval"/></th>
                 <th class="numeric"><spring:message code="feed.nextJob"/></th>
@@ -27,6 +28,7 @@
                     <td class="numeric">${feed.id}</td>
                     <td>${feed.status}</td>
                     <td>${feed.title}</td>
+                    <td><img src="${feed.logoUrl}" /></td>
                     <td>${feed.feedUrl}</td>
                     <td class="numeric">${feed.jobInterval}</td>
                     <td class="numeric">${feed.nextJob}</td>
