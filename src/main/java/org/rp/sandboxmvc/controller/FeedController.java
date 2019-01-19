@@ -3,7 +3,7 @@ package org.rp.sandboxmvc.controller;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.rp.sandboxmvc.helper.MessageProvider;
-import org.rp.sandboxmvc.model.Status;
+import org.rp.sandboxmvc.helper.Status;
 import org.rp.sandboxmvc.model.Feed;
 import org.rp.sandboxmvc.service.FeedService;
 import org.rp.sandboxmvc.service.ServiceException;
@@ -80,19 +80,18 @@ public class FeedController extends AbstractController {
             show404("feedEdit: feed not found, id=" + id);
         }
 
-        ModelAndView modelAndView = new ModelAndView();
+        ModelAndView modelAndView = getEditModel();
         modelAndView.addObject("feed", feed);
-        modelAndView.addObject("statusList", Arrays.asList(Status.values()));
-        modelAndView.setViewName("feed_edit");
+
         return modelAndView;
     }
 
     @RequestMapping(value = "/new/", method = RequestMethod.GET)
     public ModelAndView feedNew() {
-        ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("feed", new Feed());
-        modelAndView.addObject("statusList", Arrays.asList(Status.values()));
-        modelAndView.setViewName("feed_edit");
+        ModelAndView modelAndView = getEditModel();
+        Feed newFeed = new Feed();
+        newFeed.setStatus(Status.NEW);
+        modelAndView.addObject("feed", newFeed);
         return modelAndView;
     }
 
@@ -128,4 +127,12 @@ public class FeedController extends AbstractController {
         logger.error(errorMsg);
         throw new NotFoundException();
     }
+
+    private ModelAndView getEditModel() {
+        ModelAndView modelAndView = new ModelAndView();
+        modelAndView.addObject("statuses", Status.values());
+        modelAndView.setViewName("feed_edit");
+        return modelAndView;
+    }
+
 }

@@ -1,6 +1,4 @@
-package org.rp.sandboxmvc.model;
-
-import org.rp.sandboxmvc.helper.JspListCompatibleItem;
+package org.rp.sandboxmvc.helper;
 
 public enum Status implements JspListCompatibleItem<String, String> {
     NEW, ACTIVE, DISABLED;

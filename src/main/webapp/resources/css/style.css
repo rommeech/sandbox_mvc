@@ -44,6 +44,12 @@ input, textarea {
     min-width: 512px;
 }
 
+input[type='radio'] {
+    border: 0;
+    padding: 0;
+    min-width: 0;
+}
+
 select, option {
     padding: 4px 8px 4px 8px;
 }
@@ -51,6 +57,9 @@ select, option {
 input.field_error {
     border-color: darkred;
 }
+
+input.small { min-width: 128px; }
+input.medium { min-width: 256px; }
 
 span.field_error { display: block; padding: 4px 0 0 2px; margin: 0; font-weight: normal; color: #e17661; }
 

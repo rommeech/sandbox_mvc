@@ -2,7 +2,7 @@ package org.rp.sandboxmvc.service;
 
 import org.rp.sandboxmvc.dao.ChannelDao;
 import org.rp.sandboxmvc.model.Channel;
-import org.rp.sandboxmvc.model.Status;
+import org.rp.sandboxmvc.helper.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

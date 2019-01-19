@@ -5,7 +5,7 @@
 <%@ taglib prefix="tg" tagdir="/WEB-INF/tags" %>
 
 <c:set var="isNew" value="${feed.id == null ? true : false}"/>
-<spring:message var="baseTitle" code="feed.title"/>
+<spring:message var="baseTitle" code="feed.page.title"/>
 <spring:message var="addNewItem" code="feed.page.addNewItem" scope="request"/>
 <spring:message var="title" text="${isNew ? addNewItem : feed.title} / ${baseTitle}" scope="request"/>
 
@@ -27,8 +27,7 @@
             </jsp:attribute>
 
             <jsp:body>
-                <tg:formSelect field="status" legendCode="feed.status"
-                               items="${statusList}" itemLabel="itemLabel" itemValue="itemValue" />
+                <tg:formRadioButtons items="${statuses}" legendCode="feed.status" field="status" />
                 <tg:formInput field="title" legendCode="feed.title"/>
                 <tg:formInput field="feedUrl" legendCode="feed.feedUrl"/>
                 <tg:formInput field="jobInterval" legendCode="feed.jobInterval" cssClass="small"/>

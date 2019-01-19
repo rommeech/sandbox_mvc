@@ -10,6 +10,6 @@
 
 <tg:formRow field="${field}" legendCode="${legendCode}" cssClass="field_radiobuttons">
     <jsp:body>
-        <form:radiobuttons items="${items}" path="${field}" id="${id}" cssErrorClass="field_error" />
+        <form:radiobuttons items="${items}" path="${field}" id="${field}" cssErrorClass="field_error" />
     </jsp:body>
 </tg:formRow>

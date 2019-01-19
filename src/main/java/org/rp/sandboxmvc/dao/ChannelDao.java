@@ -1,7 +1,7 @@
 package org.rp.sandboxmvc.dao;
 
 import org.rp.sandboxmvc.model.Channel;
-import org.rp.sandboxmvc.model.Status;
+import org.rp.sandboxmvc.helper.Status;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;

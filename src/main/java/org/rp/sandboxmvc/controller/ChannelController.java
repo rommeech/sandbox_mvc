@@ -5,6 +5,7 @@ import org.apache.logging.log4j.Logger;
 import org.rp.sandboxmvc.helper.BotEditor;
 import org.rp.sandboxmvc.helper.FeedEditor;
 import org.rp.sandboxmvc.helper.MessageProvider;
+import org.rp.sandboxmvc.helper.Status;
 import org.rp.sandboxmvc.model.*;
 import org.rp.sandboxmvc.service.*;
 import org.springframework.beans.factory.annotation.Autowired;

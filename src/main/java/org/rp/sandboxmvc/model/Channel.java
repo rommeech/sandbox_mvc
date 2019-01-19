@@ -1,6 +1,7 @@
 package org.rp.sandboxmvc.model;
 
 import org.hibernate.validator.constraints.NotEmpty;
+import org.rp.sandboxmvc.helper.Status;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

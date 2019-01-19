@@ -1,11 +1,12 @@
 package org.rp.sandboxmvc.model;
 
+import org.rp.sandboxmvc.helper.Status;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
