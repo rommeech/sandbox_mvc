@@ -5,8 +5,8 @@ import org.apache.logging.log4j.Logger;
 import org.rp.sandboxmvc.helper.MessageProvider;
 import org.rp.sandboxmvc.helper.Status;
 import org.rp.sandboxmvc.model.Feed;
+import org.rp.sandboxmvc.model.ModelException;
 import org.rp.sandboxmvc.service.FeedService;
-import org.rp.sandboxmvc.service.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
-import java.util.Arrays;
 
 @Controller(value = "feedController")
 @RequestMapping(value = "/feeds")
@@ -57,14 +56,11 @@ public class FeedController extends AbstractController {
         }
 
         try {
-            feedService.readPosts(feed);
+            feedService.readFeed(feed);
             messageProvider.addInfoMessage("Feed " + feed.getId() + " " + feed.getFeedUrl() + " read successfully");
-        } catch (ServiceException e) {
+        } catch (Exception  e) {
             messageProvider.addErrorMessage("Cannot read feed, error " + e);
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-            throw e;
+            throw new ControllerException("Cannot read feed", e);
         }
 
         ModelAndView model = new ModelAndView();
@@ -89,8 +85,12 @@ public class FeedController extends AbstractController {
     @RequestMapping(value = "/new/", method = RequestMethod.GET)
     public ModelAndView feedNew() {
         ModelAndView modelAndView = getEditModel();
-        Feed newFeed = new Feed();
-        newFeed.setStatus(Status.NEW);
+        Feed newFeed;
+        try {
+            newFeed = feedService.newFeed();
+        } catch (ModelException e) {
+            throw new ControllerException("Cannot create new empty feed object", e);
+        }
         modelAndView.addObject("feed", newFeed);
         return modelAndView;
     }
@@ -103,7 +103,7 @@ public class FeedController extends AbstractController {
         if (result.hasErrors()) {
             logger.error(result.getAllErrors());
             messageProvider.addWarningMessage("Please fill the form properly");
-            return model;
+            return getEditModel();
         }
 
         if (feed.getId() == null || feed.getId().equals(0L)) {

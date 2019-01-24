@@ -46,8 +46,8 @@ public class FeedReaderService {
     @Transactional
     public void readFeed(Feed feed) throws ServiceException {
         SyndFeed syndFeed = getSyndFeed(feed);
-        updateFeed(feed, syndFeed);
         savePosts(feed, syndFeed);
+        updateFeed(feed, syndFeed);
         setNextJobTime(feed);
     }
 

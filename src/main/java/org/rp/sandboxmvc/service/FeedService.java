@@ -1,6 +1,7 @@
 package org.rp.sandboxmvc.service;
 
 import org.rp.sandboxmvc.model.Feed;
+import org.rp.sandboxmvc.model.ModelException;
 
 import java.util.List;
 
@@ -20,6 +21,8 @@ public interface FeedService {
 
     void delete(Long id);
 
-    void readPosts(Feed feed) throws ServiceException;
+    void readFeed(Feed feed) throws ServiceException;
+
+    Feed newFeed() throws ModelException;
 
 }

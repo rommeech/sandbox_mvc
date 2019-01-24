@@ -28,7 +28,7 @@
                     <td class="numeric">${feed.id}</td>
                     <td>${feed.status}</td>
                     <td>${feed.title}</td>
-                    <td><img src="${feed.logoUrl}" /></td>
+                    <td class="image"><img src="${feed.logoUrl}" /></td>
                     <td>${feed.feedUrl}</td>
                     <td class="numeric">${feed.jobInterval}</td>
                     <td class="numeric">${feed.nextJob}</td>

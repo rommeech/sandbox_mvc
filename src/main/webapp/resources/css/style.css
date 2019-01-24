@@ -127,6 +127,17 @@ table.table_list {
     min-width: 512px;
 }
 
+table.table_list td.image {
+    padding: 0;
+    margin: 0;
+    line-height: 0;
+}
+
+table.table_list img {
+    width: 100%;
+    max-width: 100px;
+}
+
 table.table_list td.word_break {
     word-break: break-all;
 }
