@@ -51,17 +51,19 @@
           p:prefix="/WEB-INF/pages/"
           p:suffix=".jsp"/>
 
-    <bean id="pum" class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
+    <!-- <bean id="pum" class="org.springframework.orm.jpa.persistenceunit.DefaultPersistenceUnitManager">
         <property name="persistenceXmlLocations">
             <list>
                 <value>file:src/main/resources/META-INF/persistence.xml</value>
             </list>
         </property>
     </bean>
+    p:persistenceUnitManager-ref="pum"
+    -->
 
     <bean id="entityManagerFactory"
           class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean"
-          p:persistenceUnitName="CRM" p:persistenceUnitManager-ref="pum"/>
+          p:persistenceUnitName="CRM"/>
 
     <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager"
           p:entityManagerFactory-ref="entityManagerFactory"/>
