@@ -42,6 +42,7 @@ public class FeedControllerTest {
     private FeedService feedServiceMock;
 
     // Mock data
+    private Feed newFeed;
     private List<Feed> feedList;
     private Long countFeeds;
 
@@ -174,6 +175,26 @@ public class FeedControllerTest {
 
     }
 
+    @Test
+    public void feedNew() throws Exception {
+
+        mockMvc.perform(get(NEW_URL))
+                .andExpect(status().isOk())
+                .andExpect(view().name(NEW_VIEW_NAME))
+                .andExpect(forwardedUrl(NEW_VIEW_JSP))
+                .andExpect(model().attribute("feed", allOf(
+                        hasProperty("id", is(nullValue())),
+                        hasProperty("version", is(nullValue())),
+                        hasProperty("jobInterval", greaterThan(1_000L)),
+                        hasProperty("nextJob", org.hamcrest.Matchers.isA(Timestamp.class))
+                )))
+        ;
+
+        verify(feedServiceMock, times(1)).newFeed();
+
+        verifyNoMoreInteractionsInServiceMocks();
+
+    }
 
     /*
 
@@ -186,11 +207,6 @@ public class FeedControllerTest {
 
     @Test
     public void feedEdit() {
-        assertTrue(false);
-    }
-
-    @Test
-    public void feedNew() {
         assertTrue(false);
     }
 
@@ -227,16 +243,24 @@ public class FeedControllerTest {
                 .feedUrl("http://baz.com/rss")
                 .build()
         );
+        newFeed = new Feed.Builder()
+                .nextJob(new Timestamp(new Date().getTime() + 300_000))
+                .jobInterval(300_000L)
+                .build();
         countFeeds = Long.valueOf(feedList.size());
     }
 
-    private void initFeedServiceMock() {
+    private void initFeedServiceMock() throws ModelException {
         Mockito.reset(feedServiceMock);
         when(feedServiceMock.getFeeds()).thenReturn(feedList);
         when(feedServiceMock.countFeeds()).thenReturn(countFeeds);
-        when(feedServiceMock.getById(1L)).thenReturn(feedList.get(0));
-        when(feedServiceMock.getById(2L)).thenReturn(feedList.get(1));
-        when(feedServiceMock.getById(3L)).thenReturn(feedList.get(2));
+
+        for (Feed feed : feedList) {
+            when(feedServiceMock.getById(feed.getId())).thenReturn(feed);
+        }
+
+        when(feedServiceMock.newFeed()).thenReturn(newFeed);
+
         when(feedServiceMock.getById(INVALID_ID)).thenReturn(null);
     }
 
