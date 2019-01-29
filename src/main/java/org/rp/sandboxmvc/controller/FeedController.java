@@ -38,8 +38,14 @@ public class FeedController extends AbstractController {
 
     @RequestMapping(value = "/delete/{id}/", method = RequestMethod.GET)
     public ModelAndView feedDelete(@PathVariable Long id) {
-        // TODO: Invalid service method, here should
         // TODO: call all delete methods as REST service
+
+        Feed feed = getById(id);
+
+        if (feed == null) {
+            show404("feedDelete: feed not found, id=" + id);
+        }
+
         feedService.delete(id);
         messageProvider.addInfoMessage("Feed successfully deleted");
         ModelAndView model = new ModelAndView();

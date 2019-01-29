@@ -46,14 +46,16 @@ public class FeedControllerTest {
     private Long countFeeds;
 
     // Config
+    private static final String ERROR404_VIEW_NAME = "error/404";
+    private static final String ERROR404_VIEW_JSP = "/WEB-INF/pages/error/404.jsp";
+
     private static final String LIST_URL = "/feeds/";
     private static final String LIST_VIEW_NAME = "feed_list";
     private static final String LIST_VIEW_JSP = "/WEB-INF/pages/feed_list.jsp";
 
-    private static final String ERROR404_VIEW_NAME = "error/404";
-    private static final String ERROR404_VIEW_JSP = "/WEB-INF/pages/error/404.jsp";
+    private static final String DELETE_URL = "/feeds/delete/";
 
-    private static final String EDIT_URL = "/feeds/edit/{id}/";
+    private static final String EDIT_URL = "/feeds/edit/";
     private static final String EDIT_VIEW_NAME = "feed_edit";
     private static final String EDIT_VIEW_JSP = "/WEB-INF/pages/feed_edit.jsp";
 
@@ -65,11 +67,12 @@ public class FeedControllerTest {
     private static final String SAVE_VIEW_NAME = "feed_edit";
     private static final String SAVE_VIEW_JSP = "/WEB-INF/pages/feed_edit.jsp";
 
-    private static final Long INVALID_ID = 10000L;
+    private static final Long INVALID_ID = 100500L;
 
     @Before
-    public void setUp() {
-        Mockito.reset(feedServiceMock);
+    public void setUp() throws ModelException {
+        initDummyData();
+        initFeedServiceMock();
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
@@ -90,7 +93,7 @@ public class FeedControllerTest {
                                 hasProperty("nextJob", is(feedList.get(0).getNextJob()))
                         )
                 )))
-                .andExpect(model().attribute("channels", hasItem(
+                .andExpect(model().attribute("feeds", hasItem(
                         allOf(
                                 hasProperty("id", is(feedList.get(1).getId())),
                                 hasProperty("feedUrl", is(feedList.get(1).getFeedUrl())),
@@ -98,7 +101,7 @@ public class FeedControllerTest {
                                 hasProperty("nextJob", is(feedList.get(1).getNextJob()))
                         )
                 )))
-                .andExpect(model().attribute("channels", hasItem(
+                .andExpect(model().attribute("feeds", hasItem(
                         allOf(
                                 hasProperty("id", is(feedList.get(2).getId())),
                                 hasProperty("feedUrl", is(feedList.get(2).getFeedUrl())),
@@ -114,18 +117,67 @@ public class FeedControllerTest {
         verifyNoMoreInteractionsInServiceMocks();
     }
 
-    /*
+    @Test
+    public void feedDelete_Empty() throws Exception {
 
+        String url = DELETE_URL;
 
-    */
+        mockMvc.perform(get(url))
+                .andExpect(status().isNotFound());
 
+        verifyNoMoreInteractionsInServiceMocks();
 
-    /*
+    }
 
     @Test
-    public void feedDelete() {
-        assertTrue(false);
+    public void feedDelete_InvalidID() throws Exception {
+
+        String url = DELETE_URL + "FOO/";
+
+        mockMvc.perform(get(url))
+                .andExpect(status().isBadRequest());
+
+        verifyNoMoreInteractionsInServiceMocks();
+
     }
+
+    @Test
+    public void feedDelete_NotFoundID() throws Exception {
+
+        String url = DELETE_URL + INVALID_ID + "/";
+
+        mockMvc.perform(get(url))
+                .andExpect(status().isNotFound());
+
+        verify(feedServiceMock, times(1)).getById(INVALID_ID);
+
+        verifyNoMoreInteractionsInServiceMocks();
+
+    }
+
+    @Test
+    public void feedDelete_Successful() throws Exception {
+
+        Long id = feedList.get(0).getId();
+
+        String url = DELETE_URL + id + "/";
+
+        mockMvc.perform(get(url))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:" + LIST_URL))
+        ;
+
+        verify(feedServiceMock, times(1)).getById(id);
+        verify(feedServiceMock, times(1)).delete(id);
+
+        verifyNoMoreInteractionsInServiceMocks();
+
+    }
+
+
+    /*
+
+
 
     @Test
     public void feedRead() {
@@ -152,7 +204,7 @@ public class FeedControllerTest {
         assertTrue(true);
     }
 
-    private void setUpDummyData() throws ModelException {
+    private void initDummyData() throws ModelException {
         feedList = new ArrayList<>();
         feedList.add(new Feed.Builder()
                 .id(1L)
@@ -178,7 +230,8 @@ public class FeedControllerTest {
         countFeeds = Long.valueOf(feedList.size());
     }
 
-    private void setUpFeedServiceMock() {
+    private void initFeedServiceMock() {
+        Mockito.reset(feedServiceMock);
         when(feedServiceMock.getFeeds()).thenReturn(feedList);
         when(feedServiceMock.countFeeds()).thenReturn(countFeeds);
         when(feedServiceMock.getById(1L)).thenReturn(feedList.get(0));
