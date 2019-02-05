@@ -3,11 +3,15 @@ package org.rp.sandboxmvc.controller;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
+import org.rp.sandboxmvc.helper.Status;
 import org.rp.sandboxmvc.model.Feed;
 import org.rp.sandboxmvc.model.ModelException;
 import org.rp.sandboxmvc.service.FeedService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
@@ -21,10 +25,14 @@ import java.util.Date;
 import java.util.List;
 
 import static org.hamcrest.Matchers.*;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertThat;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
+// TODO: check invalid methods
 
 @WebAppConfiguration
 @RunWith(SpringRunner.class)
@@ -73,7 +81,7 @@ public class FeedControllerTest {
     @Before
     public void setUp() throws ModelException {
         initDummyData();
-        initFeedServiceMock();
+        initServiceMocks();
         mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext).build();
     }
 
@@ -196,6 +204,262 @@ public class FeedControllerTest {
 
     }
 
+    @Test
+    public void feedEdit_Empty() throws Exception {
+
+        String url = EDIT_URL;
+
+        mockMvc.perform(get(url))
+                .andExpect(status().isNotFound());
+
+        verifyNoMoreInteractionsInServiceMocks();
+
+    }
+
+    @Test
+    public void feedEdit_InvalidID() throws Exception {
+
+        String url = EDIT_URL + "FOO/";
+
+        mockMvc.perform(get(url))
+                .andExpect(status().isBadRequest());
+
+        verifyNoMoreInteractionsInServiceMocks();
+
+    }
+
+    @Test
+    public void feedEdit_NotFoundID() throws Exception {
+
+        String url = EDIT_URL + INVALID_ID + "/";
+
+        mockMvc.perform(get(url))
+                .andExpect(status().isNotFound());
+
+        verify(feedServiceMock, times(1)).getById(INVALID_ID);
+
+        verifyNoMoreInteractionsInServiceMocks();
+
+    }
+
+    @Test
+    public void feedEdit_Successful() throws Exception {
+
+        Feed feed = feedList.get(0);
+
+        String url = EDIT_URL + feed.getId() + "/";
+
+        mockMvc.perform(get(url))
+                .andExpect(status().isOk())
+                .andExpect(view().name(NEW_VIEW_NAME))
+                .andExpect(forwardedUrl(NEW_VIEW_JSP))
+                .andExpect(model().attribute("feed", allOf(
+                        hasProperty("id", is(nullValue())),
+                        hasProperty("version", is(nullValue())),
+                        hasProperty("jobInterval", greaterThan(1_000L)),
+                        hasProperty("nextJob", org.hamcrest.Matchers.isA(Timestamp.class))
+                )))
+        ;
+
+        verify(feedServiceMock, times(1)).newFeed();
+
+        verifyNoMoreInteractionsInServiceMocks();
+
+    }
+
+    @Test
+    public void feedSave_invalidMethod() throws Exception {
+        String url = SAVE_URL;
+
+        mockMvc.perform(get(url))
+                .andExpect(status().isMethodNotAllowed());
+
+        verifyNoMoreInteractionsInServiceMocks();
+    }
+
+    // Particular case of validation fail
+    @Test
+    public void feedSave_EmptyRequest() throws Exception {
+
+        String url = SAVE_URL;
+
+        mockMvc.perform(post(url))
+                .andExpect(view().name(EDIT_VIEW_NAME))
+                .andExpect(forwardedUrl(EDIT_VIEW_JSP))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeHasFieldErrors("feed", "title"))
+                .andExpect(model().attributeHasFieldErrors("feed", "status"))
+                .andExpect(model().attributeHasFieldErrors("feed", "feedUrl"))
+                .andExpect(model().attributeHasFieldErrors("feed", "jobInterval"))
+                .andExpect(model().attributeHasFieldErrors("feed", "nextJob"))
+                .andExpect(model().attribute("feed", hasProperty("id", nullValue())))
+                .andExpect(model().attribute("feed", hasProperty("version", nullValue())))
+                .andExpect(model().attribute("feed", hasProperty("feedUrl", nullValue())))
+                .andExpect(model().attribute("feed", hasProperty("jobInterval", nullValue())))
+                .andExpect(model().attribute("feed", hasProperty("nextJob", nullValue())))
+        ;
+
+        verifyNoMoreInteractionsInServiceMocks();
+
+    }
+
+    @Test
+    public void feedSave_InvalidID() throws Exception {
+
+        String url = SAVE_URL;
+
+        // Redirect to list with error message. Error messages we don't test at the moment
+        mockMvc.perform(
+                    post(url)
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("id", "foobarbaz")
+                )
+                .andExpect(view().name(EDIT_VIEW_NAME))
+                .andExpect(forwardedUrl(EDIT_VIEW_JSP))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeHasFieldErrors("feed", "id"))
+                .andExpect(model().attribute("feed", hasProperty("id", nullValue())))
+        ;
+
+        verifyNoMoreInteractionsInServiceMocks();
+
+    }
+
+    @Test
+    public void feedSave_NotFoundID() throws Exception {
+
+        String url = SAVE_URL;
+
+        // Redirect to list with error message. Error messages we don't test at the moment
+        mockMvc.perform(
+                post(url)
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("id", INVALID_ID.toString())
+                        .param("title", "foo")
+                        .param("status", "NEW")
+                        .param("feedUrl", "http://bar.baz/")
+                        .param("jobInterval", "100500")
+                        .param("nextJob", "2000-01-01 01:00:00")
+        )
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:" + LIST_URL))
+        ;
+
+        verify(feedServiceMock, times(1)).getById(INVALID_ID);
+
+        verifyNoMoreInteractionsInServiceMocks();
+
+    }
+
+    @Test
+    public void feedSave_ValidationFailed() throws Exception {
+
+        String url = SAVE_URL;
+
+        mockMvc.perform(
+                    post(url)
+                            .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                            .param("status", "foo")
+                            .param("feedUrl", "bar")
+                            .param("jobInterval", "baz")
+                            .param("nextJob", "foobar")
+                )
+                .andExpect(view().name(EDIT_VIEW_NAME))
+                .andExpect(forwardedUrl(EDIT_VIEW_JSP))
+                .andExpect(status().isOk())
+                .andExpect(model().attributeHasFieldErrors("feed", "title"))
+                .andExpect(model().attributeHasFieldErrors("feed", "status"))
+                .andExpect(model().attributeHasFieldErrors("feed", "feedUrl"))
+                .andExpect(model().attributeHasFieldErrors("feed", "jobInterval"))
+                .andExpect(model().attributeHasFieldErrors("feed", "nextJob"))
+                .andExpect(model().attribute("feed", hasProperty("id", nullValue())))
+                .andExpect(model().attribute("feed", hasProperty("version", nullValue())))
+                .andExpect(model().attribute("feed", hasProperty("title", nullValue())))
+                .andExpect(model().attribute("feed", hasProperty("status", nullValue())))
+                .andExpect(model().attribute("feed", hasProperty("feedUrl", is("bar"))))
+                .andExpect(model().attribute("feed", hasProperty("jobInterval", nullValue())))
+                .andExpect(model().attribute("feed", hasProperty("nextJob", nullValue())))
+        ;
+
+        verifyNoMoreInteractionsInServiceMocks();
+
+    }
+
+    @Test
+    public void feedSave_InsertSuccessful() throws Exception {
+
+        String url = SAVE_URL;
+
+        mockMvc.perform(
+                post(url)
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("title", "foo")
+                        .param("status", "NEW")
+                        .param("feedUrl", "http://bar.baz/")
+                        .param("jobInterval", "100500")
+                        .param("nextJob", "2001-01-01 01:00:00")
+                )
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:" + LIST_URL))
+        ;
+
+        ArgumentCaptor<Feed> feedCaptor = ArgumentCaptor.forClass(Feed.class);
+
+        verify(feedServiceMock, times(1)).insert(feedCaptor.capture());
+
+        Feed insertedFeed = feedCaptor.getValue();
+
+        assertNull(insertedFeed.getId());
+        assertNull(insertedFeed.getVersion());
+        assertThat(insertedFeed.getTitle(), is("foo"));
+        assertThat(insertedFeed.getStatus(), is(Status.NEW));
+        assertThat(insertedFeed.getFeedUrl(), is("http://bar.baz/"));
+        assertThat(insertedFeed.getNextJob().toString(), is("2001-01-01 01:00:00.0"));
+        assertThat(insertedFeed.getJobInterval(), is(100500L));
+
+        verifyNoMoreInteractionsInServiceMocks();
+
+    }
+
+    @Test
+    public void feedSave_UpdateSuccessful() throws Exception {
+
+        String url = SAVE_URL;
+
+        mockMvc.perform(
+                post(url)
+                        .contentType(MediaType.APPLICATION_FORM_URLENCODED)
+                        .param("id", "1")
+                        .param("version", "2")
+                        .param("title", "foo")
+                        .param("status", "NEW")
+                        .param("feedUrl", "http://bar.baz/")
+                        .param("jobInterval", "100500")
+                        .param("nextJob", "2001-01-01 01:00:00")
+        )
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:" + LIST_URL))
+        ;
+
+        ArgumentCaptor<Feed> feedCaptor = ArgumentCaptor.forClass(Feed.class);
+
+        verify(feedServiceMock, times(1)).getById(1L);
+        verify(feedServiceMock, times(1)).update(feedCaptor.capture());
+
+        Feed updatedFeed = feedCaptor.getValue();
+
+        assertThat(updatedFeed.getId(), is(1L));
+        assertThat(updatedFeed.getVersion(), is(2));
+        assertThat(updatedFeed.getTitle(), is("foo"));
+        assertThat(updatedFeed.getStatus(), is(Status.NEW));
+        assertThat(updatedFeed.getFeedUrl(), is("http://bar.baz/"));
+        assertThat(updatedFeed.getNextJob().toString(), is("2001-01-01 01:00:00.0"));
+        assertThat(updatedFeed.getJobInterval(), is(100500L));
+
+        verifyNoMoreInteractionsInServiceMocks();
+
+    }
+
     /*
 
 
@@ -205,20 +469,9 @@ public class FeedControllerTest {
         assertTrue(false);
     }
 
-    @Test
-    public void feedEdit() {
-        assertTrue(false);
-    }
 
-    @Test
-    public void feedSave() {
-        assertTrue(false);
-    }*/
 
-    @Test
-    public void dummy() {
-        assertTrue(true);
-    }
+    */
 
     private void initDummyData() throws ModelException {
         feedList = new ArrayList<>();
@@ -248,6 +501,10 @@ public class FeedControllerTest {
                 .jobInterval(300_000L)
                 .build();
         countFeeds = Long.valueOf(feedList.size());
+    }
+
+    private void initServiceMocks() throws ModelException {
+        initFeedServiceMock();
     }
 
     private void initFeedServiceMock() throws ModelException {

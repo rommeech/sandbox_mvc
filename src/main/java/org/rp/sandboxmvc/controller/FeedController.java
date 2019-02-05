@@ -116,13 +116,20 @@ public class FeedController extends AbstractController {
             feedService.insert(feed);
             messageProvider.addInfoMessage("New feed successfully added");
         }
-        else {
+        else if (isFeedIdValid(feed.getId())) {
             feedService.update(feed);
             messageProvider.addInfoMessage("Feed successfully saved");
+        }
+        else {
+            messageProvider.addErrorMessage("Cannot save, something wrong with this feed, maybe already deleted in another session");
         }
 
         model.setViewName("redirect:/feeds/");
         return model;
+    }
+
+    private boolean isFeedIdValid(Long id) {
+        return getById(id) != null;
     }
 
     private Feed getById(Long id) {

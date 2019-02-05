@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.Objects;
 
+// TODO: investigate of returning STREAM's instead of List's for all models and implement it if possible
+
 @MappedSuperclass
 public abstract class AbstractModel<T extends Serializable> implements Serializable {
 
