@@ -4,7 +4,6 @@ import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
-import org.mockito.ArgumentMatchers;
 import org.mockito.Mockito;
 import org.rp.sandboxmvc.helper.Status;
 import org.rp.sandboxmvc.model.Feed;
@@ -55,14 +54,14 @@ public class FeedControllerTest {
     private Long countFeeds;
 
     // Config
-    private static final String ERROR404_VIEW_NAME = "error/404";
-    private static final String ERROR404_VIEW_JSP = "/WEB-INF/pages/error/404.jsp";
-
     private static final String LIST_URL = "/feeds/";
     private static final String LIST_VIEW_NAME = "feed_list";
     private static final String LIST_VIEW_JSP = "/WEB-INF/pages/feed_list.jsp";
 
     private static final String DELETE_URL = "/feeds/delete/";
+
+    private static final String READ_URL = "/feeds/read/";
+
 
     private static final String EDIT_URL = "/feeds/edit/";
     private static final String EDIT_VIEW_NAME = "feed_edit";
@@ -73,8 +72,8 @@ public class FeedControllerTest {
     private static final String NEW_VIEW_JSP = "/WEB-INF/pages/feed_edit.jsp";
 
     private static final String SAVE_URL = "/feeds/save/";
-    private static final String SAVE_VIEW_NAME = "feed_edit";
-    private static final String SAVE_VIEW_JSP = "/WEB-INF/pages/feed_edit.jsp";
+
+
 
     private static final Long INVALID_ID = 100500L;
 
@@ -217,7 +216,7 @@ public class FeedControllerTest {
     }
 
     @Test
-    public void feedEdit_InvalidID() throws Exception {
+    public void feedEdit_InvalidId() throws Exception {
 
         String url = EDIT_URL + "FOO/";
 
@@ -229,7 +228,7 @@ public class FeedControllerTest {
     }
 
     @Test
-    public void feedEdit_NotFoundID() throws Exception {
+    public void feedEdit_NotFoundId() throws Exception {
 
         String url = EDIT_URL + INVALID_ID + "/";
 
@@ -460,18 +459,51 @@ public class FeedControllerTest {
 
     }
 
-    /*
-
-
-
     @Test
-    public void feedRead() {
-        assertTrue(false);
+    public void feedRead_NoId() throws Exception {
+        String url = READ_URL;
+
+        mockMvc.perform(get(url))
+                .andExpect(status().isNotFound());
+
+        verifyNoMoreInteractionsInServiceMocks();
     }
 
+    @Test
+    public void feedRead_InvalidId() throws Exception {
+        String url = READ_URL + "FOO/";
 
+        mockMvc.perform(get(url))
+                .andExpect(status().isBadRequest());
 
-    */
+        verifyNoMoreInteractionsInServiceMocks();
+    }
+
+    @Test
+    public void feedRead_NotFoundId() throws Exception {
+        String url = READ_URL + INVALID_ID + "/";
+
+        mockMvc.perform(get(url))
+                .andExpect(status().isNotFound());
+
+        verify(feedServiceMock, times(1)).getById(INVALID_ID);
+
+        verifyNoMoreInteractionsInServiceMocks();
+    }
+
+    @Test
+    public void feedRead_Successful() throws Exception {
+        String url = READ_URL + 1L + "/";
+
+        mockMvc.perform(get(url))
+                .andExpect(status().is3xxRedirection())
+                .andExpect(view().name("redirect:" + LIST_URL));
+
+        verify(feedServiceMock, times(1)).getById(1L);
+        verify(feedServiceMock, times(1)).readFeed(feedList.get(0));
+
+        verifyNoMoreInteractionsInServiceMocks();
+    }
 
     private void initDummyData() throws ModelException {
         feedList = new ArrayList<>();
