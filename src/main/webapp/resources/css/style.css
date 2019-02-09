@@ -29,8 +29,8 @@ p { padding: 0; margin: 0 0 16px 0; }
 
 /* Links */
 
-a               { color: #5484ae; }
-a:hover         { color: #e17661; }
+a               { color: #5484ae; text-decoration: none; display: inline-block; border-bottom: 1px solid #36446C; line-height: 14px; }
+a:hover         { color: #e17661; border-bottom: 1px solid #733939; }
 a:visited       { color: #5484ae; }
 a:visited:hover { color: #e17661; }
 
@@ -109,18 +109,17 @@ td.numeric, th.numeric {
 
 td.td_buttons {
     text-align: right;
-    padding: 0 0 0 4px;
 }
 
 td.td_buttons a {
     display: inline-block;
-    padding: 4px 8px 4px 8px;
-    margin: 0 !important;
+    border-bottom: none;
+    /*padding: 4px 8px 4px 8px;*/
 }
 
-td.td_buttons a:hover {
+/*td.td_buttons a:hover {
     background-color: #35393A;
-}
+}*/
 
 
 table.table_list {
@@ -228,13 +227,13 @@ nav#header_nav {
     margin: 0;
     display: inline-block;
 }
-nav#header_nav a { margin-right: 24px; font-size: 15px; }
+nav#header_nav a { margin-right: 24px; font-size: 15px; line-height: 16px; border-bottom: none; }
 
 nav.main-nav { padding: 8px 32px 8px 128px; background-color: #292A2C; }
 nav.main-nav a { margin-right: 16px; font-size: 15px; }
 
 nav.sub-nav { padding: 8px 32px 8px 128px; background-color: #292A2C; }
-nav.sub-nav a { margin-right: 16px; }
+nav.sub-nav a { margin-right: 16px; border-bottom: none; }
 
 main {
     display: block;

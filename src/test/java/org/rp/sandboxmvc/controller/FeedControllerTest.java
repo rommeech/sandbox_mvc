@@ -253,14 +253,14 @@ public class FeedControllerTest {
                 .andExpect(view().name(NEW_VIEW_NAME))
                 .andExpect(forwardedUrl(NEW_VIEW_JSP))
                 .andExpect(model().attribute("feed", allOf(
-                        hasProperty("id", is(nullValue())),
-                        hasProperty("version", is(nullValue())),
+                        hasProperty("id", is(feed.getId())),
+                        hasProperty("version", is(feed.getVersion())),
                         hasProperty("jobInterval", greaterThan(1_000L)),
                         hasProperty("nextJob", org.hamcrest.Matchers.isA(Timestamp.class))
                 )))
         ;
 
-        verify(feedServiceMock, times(1)).newFeed();
+        verify(feedServiceMock, times(1)).getById(feed.getId());
 
         verifyNoMoreInteractionsInServiceMocks();
 
