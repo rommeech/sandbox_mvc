@@ -22,7 +22,7 @@ public class TelegramJob {
     @Autowired
     TelegramService telegramApiService;
 
-    @Scheduled(initialDelay = 10 * SECOND, fixedDelay = 1 * MINUTE)
+    @Scheduled(initialDelay = 10_000_000 * SECOND, fixedDelay = 1 * MINUTE)
     public void sendTelegramPosts() throws RequestException {
 
         telegramApiService.sendPostsToChannels();

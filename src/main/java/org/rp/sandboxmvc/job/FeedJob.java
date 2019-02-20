@@ -23,7 +23,7 @@ public class FeedJob {
     @Autowired
     private FeedReaderService feedReaderService;
 
-    @Scheduled(initialDelay = 5 * SECOND, fixedDelay = 3 * MINUTE)
+    @Scheduled(initialDelay = 5_000_000 * SECOND, fixedDelay = 3 * MINUTE)
     public void executeReadFeeds() {
         logger.info("Rss reader job started");
 
