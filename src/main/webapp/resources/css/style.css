@@ -29,8 +29,8 @@ p { padding: 0; margin: 0 0 16px 0; }
 
 /* Links */
 
-a               { color: #5484ae; text-decoration: none; display: inline-block; border-bottom: 1px solid #36446C; line-height: 14px; }
-a:hover         { color: #e17661; border-bottom: 1px solid #733939; }
+a               { color: #5484ae; }
+a:hover         { color: #e17661; }
 a:visited       { color: #5484ae; }
 a:visited:hover { color: #e17661; }
 
@@ -208,26 +208,46 @@ table.table_view div.post_content td {
 
 /* Layout */
 
+footer {}
+
 header {
-    padding: 16px 128px 16px 128px;
+    padding: 0px 128px 0px 128px;
     background-color: #252628;
     margin: 0;
 }
 
-div#logo {
+header div#logo {
     margin: 0;
     padding: 0;
     display: inline-block;
 }
 
-footer {}
+header div#logo {
+}
 
-nav#header_nav {
+header nav#header_nav {
     padding: 0 0 0 64px;
     margin: 0;
     display: inline-block;
 }
-nav#header_nav a { margin-right: 24px; font-size: 15px; line-height: 16px; border-bottom: none; }
+header nav#header_nav a {
+    margin: 0px 4px 0px 4px;
+    font-size: 15px;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    display: inline-block;
+    padding: 16px 16px 8px 16px;
+}
+
+header nav#header_nav a:hover {
+    color: #e17661;
+    border-bottom: 2px solid #e17661 !important;
+}
+
+header nav#header_nav a.active {
+    border-bottom: 2px solid #5484ae;
+    /* background: #35393A; */
+}
 
 nav.main-nav { padding: 8px 32px 8px 128px; background-color: #292A2C; }
 nav.main-nav a { margin-right: 16px; font-size: 15px; }
