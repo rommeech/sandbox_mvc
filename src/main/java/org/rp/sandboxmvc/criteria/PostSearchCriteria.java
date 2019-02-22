@@ -1,16 +1,14 @@
 package org.rp.sandboxmvc.criteria;
 
-import org.rp.sandboxmvc.model.Feed;
-
 import java.util.Objects;
 
-public class PostSearchForm {
+public class PostSearchCriteria {
 
     private String title;
     private String content;
-    private Feed feed;
+    private Long feedId;
 
-    public PostSearchForm() {
+    public PostSearchCriteria() {
     }
 
     public String getTitle() {
@@ -29,35 +27,35 @@ public class PostSearchForm {
         this.content = content;
     }
 
-    public Feed getFeed() {
-        return feed;
+    public Long getFeedId() {
+        return feedId;
     }
 
-    public void setFeed(Feed feed) {
-        this.feed = feed;
+    public void setFeedId(Long feedId) {
+        this.feedId = feedId;
     }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        PostSearchForm that = (PostSearchForm) o;
+        PostSearchCriteria that = (PostSearchCriteria) o;
         return Objects.equals(title, that.title) &&
                 Objects.equals(content, that.content) &&
-                Objects.equals(feed, that.feed);
+                Objects.equals(feedId, that.feedId);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, content, feed);
+        return Objects.hash(title, content, feedId);
     }
 
     @Override
     public String toString() {
-        return "PostSearchForm{" +
+        return "PostSearchCriteria{" +
                 "title='" + title + '\'' +
                 ", content='" + content + '\'' +
-                ", feed=" + feed +
+                ", feedId=" + feedId +
                 '}';
     }
 }

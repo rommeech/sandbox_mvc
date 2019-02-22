@@ -2,19 +2,18 @@ package org.rp.sandboxmvc.controller;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.rp.sandboxmvc.criteria.PostSearchForm;
+import org.rp.sandboxmvc.criteria.PostSearchCriteria;
 import org.rp.sandboxmvc.model.Post;
 import org.rp.sandboxmvc.service.PostService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-@RequestMapping("/posts")
+@RequestMapping(value = {"/posts", "/feeds/posts"})
 public class PostController {
 
     private static final Logger logger = LogManager.getLogger(PostController.class);
@@ -37,10 +36,10 @@ public class PostController {
 
     // TODO: refactoring, use Command object
     @RequestMapping("/")
-    public String postList(PostSearchForm postSearchForm, Model model) {
+    public String postList(PostSearchCriteria postSearchCriteria, Model model) {
         model.addAttribute("posts", postService.getPosts());
         model.addAttribute("total", postService.countPosts());
-        logger.info(postSearchForm);
+        logger.info(postSearchCriteria);
         return "post_list";
     }
 
