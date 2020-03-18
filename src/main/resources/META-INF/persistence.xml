@@ -11,29 +11,19 @@
 
         <properties>
 
-            <property name="javax.persistence.jdbc.driver"
-                      value="org.postgresql.Driver" />
+            <property name="javax.persistence.jdbc.driver" value="org.postgresql.Driver" />
 
-            <property name="javax.persistence.jdbc.url"
-                      value="jdbc:postgresql://localhost:5432/test_tg2" />
+            <property name="javax.persistence.jdbc.url" value="jdbc:postgresql://localhost:5432/tg" />
 
-            <property name="javax.persistence.jdbc.user"
-                      value="roman" />
+            <property name="javax.persistence.jdbc.user" value="roman" />
 
-            <property name="javax.persistence.jdbc.password"
-                      value="roman" />
+            <property name="javax.persistence.jdbc.password" value="roman" />
 
-            <property name="hibernate.show_sql"
-                      value="true" />
+            <property name="hibernate.show_sql" value="true" />
 
-            <property name="hibernate.hbm2ddl.auto"
-                      value="update" />
+            <property name="hibernate.hbm2ddl.auto" value="update" />
 
-            <!-- property name="hibernate.connection.pool_size" value="1" / -->
-            <!-- property name="hibernate.current_session_context_class" value="thread" / -->
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL95Dialect" />
-
-            <!--property name="current_session_context_class" value="thread"/!-->
 
         </properties>
 
