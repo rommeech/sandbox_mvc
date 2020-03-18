@@ -3,7 +3,7 @@
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 <header id="header">
     <div id="logo">
-        <h1>Sandbox MVC</h1>
+        <h1><spring:message code="project.header.name"/></h1>
     </div>
 
     <script>
