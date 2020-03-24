@@ -15,7 +15,7 @@ public class TgBotApiTest {
     @Test
     public void getMeTest() throws BotApiException {
         TgBotApi tgBotApi = new TgBotApi();
-        User user = tgBotApi.getMe("1073585381:AAHJ8XG593OkCwwdGTPPKR2Xt04wz0434q4");
+        User user = tgBotApi.getMe("*******");
         System.out.printf("user: " + user);
     }
 
