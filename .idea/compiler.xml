@@ -17,8 +17,8 @@
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="sandbox_mvc" options="" />
       <module name="sandboxmvc" options="-processor org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor" />
-      <module name="telegram-botapi" options="-processor org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor" />
-      <module name="telegram-botapi-it" options="-processor org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor" />
+      <module name="telegram-botapi" options="" />
+      <module name="telegram-botapi-it" options="" />
       <module name="tgtools-gui" options="-processor org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor" />
     </option>
   </component>

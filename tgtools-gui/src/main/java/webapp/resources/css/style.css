@@ -1,0 +1,326 @@
+/* Common */
+
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #222;
+}
+
+body {
+    height: 100%;
+    min-height: 100%;
+    margin: 0;
+    padding: 0;
+    position: relative;
+    background-color: #2e3032;
+}
+
+body, p, span, input, button, textarea {
+    font-family: sans-serif;
+    color: #ACACAC;
+    font-size: small;
+}
+
+h1 { font-size: 22px; font-weight: normal; padding: 0; margin: 0; }
+
+h2 { font-size: 18px; font-weight: normal; padding: 0; margin: 0 0 8px 0; }
+p { padding: 0; margin: 0 0 16px 0; }
+
+/* Links */
+
+a               { color: #5484ae; }
+a:hover         { color: #e17661; }
+a:visited       { color: #5484ae; }
+a:visited:hover { color: #e17661; }
+
+/* Forms */
+
+input, textarea {
+    border: 1px solid #515151;
+    padding: 4px 8px 4px 8px;
+    color: #ccc;
+    background-color: #35393A;
+    min-width: 512px;
+}
+
+input[type='radio'] {
+    border: 0;
+    padding: 0;
+    min-width: 0;
+}
+
+select, option {
+    padding: 4px 8px 4px 8px;
+}
+
+input.field_error {
+    border-color: darkred;
+}
+
+input.small { min-width: 128px; }
+input.medium { min-width: 256px; }
+
+span.field_error { display: block; padding: 4px 0 0 2px; margin: 0; font-weight: normal; color: #e17661; }
+
+input[type='checkbox'] {
+    padding: 0;
+    margin: 3px;
+    border: 1px solid gray;
+}
+
+button {
+    margin: 0 16px 0 0;
+    color: #ccc;
+    min-width: 96px;
+    border: 0;
+    padding: 6px 16px 6px 16px;
+    background-color: #5484ae;
+}
+
+/* Tables */
+
+table {
+    border: 0;
+    border-top: 1px solid #515151;
+    border-collapse: collapse;
+}
+td {
+    padding: 4px 8px 4px 8px;
+    border-bottom: 1px solid #515151;
+}
+td span.value {
+    border: 1px solid #454545;
+    padding: 0 0 0 0;
+    color: #d2d2d2;
+    display: block;
+}
+th {
+    padding: 8px 8px 8px 8px;
+    border-bottom: 3px double #454545;
+    font-weight: bold;
+    background-color: #35393A;
+    text-align: left;
+}
+
+td.numeric, th.numeric {
+    text-align: right;
+}
+
+td.td_buttons {
+    text-align: right;
+}
+
+td.td_buttons a {
+    display: inline-block;
+    border-bottom: none;
+    /*padding: 4px 8px 4px 8px;*/
+}
+
+/*td.td_buttons a:hover {
+    background-color: #35393A;
+}*/
+
+
+table.table_list {
+    min-width: 512px;
+}
+
+table.table_list td.image {
+    padding: 0;
+    margin: 0;
+    line-height: 0;
+}
+
+table.table_list img {
+    width: 100%;
+    max-width: 100px;
+}
+
+table.table_list td.word_break {
+    word-break: break-all;
+}
+
+table.table_list a {
+    margin: 0 2px 0 2px;
+}
+
+table.table_list td {
+    vertical-align: top;
+}
+
+table.table_edit {
+    min-width: 512px;
+}
+
+table.table_edit td.td_legend {
+    font-weight: bold;
+    text-align: right;
+    padding-top: 6px;
+    min-width: 128px;
+    vertical-align: top;
+}
+
+table.table_view td.td_legend {
+    font-weight: bold;
+    text-align: right;
+    padding-top: 6px;
+    min-width: 128px;
+    vertical-align: top;
+}
+
+table.table_view div.post_content {
+    margin: 0;
+    border: 1px solid #515151;
+    padding: 4px 8px 4px 8px;
+    color: #ccc;
+    background-color: #35393A;
+}
+
+table.table_view div.post_content div {
+    margin: 0;
+    padding: 0;
+}
+
+table.table_view div.post_content p {
+    padding: 0;
+    margin: 0 0 16px 0;
+}
+
+table.table_view div.post_content table {
+    border: 0;
+}
+
+table.table_view div.post_content td {
+    border: 0;
+}
+
+
+
+/*table.table_list a {
+    text-decoration: none;
+    display: inline-block;
+    background-color: #5484ae;
+    color: #ACACAC;
+    padding: 2px 4px 2px 4px;
+    margin: 0 4px 0 0;
+}*/
+
+/* Layout */
+
+footer {}
+
+header {
+    padding: 0px 128px 0px 128px;
+    background-color: #252628;
+    margin: 0;
+}
+
+header div#logo {
+    margin: 0;
+    padding: 0;
+    display: inline-block;
+}
+
+header div#logo {
+}
+
+header nav#header_nav {
+    padding: 0 0 0 64px;
+    margin: 0;
+    display: inline-block;
+}
+header nav#header_nav a {
+    margin: 0px 4px 0px 4px;
+    font-size: 15px;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    display: inline-block;
+    padding: 16px 16px 8px 16px;
+}
+
+header nav#header_nav a:hover {
+    color: #e17661;
+    border-bottom: 2px solid #e17661 !important;
+}
+
+header nav#header_nav a.active {
+    border-bottom: 2px solid #5484ae;
+    /* background: #35393A; */
+}
+
+nav.main-nav { padding: 8px 32px 8px 128px; background-color: #292A2C; }
+nav.main-nav a { margin-right: 16px; font-size: 15px; }
+
+nav.sub-nav { padding: 8px 32px 8px 128px; background-color: #292A2C; }
+nav.sub-nav a { margin-right: 16px; border-bottom: none; }
+
+main {
+    display: block;
+    padding: 16px 128px 16px 128px;
+    margin: 0;
+    background-color: #2e3032;
+}
+
+main div{
+    padding: 0 0 16px 0;
+}
+
+main h1 {
+    padding: 0 0 16px 0;
+}
+
+/* Other layers */
+
+div#messages {
+    display: block;
+    padding: 0;
+    margin: 0;
+}
+
+div.error_msg, div.warning_msg, div.info_msg {
+    margin: 0;
+    padding: 8px 128px 8px 128px;
+}
+
+div.error_msg {
+    background-color: #e17661;
+    color: antiquewhite;
+}
+
+div.warning_msg {
+    background-color: sandybrown;
+    color: #222;
+}
+
+div.info_msg {
+    background-color: cadetblue;
+    color: #222
+}
+
+div.edit_form { padding: 0; margin: 0; display: inline-block; }
+div.edit_row { padding: 4px 0 0 0; margin: 0 0 0 0; vertical-align: top; border-top: 1px solid #515151; }
+div.edit_legend { width: 196px; display: inline-block; padding: 6px 4px 4px 0; margin: 0; font-weight: bold;
+    text-align: right; vertical-align: top; }
+div.edit_input{ display: inline-block; padding: 0 32px 4px 4px; margin: 0; vertical-align: top; }
+
+div.view_layer { padding: 0; margin: 0; }
+div.view_row { padding: 0; margin: 0; vertical-align: top; border-bottom: 1px solid #515151; }
+div.view_legend { width: 196px; display: inline-block; padding: 4px; margin: 0; font-weight: bold;
+    text-align: right; vertical-align: top; }
+div.view_data{ min-width: 320px; display: inline-block; padding: 4px 32px 4px 4px; margin: 0; vertical-align: top; }
+
+div.form_buttons {
+    border-top: 1px solid #515151;
+    border-bottom: 1px solid #515151;
+    padding: 8px 0 8px 208px;
+    margin: 0;
+}
+
+div.field_radiobuttons span {
+    display: inline-block;
+    margin: 0px 8px 4px 0px;
+}
+
+
+

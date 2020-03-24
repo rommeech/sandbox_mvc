@@ -23,9 +23,6 @@ public class GetMeTest {
     @Test
     public void doRequest() throws BotApiException {
 
-        GetMe request = new GetMe();
-        ResponseModel<User> responseModel = request.doRequest();
-        System.out.printf("responseModel: " + responseModel);
 
     }
 
