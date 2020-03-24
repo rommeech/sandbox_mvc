@@ -2,7 +2,7 @@ package org.rp.sandboxmvc.service;
 
 import org.rp.sandboxmvc.dao.BotDao;
 import org.rp.sandboxmvc.model.Bot;
-import org.rp.telegram.botapi.entity.User;
+import org.rp.tg.botapi.type.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

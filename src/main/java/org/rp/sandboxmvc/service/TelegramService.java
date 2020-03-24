@@ -4,16 +4,14 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.rp.sandboxmvc.model.Channel;
 import org.rp.sandboxmvc.model.Post;
-import org.rp.telegram.botapi.entity.FormatOption;
-import org.rp.telegram.botapi.entity.User;
-import org.rp.telegram.botapi.http.HttpClient;
-import org.rp.telegram.botapi.request.AbstractApiRequest;
-import org.rp.telegram.botapi.request.GetMeRequest;
-import org.rp.telegram.botapi.request.RequestException;
-import org.rp.telegram.botapi.request.SendMessageRequest;
-import org.rp.telegram.botapi.response.MessageResponse;
-import org.rp.telegram.botapi.response.UserResponse;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.rp.tg.botapi.type.FormatOption;
+import org.rp.tg.botapi.type.User;
+import org.rp.tg.botapi.http.HttpClient;
+import org.rp.tg.botapi.request.GetMeRequest;
+import org.rp.tg.botapi.request.RequestException;
+import org.rp.tg.botapi.request.SendMessageRequest;
+import org.rp.tg.botapi.response.MessageResponse;
+import org.rp.tg.botapi.response.UserResponse;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,17 +22,17 @@ public class TelegramService {
 
     private static final Logger logger = LogManager.getLogger(TelegramService.class);
 
-    @Autowired
-    private ChannelService channelService;
+    private final ChannelService channelService;
+    private final PublicationService publicationService;
+    private final RequestLogService requestLogService;
+    private final PostService postService;
 
-    @Autowired
-    private PublicationService publicationService;
-
-    @Autowired
-    private RequestLogService requestLogService;
-
-    @Autowired
-    private PostService postService;
+    public TelegramService(ChannelService channelService, PublicationService publicationService, RequestLogService requestLogService, PostService postService) {
+        this.channelService = channelService;
+        this.publicationService = publicationService;
+        this.requestLogService = requestLogService;
+        this.postService = postService;
+    }
 
     @Transactional
     public User sendGetMeRequest(String token) throws ServiceException {

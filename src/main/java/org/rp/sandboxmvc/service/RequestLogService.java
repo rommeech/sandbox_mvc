@@ -15,8 +15,11 @@ public class RequestLogService extends AbstractService {
 
     private static final Logger logger = LogManager.getLogger(RequestLogService.class);
 
-    @Autowired
-    private RequestLogDao requestLogDao;
+    private final RequestLogDao requestLogDao;
+
+    public RequestLogService(RequestLogDao requestLogDao) {
+        this.requestLogDao = requestLogDao;
+    }
 
     @Transactional
     public void insert(RequestLog model) {

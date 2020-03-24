@@ -7,7 +7,12 @@
     <groupId>org.rp</groupId>
     <artifactId>sandboxmvc</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <modules>
+        <module>tgtools-gui</module>
+        <module>telegram-org.rp.telegram.botapi</module>
+        <module>telegram-botapi-it</module>
+    </modules>
+    <packaging>pom</packaging>
 
     <properties>
         <springVersion>4.3.20.RELEASE</springVersion>

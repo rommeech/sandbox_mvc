@@ -31,15 +31,15 @@ public class FeedReaderJob {
 
     @Scheduled(initialDelay = JOB_INITIAL_DELAY, fixedDelay = JOB_FIXED_DELAY)
     public void executeReadFeeds() {
-        LOGGER.info("RssReaderJob started");
+        LOGGER.info("FeedsReaderJob started");
 
         try {
-            feedReaderService.readFeeds();
+            feedReaderService.readAllFeeds();
         } catch (ServiceException e) {
-            LOGGER.error("RssReaderJob error", e);
+            LOGGER.error("FeedsReaderJob error", e);
         }
 
-        LOGGER.info("RssReaderJob finished");
+        LOGGER.info("FeedsReaderJob finished");
     }
 
 }

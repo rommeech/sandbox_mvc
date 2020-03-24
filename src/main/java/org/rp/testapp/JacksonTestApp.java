@@ -1,8 +1,8 @@
 package org.rp.testapp;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.rp.telegram.botapi.entity.User;
-import org.rp.telegram.botapi.response.AbstractApiResponse;
+import org.rp.tg.botapi.type.User;
+import org.rp.tg.botapi.response.AbstractApiResponse;
 
 import java.io.IOException;
 import java.util.Map;

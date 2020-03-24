@@ -1,8 +1,8 @@
 package org.rp.testapp;
 
-import org.rp.telegram.botapi.request.GetMeRequest;
-import org.rp.telegram.botapi.request.RequestException;
-import org.rp.telegram.botapi.response.UserResponse;
+import org.rp.tg.botapi.request.GetMeRequest;
+import org.rp.tg.botapi.request.RequestException;
+import org.rp.tg.botapi.response.UserResponse;
 
 public class ApiTestApp {
 

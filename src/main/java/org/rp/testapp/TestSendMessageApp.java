@@ -1,9 +1,9 @@
 package org.rp.testapp;
 
-import org.rp.telegram.botapi.entity.FormatOption;
-import org.rp.telegram.botapi.request.RequestException;
-import org.rp.telegram.botapi.request.SendMessageRequest;
-import org.rp.telegram.botapi.response.MessageResponse;
+import org.rp.tg.botapi.type.FormatOption;
+import org.rp.tg.botapi.request.RequestException;
+import org.rp.tg.botapi.request.SendMessageRequest;
+import org.rp.tg.botapi.response.MessageResponse;
 
 public class TestSendMessageApp {
 

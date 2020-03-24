@@ -6,15 +6,20 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="telegram-botapi-it" />
+        <module name="telegram-botapi" />
         <module name="sandboxmvc" />
-        <module name="sandbox_mvc" />
+        <module name="tgtools-gui" />
       </profile>
     </annotationProcessing>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
-      <module name="sandbox_mvc" options="-processor org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor" />
+      <module name="sandbox_mvc" options="" />
       <module name="sandboxmvc" options="-processor org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor" />
+      <module name="telegram-botapi" options="-processor org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor" />
+      <module name="telegram-botapi-it" options="-processor org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor" />
+      <module name="tgtools-gui" options="-processor org.hibernate.jpamodelgen.JPAMetaModelEntityProcessor" />
     </option>
   </component>
 </project>

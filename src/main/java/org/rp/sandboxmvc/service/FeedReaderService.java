@@ -12,7 +12,6 @@ import org.rp.sandboxmvc.dao.FeedDao;
 import org.rp.sandboxmvc.dao.PostDao;
 import org.rp.sandboxmvc.model.Feed;
 import org.rp.sandboxmvc.model.Post;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -25,18 +24,19 @@ import java.util.List;
 @Service
 public class FeedReaderService {
 
-    private static final Logger logger = LogManager.getLogger(FeedReaderService.class);
+    private static final Logger LOGGER = LogManager.getLogger(FeedReaderService.class);
 
-    @Autowired
-    private FeedDao feedDao;
+    private final FeedDao feedDao;
+    private final PostDao postDao;
+    private final SyndEntryToPostConverter syndEntryToPostConverter;
 
-    @Autowired
-    private PostDao postDao;
+    public FeedReaderService(FeedDao feedDao, PostDao postDao, SyndEntryToPostConverter syndEntryToPostConverter) {
+        this.feedDao = feedDao;
+        this.postDao = postDao;
+        this.syndEntryToPostConverter = syndEntryToPostConverter;
+    }
 
-    @Autowired
-    private SyndEntryToPostConverter syndEntryToPostConverter;
-
-    public void readFeeds() throws ServiceException {
+    public void readAllFeeds() throws ServiceException {
         List<Feed> feeds = feedDao.getFeedsReadyForReading();
         for (Feed feed : feeds) {
             readFeed(feed);
@@ -62,7 +62,7 @@ public class FeedReaderService {
                 savePostFromSyndEntry(feed, entry);
             }
             else {
-                logger.info(String.format("Feed=%s: Post %s %s already saved",
+                LOGGER.info(String.format("Feed=%s: Post %s %s already saved",
                         feed.getId(), entry.getUri(), entry.getTitle()));
             }
         }
@@ -73,7 +73,7 @@ public class FeedReaderService {
         Post post = syndEntryToPostConverter.convert(entry);
         post.setFeed(feed);
         postDao.insert(post);
-        logger.info(String.format("Feed=%s: Post %s %s %s successfully saved",
+        LOGGER.info(String.format("Feed=%s: Post %s %s %s successfully saved",
                 feed.getId(), post.getId(), post.getPostXid(), post.getTitle()));
     }
 
