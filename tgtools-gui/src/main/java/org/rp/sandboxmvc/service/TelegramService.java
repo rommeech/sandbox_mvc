@@ -2,7 +2,7 @@ package org.rp.sandboxmvc.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.rp.telegram.botapi.TgBotApi;
+import org.rp.telegram.botapi.TelegramBotApi;
 import org.rp.telegram.botapi.exception.BotApiException;
 import org.rp.telegram.botapi.type.User;
 import org.springframework.stereotype.Service;
@@ -11,7 +11,7 @@ import org.springframework.stereotype.Service;
 public class TelegramService {
 
     private static final Logger LOGGER = LogManager.getLogger(TelegramService.class);
-    private static final TgBotApi BOT_API_CLIENT = new TgBotApi();
+    private static final TelegramBotApi BOT_API_CLIENT = new TelegramBotApi();
 
     /*
     private final ChannelService channelService;

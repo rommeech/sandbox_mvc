@@ -43,7 +43,7 @@ public final class ResponseModel<T extends BotApiResultType> implements Serializ
      *
      * @return   request result
      */
-    @JsonProperty(value = "ok")
+    @JsonProperty(value = "ok", required = true)
     public Boolean getOk() {
         return ok;
     }

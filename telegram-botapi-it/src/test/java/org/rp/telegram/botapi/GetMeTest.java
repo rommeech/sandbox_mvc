@@ -10,12 +10,12 @@ import org.rp.telegram.botapi.type.User;
  * Date: 23.03.20
  * Time: 16:37
  */
-public class TgBotApiTest {
+public class GetMeTest {
 
     @Test
     public void getMeTest() throws BotApiException {
-        TgBotApi tgBotApi = new TgBotApi();
-        User user = tgBotApi.getMe("*******");
+        TelegramBotApi tgBotApi = new TelegramBotApi();
+        User user = tgBotApi.getMe("1073585381:AAHJ8XG593OkCwwdGTPPKR2Xt04wz0434q4");
         System.out.printf("user: " + user);
     }
 

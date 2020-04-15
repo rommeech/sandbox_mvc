@@ -5,6 +5,8 @@ import org.rp.telegram.botapi.BotApiResultType;
 
 import java.util.Objects;
 
+// TODO: JsonProperties for attributes or for getters/setters?
+
 /**
  * This object represents a Telegram user or bot.
  *
@@ -16,6 +18,7 @@ import java.util.Objects;
 public class User implements BotApiResultType {
 
     private static final long serialVersionUID = 1020566709953373521L;
+
     private Long id;
     private Boolean isBot;
     private String firstName;
@@ -46,6 +49,8 @@ public class User implements BotApiResultType {
     }
 
     /**
+     * See {@link User#getId}
+     *
      * @param   id   Unique identifier
      */
     @JsonProperty(value = "id")

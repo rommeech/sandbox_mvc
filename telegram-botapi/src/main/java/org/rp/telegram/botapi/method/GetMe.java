@@ -2,7 +2,7 @@ package org.rp.telegram.botapi.method;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import org.rp.telegram.botapi.BotApiMethod;
-import org.rp.telegram.botapi.client.AbstractApiHttpClient;
+import org.rp.telegram.botapi.client.AbstractApiHttpRequest;
 import org.rp.telegram.botapi.exception.BotApiException;
 import org.rp.telegram.botapi.exception.HttpException;
 import org.rp.telegram.botapi.exception.JsonException;
@@ -18,7 +18,11 @@ import java.io.IOException;
  * Date: 20.03.20
  * Time: 20:08
  */
-public class GetMe extends AbstractApiHttpClient implements BotApiMethod {
+
+// TODO: unittests
+// TODO: javadoc
+
+public class GetMe extends AbstractApiHttpRequest implements BotApiMethod {
 
     private static final long serialVersionUID = -3294279648405728973L;
 
@@ -27,7 +31,7 @@ public class GetMe extends AbstractApiHttpClient implements BotApiMethod {
 
         String responseBody;
         try {
-            responseBody = this.httpClientInstance().queryStringGetRequest(
+            responseBody = this.httpClientInstance().queryStringRequest(
                     buildApiUrl(MethodName.GET_ME.apiMethodName()));
         } catch (IOException e) {
             throw new HttpException("Server communication error", e);

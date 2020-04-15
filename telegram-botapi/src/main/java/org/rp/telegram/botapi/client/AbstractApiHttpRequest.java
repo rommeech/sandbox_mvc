@@ -1,5 +1,6 @@
 package org.rp.telegram.botapi.client;
 
+import org.rp.telegram.botapi.BotApiRequestModel;
 import org.rp.telegram.botapi.exception.BotApiException;
 import org.rp.telegram.botapi.http.HttpClient;
 import org.rp.telegram.botapi.http.impl.OkHttpClient;
@@ -18,12 +19,17 @@ import static org.rp.telegram.botapi.util.Const.API_URL;
 /**
  * Abstract Telegram Bot API HTTP Client
  */
-public abstract class AbstractApiHttpClient {
+
+// TODO: javadoc
+
+public abstract class AbstractApiHttpRequest<T extends BotApiRequestModel> {
 
     private static HttpClient httpClient;
     private static JsonMapper jsonMapper;
     private static String apiUrl = API_URL;
-    private static String token;
+
+    private String token;
+    private T requestModel;
 
     /**
      * Returns HTTP client. When no client injected - returns default okhttp3 implementation
@@ -86,6 +92,18 @@ public abstract class AbstractApiHttpClient {
         this.token = token;
     }
 
+    protected String getToken() {
+        return token;
+    }
+
+    void setRequestModel(T requestModel) {
+        this.requestModel = requestModel;
+    }
+
+    protected T getRequestModel() {
+        return requestModel;
+    }
+
     /**
      * Build URL of API's method
      *
@@ -135,7 +153,7 @@ public abstract class AbstractApiHttpClient {
      * @param   <T>   AbstractApiHttpClient
      * @param   <B>   AbstractClientBuilder
      */
-    protected static abstract class AbstractClientBuilder<T extends AbstractApiHttpClient, B extends AbstractClientBuilder> {
+    protected static abstract class AbstractClientBuilder<T extends AbstractApiHttpRequest, B extends AbstractClientBuilder> {
 
         protected T apiMethod;
         protected B apiMethodBuilder;
@@ -164,6 +182,11 @@ public abstract class AbstractApiHttpClient {
 
         public B token(String token) {
             apiMethod.setToken(token);
+            return apiMethodBuilder;
+        }
+
+        public B requestModel(BotApiRequestModel requestModel) {
+            apiMethod.setRequestModel(requestModel);
             return apiMethodBuilder;
         }
 

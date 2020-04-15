@@ -1,6 +1,8 @@
 package org.rp.telegram.botapi;
 
 import org.rp.telegram.botapi.exception.BotApiException;
+import org.rp.telegram.botapi.requestmodel.SendMessageRequestModel;
+import org.rp.telegram.botapi.type.Message;
 import org.rp.telegram.botapi.type.User;
 
 /**
@@ -18,4 +20,5 @@ public interface BotApiClient {
 
     User getMe(String token) throws BotApiException;
 
+    Message sendMessage(String token, SendMessageRequestModel requestModel) throws BotApiException;
 }

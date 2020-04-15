@@ -58,7 +58,7 @@ public class ResponseModelParserTest {
 
         assertNull("Field 'parameters'", responseModel.getParameters());
 
-        assertTrue("Field 'result/id'", 123456789 == responseModel.getResult().getId());
+        assertTrue("Field 'result/id'", 123456789L == responseModel.getResult().getId());
         assertTrue("Field 'result/is_bot'", responseModel.getResult().getBot());
         assertEquals("Field 'result/first_name'", "FooBarBot", responseModel.getResult().getFirstName());
         assertNull("Field 'result/last_name'", responseModel.getResult().getLastName());

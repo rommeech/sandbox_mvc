@@ -13,6 +13,7 @@ import java.io.IOException;
  */
 
 // TODO: Add javadoc
+// TODO: we do not need to inject JsonMapper to API client!
 
 public interface JsonMapper {
 

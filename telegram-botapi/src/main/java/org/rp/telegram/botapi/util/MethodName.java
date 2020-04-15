@@ -8,7 +8,8 @@ package org.rp.telegram.botapi.util;
  */
 public enum MethodName {
 
-    GET_ME("getMe");
+    GET_ME("getMe"),
+    SEND_MESSAGE("sendMessage");
 
     private final String apiMethodName;
 
