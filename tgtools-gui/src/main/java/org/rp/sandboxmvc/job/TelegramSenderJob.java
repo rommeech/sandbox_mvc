@@ -18,6 +18,7 @@ import static org.rp.sandboxmvc.helper.TimeInterval.SECOND;
 public class TelegramSenderJob {
 
     private static final Logger LOGGER = LogManager.getLogger(TelegramSenderJob.class);
+
     public static final int JOB_INITIAL_DELAY = 5 * SECOND;
     public static final int JOB_FIXED_DELAY = 15 * MINUTE;
 
@@ -31,7 +32,7 @@ public class TelegramSenderJob {
     public void sendTelegramPosts() {
         LOGGER.info("TelegramSenderJob started");
 
-        //telegramService.sendPostsToChannels();
+        telegramService.sendMessagesToChannels();
 
         LOGGER.info("TelegramSenderJob finished");
     }

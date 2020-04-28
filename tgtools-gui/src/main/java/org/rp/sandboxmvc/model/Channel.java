@@ -109,8 +109,8 @@ public class Channel extends AbstractModel<Long> {
         if (!(o instanceof Channel)) return false;
         if (!super.equals(o)) return false;
         Channel channel = (Channel) o;
-        return Objects.equals(bot, channel.bot) &&
-                Objects.equals(feed, channel.feed) &&
+        return Objects.equals(bot.getId(), channel.bot.getId()) &&
+                Objects.equals(feed.getId(), channel.feed.getId()) &&
                 Objects.equals(name, channel.name) &&
                 Objects.equals(username, channel.username) &&
                 status == channel.status;
@@ -119,14 +119,14 @@ public class Channel extends AbstractModel<Long> {
     @Override
     public int hashCode() {
 
-        return Objects.hash(super.hashCode(), bot, feed, name, username, status);
+        return Objects.hash(super.hashCode(), bot.getId(), feed.getId(), name, username, status);
     }
 
     @Override
     public String toString() {
         return "Channel{id=" + getId() +
-                ", bot=" + bot +
-                ", feed=" + feed +
+                ", bot=" + bot.getId() +
+                ", feed=" + feed.getId() +
                 ", name='" + name + '\'' +
                 ", token='" + username + '\'' +
                 ", status=" + status +

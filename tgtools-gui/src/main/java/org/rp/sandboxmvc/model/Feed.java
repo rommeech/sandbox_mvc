@@ -158,10 +158,18 @@ public class Feed extends AbstractModel<Long> {
         }
     }
 
+    public List<Channel> getChannels() {
+        return channels;
+    }
+
+    public void setChannels(List<Channel> channels) {
+        this.channels = channels;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Feed)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Feed feed = (Feed) o;
         return status == feed.status &&
@@ -172,20 +180,19 @@ public class Feed extends AbstractModel<Long> {
                 Objects.equals(author, feed.author) &&
                 Objects.equals(description, feed.description) &&
                 Objects.equals(jobInterval, feed.jobInterval) &&
-                Objects.equals(nextJob, feed.nextJob) &&
-                Objects.equals(posts, feed.posts);
+                Objects.equals(nextJob, feed.nextJob);
     }
 
     @Override
     public int hashCode() {
-
-        return Objects.hash(super.hashCode(), status, iconUrl, logoUrl, title, feedUrl, author, description, jobInterval, nextJob, posts);
+        return Objects.hash(super.hashCode(), status, iconUrl, logoUrl, title, feedUrl, author, description,
+                jobInterval, nextJob);
     }
 
     @Override
     public String toString() {
-        return "Feed{id=" + getId() +
-                ", status=" + status +
+        return "Feed{" +
+                "status=" + status +
                 ", iconUrl='" + iconUrl + '\'' +
                 ", logoUrl='" + logoUrl + '\'' +
                 ", title='" + title + '\'' +

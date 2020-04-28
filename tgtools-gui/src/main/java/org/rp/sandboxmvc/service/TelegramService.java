@@ -2,22 +2,36 @@ package org.rp.sandboxmvc.service;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.rp.sandboxmvc.model.Channel;
+import org.rp.sandboxmvc.model.Post;
 import org.rp.telegram.botapi.TelegramBotApi;
 import org.rp.telegram.botapi.exception.BotApiException;
 import org.rp.telegram.botapi.type.User;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service(value = "telegramService")
 public class TelegramService {
 
     private static final Logger LOGGER = LogManager.getLogger(TelegramService.class);
+
+    private static final int MESSAGES_LIMIT = 1;
+
     private static final TelegramBotApi BOT_API_CLIENT = new TelegramBotApi();
 
-    /*
+
     private final ChannelService channelService;
+    private final PostService postService;
+
+    public TelegramService(ChannelService channelService, PostService postService) {
+        this.channelService = channelService;
+        this.postService = postService;
+    }
+
+    /*
     private final PublicationService publicationService;
     private final RequestLogService requestLogService;
-    private final PostService postService;
 
     public TelegramService(
             ChannelService channelService,
@@ -39,6 +53,24 @@ public class TelegramService {
             throw new ServiceException(e);
         }
         return user;
+    }
+
+    public void sendMessagesToChannels() {
+        List<Channel> channels = channelService.getActiveChannels();
+        for (Channel channel : channels) {
+            this.sendMessagesToChannel(channel);
+        }
+    }
+
+    private void sendMessagesToChannel(Channel channel) {
+        List<Post> posts = postService.getUnpublishedPostsByChannel(channel, MESSAGES_LIMIT);
+        for (Post post : posts) {
+            this.sendMessageToChannel(channel, post);
+        }
+    }
+
+    private void sendMessageToChannel(Channel channel, Post post) {
+        LOGGER.info("sendMessageToChanne: channel=" + channel + " post=" + post);
     }
 
     /*

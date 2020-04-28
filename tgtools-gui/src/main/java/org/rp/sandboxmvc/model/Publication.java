@@ -61,41 +61,29 @@ public class Publication extends AbstractModel<Long> {
         this.channel = channel;
     }
 
-    /*public List<RequestLog> getRequestLogs() {
-        return requestLogs;
-    }
-
-    public void setRequestLogs(List<RequestLog> requestLogs) {
-        this.requestLogs = requestLogs;
-    }*/
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Publication)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Publication that = (Publication) o;
         return Objects.equals(isSuccessful, that.isSuccessful) &&
-                Objects.equals(post, that.post) &&
-                Objects.equals(channel, that.channel)
-                //Objects.equals(requestLogs, that.requestLogs)
-                ;
+                Objects.equals(post.getId(), that.post.getId()) &&
+                Objects.equals(channel.getId(), that.channel.getId());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), isSuccessful, post, channel);
+        return Objects.hash(super.hashCode(), isSuccessful, post.getId(), channel.getId());
     }
 
     @Override
     public String toString() {
-        final StringBuilder sb = new StringBuilder("Publication{");
-        sb.append("isSuccessful=").append(isSuccessful);
-        sb.append(", post=").append(post);
-        sb.append(", channel=").append(channel);
-        //sb.append(", requestLogs=").append(requestLogs);
-        sb.append('}');
-        return sb.toString();
+        return "Publication{" +
+                "isSuccessful=" + isSuccessful +
+                ", post=" + post.getId() +
+                ", channel=" + channel.getId() +
+                '}';
     }
 
     public static class Builder {

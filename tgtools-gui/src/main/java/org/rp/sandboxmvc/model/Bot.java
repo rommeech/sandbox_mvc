@@ -105,17 +105,20 @@ public class Bot extends AbstractModel<Long> {
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (!(o instanceof Bot)) return false;
+        if (o == null || getClass() != o.getClass()) return false;
         if (!super.equals(o)) return false;
         Bot bot = (Bot) o;
         return Objects.equals(userId, bot.userId) &&
+                Objects.equals(firstName, bot.firstName) &&
+                Objects.equals(lastName, bot.lastName) &&
                 Objects.equals(username, bot.username) &&
-                Objects.equals(token, bot.token);
+                Objects.equals(token, bot.token) &&
+                Objects.equals(about, bot.about);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(super.hashCode(), userId, username, token);
+        return Objects.hash(super.hashCode(), userId, firstName, lastName, username, token, about);
     }
 
     @Override
@@ -127,7 +130,6 @@ public class Bot extends AbstractModel<Long> {
                 ", username='" + username + '\'' +
                 ", token='" + token + '\'' +
                 ", about='" + about + '\'' +
-                ", channels=" + channels +
                 '}';
     }
 
