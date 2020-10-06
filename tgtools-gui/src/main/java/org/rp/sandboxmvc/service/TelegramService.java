@@ -6,7 +6,10 @@ import org.rp.sandboxmvc.model.Channel;
 import org.rp.sandboxmvc.model.Post;
 import org.rp.telegram.botapi.TelegramBotApi;
 import org.rp.telegram.botapi.exception.BotApiException;
+import org.rp.telegram.botapi.requestmodel.SendMessageRequestModel;
+import org.rp.telegram.botapi.type.Message;
 import org.rp.telegram.botapi.type.User;
+import org.rp.telegram.botapi.util.ParseMode;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -70,7 +73,29 @@ public class TelegramService {
     }
 
     private void sendMessageToChannel(Channel channel, Post post) {
-        LOGGER.info("sendMessageToChanne: channel=" + channel + " post=" + post);
+        LOGGER.info("sendMessageToChannel: channel=" + channel.getName() + " post=" + post.getTitle());
+        LOGGER.info("Post: " + post);
+
+        SendMessageRequestModel requestModel = new SendMessageRequestModel.Builder()
+                .chatId(channel.getUsername())
+                .text(buildHtmlText(post))
+                .parseMode(ParseMode.HTML)
+                .build();
+        TelegramBotApi tgBotApi = new TelegramBotApi();
+        try {
+            LOGGER.info(channel.getBot().getToken());
+            Message message = tgBotApi.sendMessage(channel.getBot().getToken(), requestModel);
+            LOGGER.info(message);
+        } catch (BotApiException e) {
+            LOGGER.error("Cannot send message", e);
+        }
+
+    }
+
+    private String buildHtmlText(Post post) {
+        return "<p><b>" + post.getTitle() + "</b></p>" +
+                post.getContent() +
+                "<p><a href=\"" + post.getPostUrl() + "\">" + post.getPostUrl() + "</a></p>";
     }
 
     /*

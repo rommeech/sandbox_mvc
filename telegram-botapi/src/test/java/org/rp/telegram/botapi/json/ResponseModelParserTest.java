@@ -1,5 +1,6 @@
 package org.rp.telegram.botapi.json;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.Before;
@@ -7,6 +8,7 @@ import org.junit.Test;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.rp.telegram.botapi.type.Message;
 import org.rp.telegram.botapi.type.User;
 import org.rp.telegram.botapi.util.ResponseModel;
 
@@ -23,7 +25,6 @@ import static org.junit.Assert.*;
 public class ResponseModelParserTest {
 
     private ObjectMapper mapper;
-    private ClassLoader classLoader;
     private final static Logger LOGGER = LogManager.getLogger(ResponseModelParserTest.class);
 
     @Before
@@ -34,7 +35,6 @@ public class ResponseModelParserTest {
 
     @Test
     public void getMeOkTest() throws IOException {
-        classLoader = getClass().getClassLoader();
 
         final String json = "{\n" +
                 "  \"ok\": true,\n" +
@@ -71,7 +71,6 @@ public class ResponseModelParserTest {
 
     @Test
     public void getMeFullOkTest() throws IOException {
-        classLoader = getClass().getClassLoader();
 
         final String json = "{\n" +
                 "  \"ok\": true,\n" +
@@ -117,7 +116,6 @@ public class ResponseModelParserTest {
 
     @Test
     public void getMeNokTest() throws IOException {
-        classLoader = getClass().getClassLoader();
 
         final String json = "{\n" +
                 "  \"ok\": false,\n" +
@@ -135,6 +133,23 @@ public class ResponseModelParserTest {
         assertNull("Field 'parameters'", responseModel.getParameters());
 
         assertNull("Field 'result'", responseModel.getResult());
+    }
+
+    @Test
+    public void sendMessageOkTest() throws JsonProcessingException {
+
+        final String json = "{\"ok\":true,\"result\":{\"message_id\":455,\"chat\":{\"id\":-1001146069923," +
+                "\"title\":\"testchannel\",\"type\":\"channel\"},\"date\":1589394204," +
+                "\"text\":\"test\\nDigitale Medien geh\\u00f6ren bei der Deutschen Nationalbibliothek in Leipzig zum " +
+                "Alltag. Auch Artikel im Netz werden gesammelt. L\\u00f6st das ein Platzproblem?\"," +
+                "\"entities\":[{\"offset\":0,\"length\":4,\"type\":\"text_link\"," +
+                "\"url\":\"https://www.heise.de/newsticker/meldung/Digitale-Medien-Wie-die-Digitalisierung-das-" +
+                "Gedaechtnis-der-Nation-veraendert-4687855.html?wt_mc=rss.red.ho.ho.atom.beitrag.beitrag\"}]}}";
+
+        ResponseModel<Message> responseModel = mapper.readValue(json, new TypeReference<ResponseModel<Message>>(){});
+
+        System.out.printf(responseModel.getResult().getEntities().toString());
+
     }
 
 

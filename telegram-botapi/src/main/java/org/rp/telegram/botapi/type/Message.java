@@ -1,6 +1,6 @@
 package org.rp.telegram.botapi.type;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import org.rp.telegram.botapi.BotApiResultType;
@@ -29,8 +29,6 @@ import java.util.Objects;
 public class Message implements BotApiResultType {
 
     private static final long serialVersionUID = 5854342279136595699L;
-
-
 
     @JsonProperty(value = "message_id")
     private Long messageId;
@@ -78,14 +76,11 @@ public class Message implements BotApiResultType {
     @JsonProperty(value = "text")
     private String text;
 
-    // TODO: should be MessageEntity
     @JsonProperty(value = "entities")
-    @JsonDeserialize(using = EntityListDeserializer.class)
-    private List<Object> entities;
+    private List<MessageEntity> entities;
 
-    // TODO: should be MessageEntity
     @JsonProperty(value = "caption_entities")
-    private List<Object> captionEntities;
+    private List<MessageEntity> captionEntities;
 
     // TODO: Should be Audio
     @JsonProperty(value = "audio")
@@ -214,7 +209,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    messageId   message identifier
      */
     public void setMessageId(Long messageId) {
@@ -231,7 +225,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    from    sender
      */
     public void setFrom(User from) {
@@ -248,7 +241,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    date    date the message was sent
      */
     public void setDate(LocalDateTime date) {
@@ -265,7 +257,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    chat    chat object
      */
     public void setChat(Chat chat) {
@@ -281,7 +272,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    forwardFrom    sender of the original message
      */
     public void setForwardFrom(User forwardFrom) {
@@ -298,7 +288,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    forwardFromChat    original channel
      */
     public void setForwardFromChat(Chat forwardFromChat) {
@@ -315,7 +304,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    forwardFromMessageId    identifier of the original message
      */
     public void setForwardFromMessageId(Long forwardFromMessageId) {
@@ -332,7 +320,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    forwardSignature    signature of the post author
      */
     public void setForwardSignature(String forwardSignature) {
@@ -350,7 +337,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    forwardSenderName    sender's name
      */
     public void setForwardSenderName(String forwardSenderName) {
@@ -367,7 +353,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    forwardDate    date the original message
      */
     public void setForwardDate(LocalDateTime forwardDate) {
@@ -386,7 +371,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    replyToMessage    original message
      */
     public void setReplyToMessage(Message replyToMessage) {
@@ -403,7 +387,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    editDate    last edited date
      */
     public void setEditDate(LocalDateTime editDate) {
@@ -420,7 +403,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    mediaGroupId    unique identifier of a media message group
      */
     public void setMediaGroupId(String mediaGroupId) {
@@ -437,7 +419,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    authorSignature    signature of the post author
      */
     public void setAuthorSignature(String authorSignature) {
@@ -454,7 +435,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    text    text of the message
      */
     public void setText(String text) {
@@ -467,15 +447,14 @@ public class Message implements BotApiResultType {
      *
      * @return    special entity list for text messages
      */
-    public List<Object> getEntities() {
+    public List<MessageEntity> getEntities() {
         return entities;
     }
 
     /**
-     *
      * @param    entities    special entity list for text messages
      */
-    public void setEntities(List<Object> entities) {
+    public void setEntities(List<MessageEntity> entities) {
         this.entities = entities;
     }
 
@@ -485,15 +464,14 @@ public class Message implements BotApiResultType {
      *
      * @return    special entity list for messages with a caption
      */
-    public List<Object> getCaptionEntities() {
+    public List<MessageEntity> getCaptionEntities() {
         return captionEntities;
     }
 
     /**
-     *
      * @param    captionEntities    special entity list for messages with a caption
      */
-    public void setCaptionEntities(List<Object> captionEntities) {
+    public void setCaptionEntities(List<MessageEntity> captionEntities) {
         this.captionEntities = captionEntities;
     }
 
@@ -507,7 +485,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    audio    audio object
      */
     public void setAudio(Object audio) {
@@ -524,7 +501,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    document    document object
      */
     public void setDocument(Object document) {
@@ -542,7 +518,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    animation    animation object
      */
     public void setAnimation(Object animation) {
@@ -559,7 +534,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    game    game object
      */
     public void setGame(Object game) {
@@ -576,7 +550,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    photo    photo object
      */
     public void setPhoto(List<Object> photo) {
@@ -593,7 +566,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    sticker    sticker object
      */
     public void setSticker(Object sticker) {
@@ -610,7 +582,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    video    video object
      */
     public void setVideo(Object video) {
@@ -627,7 +598,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    voice    voice object
      */
     public void setVoice(Object voice) {
@@ -644,7 +614,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    videoNote    video note object
      */
     public void setVideoNote(Object videoNote) {
@@ -661,7 +630,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    caption    caption of media object
      */
     public void setCaption(String caption) {
@@ -678,7 +646,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    contact    contact object
      */
     public void setContact(Object contact) {
@@ -695,7 +662,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    location    location object
      */
     public void setLocation(Object location) {
@@ -712,7 +678,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    venue    venue object
      */
     public void setVenue(Object venue) {
@@ -729,7 +694,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    poll    poll object
      */
     public void setPoll(Object poll) {
@@ -747,7 +711,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    newChatMembers    new members information
      */
     public void setNewChatMembers(List<User> newChatMembers) {
@@ -765,7 +728,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    leftChatMember    removed member information
      */
     public void setLeftChatMember(User leftChatMember) {
@@ -782,7 +744,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    newChatTitle    new chat title
      */
     public void setNewChatTitle(String newChatTitle) {
@@ -799,7 +760,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    newChatPhoto    new chat photo
      */
     public void setNewChatPhoto(List<Object> newChatPhoto) {
@@ -816,7 +776,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    deleteChatPhoto    true when chat photo was deleted
      */
     public void setDeleteChatPhoto(Boolean deleteChatPhoto) {
@@ -833,7 +792,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    groupChatCreated    true when the group has been created
      */
     public void setGroupChatCreated(Boolean groupChatCreated) {
@@ -853,7 +811,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    supergroupChatCreated    true when the supergroup has been created
      */
     public void setSupergroupChatCreated(Boolean supergroupChatCreated) {
@@ -873,7 +830,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    channelChatCreated    true when the channel has been created
      */
     public void setChannelChatCreated(Boolean channelChatCreated) {
@@ -890,7 +846,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    migrateToChatId    supergroup identifier
      */
     public void setMigrateToChatId(Long migrateToChatId) {
@@ -907,7 +862,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    migrateFromChatId    group identifier
      */
     public void setMigrateFromChatId(Long migrateFromChatId) {
@@ -926,7 +880,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    pinnedMessage    pinned message
      */
     public void setPinnedMessage(Message pinnedMessage) {
@@ -944,7 +897,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    invoice    invoice information
      */
     public void setInvoice(Object invoice) {
@@ -962,7 +914,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    successfulPayment    successful payment information
      */
     public void setSuccessfulPayment(Object successfulPayment) {
@@ -980,7 +931,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    connectedWebsite    domain name
      */
     public void setConnectedWebsite(String connectedWebsite) {
@@ -997,7 +947,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    passportData    passport data
      */
     public void setPassportData(Object passportData) {
@@ -1015,7 +964,6 @@ public class Message implements BotApiResultType {
     }
 
     /**
-     *
      * @param    replyMarkup    inline keyboard
      */
     public void setReplyMarkup(Object replyMarkup) {
@@ -1138,11 +1086,5 @@ public class Message implements BotApiResultType {
                 ", passportData=" + passportData +
                 ", replyMarkup=" + replyMarkup +
                 '}';
-    }
-
-
-    private static class EntityListDeserializer extends JacksonListDeserializer<Object> {
-        public EntityListDeserializer() {
-        }
     }
 }

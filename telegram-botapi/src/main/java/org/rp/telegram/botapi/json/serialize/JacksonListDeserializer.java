@@ -23,8 +23,9 @@ public class JacksonListDeserializer<T> extends JsonDeserializer<List<T>> {
 
     @Override
     public List<T> deserialize(JsonParser jsonParser, DeserializationContext deserializationContext)
-            throws IOException, JsonProcessingException {
-        NestedItems<T> nestedItems = jsonParser.readValueAs(new TypeReference<NestedItems<T>>(){});
+            throws IOException {
+        TypeReference<NestedItems<T>> reference = new TypeReference<NestedItems<T>>() {};
+        NestedItems<T> nestedItems = jsonParser.readValueAs(reference);
         return nestedItems.nestedItems;
     }
 

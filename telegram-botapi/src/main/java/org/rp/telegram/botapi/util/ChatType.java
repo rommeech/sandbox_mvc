@@ -8,6 +8,9 @@ import com.fasterxml.jackson.annotation.JsonProperty;
  * Date: 24.03.20
  * Time: 13:04
  */
+
+// TODO: javadoc
+
 public enum ChatType {
 
     @JsonProperty("private")

@@ -6,10 +6,9 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
-        <module name="telegram-botapi-it" />
         <module name="telegram-botapi" />
-        <module name="sandboxmvc" />
         <module name="tgtools-gui" />
+        <module name="telegram-botapi-it" />
       </profile>
     </annotationProcessing>
   </component>
