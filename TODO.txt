@@ -1,0 +1,9 @@
+* .gitignore
+* Orginize dependencies
+* Make it works
+* Why junit4?
+* Why spring framework4?
+* V2 architecture
+* V2: Java17
+* Implement V2
+* Migrate to V2
