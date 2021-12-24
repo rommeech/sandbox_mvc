@@ -156,7 +156,8 @@ public class Post extends AbstractModel<Long> {
     @Override
     public String toString() {
         return "Post{" +
-                "feed=" + feed.getId() +
+                "id=" + this.getId() +
+                ", feed=" + feed.getId() +
                 ", author='" + author + '\'' +
                 ", authorUrl='" + authorUrl + '\'' +
                 ", title='" + title + '\'' +

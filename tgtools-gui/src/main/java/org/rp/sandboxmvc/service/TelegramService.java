@@ -3,7 +3,9 @@ package org.rp.sandboxmvc.service;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.rp.sandboxmvc.model.Channel;
+import org.rp.sandboxmvc.model.ModelException;
 import org.rp.sandboxmvc.model.Post;
+import org.rp.sandboxmvc.model.Publication;
 import org.rp.telegram.botapi.TelegramBotApi;
 import org.rp.telegram.botapi.exception.BotApiException;
 import org.rp.telegram.botapi.requestmodel.SendMessageRequestModel;
@@ -13,6 +15,8 @@ import org.rp.telegram.botapi.util.ParseMode;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+
+import static org.rp.telegram.botapi.util.MarkdownV2Tools.html2markdown;
 
 @Service(value = "telegramService")
 public class TelegramService {
@@ -26,10 +30,14 @@ public class TelegramService {
 
     private final ChannelService channelService;
     private final PostService postService;
+    private final PublicationService publicationService;
 
-    public TelegramService(ChannelService channelService, PostService postService) {
+    public TelegramService(ChannelService channelService,
+                           PostService postService,
+                           PublicationService publicationService) {
         this.channelService = channelService;
         this.postService = postService;
+        this.publicationService = publicationService;
     }
 
     /*
@@ -76,26 +84,87 @@ public class TelegramService {
         LOGGER.info("sendMessageToChannel: channel=" + channel.getName() + " post=" + post.getTitle());
         LOGGER.info("Post: " + post);
 
-        SendMessageRequestModel requestModel = new SendMessageRequestModel.Builder()
-                .chatId(channel.getUsername())
-                .text(buildHtmlText(post))
-                .parseMode(ParseMode.HTML)
-                .build();
+        SendMessageRequestModel requestModel = buildSendMessageRequestModel(channel, post);
+
         TelegramBotApi tgBotApi = new TelegramBotApi();
         try {
-            LOGGER.info(channel.getBot().getToken());
+            //LOGGER.info(channel.getBot().getToken());
             Message message = tgBotApi.sendMessage(channel.getBot().getToken(), requestModel);
             LOGGER.info(message);
-        } catch (BotApiException e) {
-            LOGGER.error("Cannot send message", e);
+
+            if (message != null) {
+                savePublication(channel, post);
+            }
+
+        } catch (ModelException | BotApiException e) {
+            LOGGER.error("Something wrong with sending message", e);
         }
+    }
+
+    private void savePublication(Channel channel, Post post) throws ModelException {
+        Publication publication = new Publication.Builder()
+                .isSuccessful(true)
+                .channel(channel)
+                .post(post)
+                .build();
+        publicationService.insert(publication);
+    }
+
+    private SendMessageRequestModel buildSendMessageRequestModel(Channel channel, Post post) {
+        SendMessageRequestModel.Builder builder = new SendMessageRequestModel.Builder()
+                .chatId(channel.getUsername());
+
+        // TODO: WTF?
+        LOGGER.info(String.format("PostId=%s\nUlt=%s\nTitle=%s\nContent=%s\nMarkdownV2=%s",
+                post.getId(),
+                post.getPostUrl(),
+                post.getTitle(),
+                post.getContent(),
+                html2markdown(post.getContent())
+                ));
+
+        if (channel.getId() == 1) {
+            builder.text(buildMarkdownV2LinkFromPost(post))
+                    .parseMode(ParseMode.MARKDOWNV2);
+        }
+        else {
+            builder.text(buildMarkdownV2Post(post))
+                    .parseMode(ParseMode.MARKDOWNV2);
+            //builder.text(buildHtmlText(post))
+            //        .parseMode(ParseMode.HTML);
+        }
+
+        return builder.build();
+    }
+
+    private String buildMarkdownV2Post(Post post) {
+
+        String markdown = html2markdown(post.getContent());
+
+        if (markdown != null && markdown.replace("", "") != "") {
+            return "*" + post.getTitle() + "*\n" +
+                    markdown + "\n" +
+                    markdownV2InlineURL(post.getPostUrl(), post.getPostUrl());
+        }
+        else {
+            return buildMarkdownV2LinkFromPost(post);
+        }
+
 
     }
 
-    private String buildHtmlText(Post post) {
-        return "<p><b>" + post.getTitle() + "</b></p>" +
-                post.getContent() +
-                "<p><a href=\"" + post.getPostUrl() + "\">" + post.getPostUrl() + "</a></p>";
+    private String buildMarkdownV2LinkFromPost(Post post) {
+        return markdownV2InlineURL(escapeChars(post.getTitle()), post.getPostUrl());
+    }
+
+    private String markdownV2InlineURL(String title, String url) {
+        return String.format("[%s](%s)", escapeChars(title), url);
+    }
+
+    //private String
+
+    private String escapeChars(String text) {
+        return text.replaceAll("([^\\w\\s])", "\\\\$1");
     }
 
     /*

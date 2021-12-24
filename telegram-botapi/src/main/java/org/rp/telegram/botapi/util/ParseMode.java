@@ -9,6 +9,7 @@ package org.rp.telegram.botapi.util;
 public enum ParseMode {
 
     MARKDOWN("Markdown"),
+    MARKDOWNV2("MarkdownV2"),
     HTML("HTML");
 
     private String value;

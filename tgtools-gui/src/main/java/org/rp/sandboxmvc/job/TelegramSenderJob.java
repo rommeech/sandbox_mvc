@@ -20,7 +20,7 @@ public class TelegramSenderJob {
     private static final Logger LOGGER = LogManager.getLogger(TelegramSenderJob.class);
 
     public static final int JOB_INITIAL_DELAY = 5 * SECOND;
-    public static final int JOB_FIXED_DELAY = 15 * MINUTE;
+    public static final int JOB_FIXED_DELAY = 1 * MINUTE;
 
     private final TelegramService telegramService;
 

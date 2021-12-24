@@ -40,6 +40,9 @@ public class Message implements BotApiResultType {
     @JsonDeserialize(using = LocalDateTimeDeserializer.class)
     private LocalDateTime date;
 
+    @JsonProperty(value = "sender_chat")
+    private Chat senderChat;
+
     @JsonProperty(value = "chat")
     private Chat chat;
 
@@ -63,6 +66,9 @@ public class Message implements BotApiResultType {
 
     @JsonProperty(value = "reply_to_message")
     private Message replyToMessage;
+
+    @JsonProperty(value = "via_bot")
+    private User viaBot;
 
     @JsonProperty(value = "edit_date")
     private LocalDateTime editDate;

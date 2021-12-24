@@ -20,8 +20,8 @@ public class FeedReaderJob {
 
     private static final Logger LOGGER = LogManager.getLogger(FeedReaderJob.class);
 
-    public static final int JOB_INITIAL_DELAY = 5000000 * SECOND;
-    public static final int JOB_FIXED_DELAY = 15 * MINUTE;
+    public static final int JOB_INITIAL_DELAY = 1 * SECOND;
+    public static final int JOB_FIXED_DELAY = 5 * MINUTE;
 
     private final FeedReaderService feedReaderService;
 

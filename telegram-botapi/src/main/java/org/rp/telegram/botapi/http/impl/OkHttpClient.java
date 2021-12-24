@@ -1,9 +1,9 @@
 package org.rp.telegram.botapi.http.impl;
 
 import okhttp3.*;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.rp.telegram.botapi.http.HttpClient;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.IOException;
@@ -22,7 +22,7 @@ import java.util.Map;
 public class OkHttpClient implements HttpClient {
 
     private static final okhttp3.OkHttpClient okClient = new okhttp3.OkHttpClient();
-    private static final Logger LOGGER = LoggerFactory.getLogger(OkHttpClient.class);
+    private static final Logger LOGGER = LogManager.getLogger(OkHttpClient.class);
     private static final MediaType MEDIA_TYPE_JSON = MediaType.parse("application/json; charset=utf-8");
 
     @Override
