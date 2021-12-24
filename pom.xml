@@ -16,7 +16,7 @@
     <packaging>pom</packaging>
 
     <properties>
-        <springVersion>4.3.20.RELEASE</springVersion>
+        <springVersion>4.3.21.RELEASE</springVersion>
         <hibernateVersion>5.4.12.Final</hibernateVersion>
         <hibernateValidatorVersion>5.4.3.Final</hibernateValidatorVersion>
         <jettyVersion>9.4.27.v20200227</jettyVersion>
